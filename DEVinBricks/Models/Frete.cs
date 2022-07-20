@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DEVinBricks.Models
 {
-    public partial class Frete
+    public partial class Frete : Log
     {
         
     }
