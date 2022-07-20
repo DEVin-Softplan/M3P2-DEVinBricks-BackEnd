@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace DEVinBricks.Models
 {
-    public partial class Comprador
+    public partial class Comprador : Log
     {
-      
+        
     }
 }

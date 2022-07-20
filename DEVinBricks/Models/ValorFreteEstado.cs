@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DEVinBricks.Models
 {
-    public partial class ValorFreteEstado
+    public partial class ValorFreteEstado : Log
     {
    
 
