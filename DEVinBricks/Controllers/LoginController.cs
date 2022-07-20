@@ -1,5 +1,6 @@
 ﻿using DEVinBricks.DTO;
 using DEVinBricks.Models;
+using DEVinBricks.Repositories;
 using DEVinBricks.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +14,11 @@ namespace DEVinBricks.Controllers
     {
         private readonly DEVinBricksContext _context;
 
-        public LoginController(DEVinBricksContext context)
+        private IUsuarioRepository _service;
+
+        public LoginController(IUsuarioRepository context)
         {
-            _context = context;
+            _service = context;
         }
 
         /// <summary>
@@ -26,26 +29,16 @@ namespace DEVinBricks.Controllers
         /// <response code="404">Login e/ou senha incorreto(s).</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Authorize]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Login([FromBody] LoginDTO dto)
         {
-            try
-            {
-                var usuario = _context.Usuarios.First(x => x.Login.ToLower() == dto.Login.ToLower() && x.Senha.ToLower() == dto.Senha.ToLower());
+            var usuario = _service.ObterPorLoginESenha(dto.Login, dto.Senha);
 
-                if (usuario == null) return NotFound("Login e/ou senha incorreto(s)");
+            if (usuario == null) return NotFound("Login e/ou senha incorreto(s)");
 
-                var token = TokenService.GerarToken(usuario);
+            var token = TokenService.GerarToken(usuario);
 
-                return Ok($"Bem-vindo(a) {usuario.Nome} ao sistema da DEVinBricks!. Segue seu token: \n\n" + token);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"{ex.Message}");
-            }
+            return Ok($"Bem-vindo(a) {usuario.Nome} ao sistema da DEVinBricks!. Segue seu token: \n\n" + token);
         }
     }
 }
