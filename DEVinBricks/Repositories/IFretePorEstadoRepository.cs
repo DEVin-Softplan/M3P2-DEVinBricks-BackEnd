@@ -1,7 +1,9 @@
-﻿namespace DEVinBricks.Repositories
+﻿using DEVinBricks.Models;
+
+namespace DEVinBricks.Repositories
 {
     public interface IFretePorEstadoRepository
     {
-        public int EditaEstado(int id);
+       
     }
 }

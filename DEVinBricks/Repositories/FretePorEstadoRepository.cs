@@ -9,10 +9,10 @@ namespace DEVinBricks.Repositories
         {
             _context = context;
         }
-        public int EditaEstado(int id)
+        public Estado EditaEstado(int id)
         {
 
-            return StatusCodes.Status200OK;
+           
            
         }
     }
