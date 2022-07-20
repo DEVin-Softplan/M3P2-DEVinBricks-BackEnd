@@ -1,8 +1,10 @@
 using DEVinBricks;
 using DEVinBricks.Models;
 using DEVinBricks.Repositories;
+using feature/cthor-4.3.3-cria-valorfreteestado
 using DEVinBricks.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using develop
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -38,6 +40,7 @@ builder.Services.AddAuthentication(x =>
 		};
 	});
 
+builder.Services.AddScoped<IFretePorEstadoRepository, FretePorEstadoRepository>();
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 
 var app = builder.Build();
