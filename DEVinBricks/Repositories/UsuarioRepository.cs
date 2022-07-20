@@ -18,5 +18,10 @@ namespace DEVinBricks.Services
             return _context.Usuarios.ToList();
         }
 
+        public Usuario ObterPorLoginESenha(string login, string senha)
+        {
+            return _context.Usuarios.FirstOrDefault(x => x.Login.ToLower() == login && x.Senha == senha);
+        }
+
     }
 }
