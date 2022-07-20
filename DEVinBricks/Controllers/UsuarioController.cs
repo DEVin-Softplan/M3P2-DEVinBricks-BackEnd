@@ -21,7 +21,7 @@ namespace DEVinBricks.Controllers
             _usuarioService = usuarioService;
         }
 
-        [HttpPost("api/usuario")]
+        [HttpPost("/usuario")]
         public async Task<IActionResult> Cadastrar([FromBody] Usuario usuario)
         {
             try
