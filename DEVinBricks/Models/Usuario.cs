@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApplication1.Models
+namespace DEVinBricks.Models
 {
     public partial class Usuario
     {
