@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DEVinBricks.Models
+namespace DEVinBricks.Repositories.Models
 {
     public partial class Estado
     {

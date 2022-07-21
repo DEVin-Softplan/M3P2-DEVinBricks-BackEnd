@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DEVinBricks.Models
+﻿namespace DEVinBricks.Repositories.Models
 {
-    public partial class Comprador : Log
+    public partial class Comprador : BaseEntity
     {
         public int Id { get; set; }
         public string Nome { get; set; }
