@@ -58,7 +58,7 @@ namespace DEVinBricks.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioAlteracaoId")
+                    b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -101,7 +101,7 @@ namespace DEVinBricks.Migrations
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UsuarioAlteracaoId")
+                    b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -146,7 +146,7 @@ namespace DEVinBricks.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioAlteracaoId")
+                    b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -201,7 +201,7 @@ namespace DEVinBricks.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UsuarioAlteracaoId")
+                    b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -211,7 +211,8 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("Usuarios");
                 });
@@ -233,7 +234,7 @@ namespace DEVinBricks.Migrations
                     b.Property<int>("EstadoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioAlteracaoId")
+                    b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -268,7 +269,7 @@ namespace DEVinBricks.Migrations
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UsuarioAlteracaoId")
+                    b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -298,7 +299,7 @@ namespace DEVinBricks.Migrations
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UsuarioAlteracaoId")
+                    b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -318,9 +319,7 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
                         .WithOne()
@@ -337,9 +336,7 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
                         .WithOne()
@@ -356,9 +353,7 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
                         .WithOne()
@@ -375,14 +370,12 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusaoId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("UsuarioAlteracao");
@@ -400,9 +393,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
                         .WithOne()
@@ -421,9 +412,7 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
                         .WithOne()
@@ -440,9 +429,7 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
                         .WithOne()

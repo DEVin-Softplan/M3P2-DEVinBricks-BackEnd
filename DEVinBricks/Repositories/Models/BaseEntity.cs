@@ -16,7 +16,7 @@ namespace DEVinBricks.Repositories.Models
         public Usuario UsuarioInclusao { get; set; }
         public DateTime? DataDeAlteracao { get; set; }
         [ForeignKey("UsuarioAlteracao")]
-        public int UsuarioAlteracaoId { get; set; }
-        public Usuario UsuarioAlteracao { get; set; }
+        public int? UsuarioAlteracaoId { get; set; }
+        public Usuario? UsuarioAlteracao { get; set; }
     }
 }

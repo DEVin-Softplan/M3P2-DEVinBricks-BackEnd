@@ -32,11 +32,25 @@ namespace DEVinBricks.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Admin = table.Column<bool>(type: "bit", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
+                    DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Usuarios_UsuarioAlteracaoId",
+                        column: x => x.UsuarioAlteracaoId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Usuarios_UsuarioInclusaoId",
+                        column: x => x.UsuarioInclusaoId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -54,7 +68,7 @@ namespace DEVinBricks.Migrations
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,8 +77,7 @@ namespace DEVinBricks.Migrations
                         name: "FK_Compradores_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Compradores_Usuarios_UsuarioInclusaoId",
                         column: x => x.UsuarioInclusaoId,
@@ -81,7 +94,7 @@ namespace DEVinBricks.Migrations
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,8 +103,7 @@ namespace DEVinBricks.Migrations
                         name: "FK_Fretes_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Fretes_Usuarios_UsuarioInclusaoId",
                         column: x => x.UsuarioInclusaoId,
@@ -110,12 +122,10 @@ namespace DEVinBricks.Migrations
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UrlDaImagem = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    IdUsuarioInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdUsuarioAlteracao = table.Column<int>(type: "int", nullable: false),
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
-                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: false)
+                    DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -124,8 +134,7 @@ namespace DEVinBricks.Migrations
                         name: "FK_Produtos_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Produtos_Usuarios_UsuarioInclusaoId",
                         column: x => x.UsuarioInclusaoId,
@@ -144,7 +153,7 @@ namespace DEVinBricks.Migrations
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -159,8 +168,7 @@ namespace DEVinBricks.Migrations
                         name: "FK_ValorFreteEstados_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ValorFreteEstados_Usuarios_UsuarioInclusaoId",
                         column: x => x.UsuarioInclusaoId,
@@ -177,7 +185,7 @@ namespace DEVinBricks.Migrations
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,8 +194,7 @@ namespace DEVinBricks.Migrations
                         name: "FK_Vendas_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Vendas_Usuarios_UsuarioInclusaoId",
                         column: x => x.UsuarioInclusaoId,
@@ -204,7 +211,7 @@ namespace DEVinBricks.Migrations
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -213,8 +220,7 @@ namespace DEVinBricks.Migrations
                         name: "FK_VendasProdutos_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_VendasProdutos_Usuarios_UsuarioInclusaoId",
                         column: x => x.UsuarioInclusaoId,
@@ -252,6 +258,17 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_UsuarioInclusaoId",
                 table: "Produtos",
+                column: "UsuarioInclusaoId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_UsuarioAlteracaoId",
+                table: "Usuarios",
+                column: "UsuarioAlteracaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_UsuarioInclusaoId",
+                table: "Usuarios",
                 column: "UsuarioInclusaoId",
                 unique: true);
 
