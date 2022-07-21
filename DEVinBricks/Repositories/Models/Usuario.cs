@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace DEVinBricks.Repositories.Models
 {
-    public partial class Usuario
+    public partial class Usuario : BaseEntity
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Senha { get; set; }
         public string Email { get; set; }

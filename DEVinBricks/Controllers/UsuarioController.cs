@@ -1,9 +1,9 @@
 ﻿using DEVinBricks.Controllers.Validacoes;
 using DEVinBricks.Repositories.Models;
 using DEVinBricks.Repositories;
-using DEVinBricks.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using DEVinBricks.Services.Interfaces;
 
 namespace DEVinBricks.Controllers
 {

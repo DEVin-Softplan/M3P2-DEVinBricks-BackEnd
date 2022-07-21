@@ -1,6 +1,6 @@
 ﻿using DEVinBricks.Repositories.Models;
 
-namespace DEVinBricks.Services
+namespace DEVinBricks.Services.Interfaces
 {
     public interface IUsuarioService
     {
