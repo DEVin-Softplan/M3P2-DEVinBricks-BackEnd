@@ -5,6 +5,6 @@ namespace DEVinBricks.Repositories.Models
 {
     public partial class Venda : BaseEntity
     {
-        
+        public int DESGRACA { get; set; }        
     }
 }
