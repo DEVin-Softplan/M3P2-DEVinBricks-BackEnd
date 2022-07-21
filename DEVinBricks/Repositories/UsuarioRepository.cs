@@ -29,9 +29,32 @@ namespace DEVinBricks.Services
             }
         }
 
-        public List<Usuario> listarUsuarios()
+        public List<Usuario> listarUsuarios(string nome, string login, int tamanho, int pagina)
         {
-            return _context.Usuarios.ToList();
+            var usuarios = new List<Usuario>();
+            if (nome == "sem nome" && login == "sem login")
+            {
+                usuarios = _context.Usuarios.ToList();
+            }
+            if (nome != "sem nome" && login == "sem login")
+            {
+                usuarios = _context.Usuarios.Where(x => x.Nome == nome).ToList();
+            }
+            if (nome == "sem nome" && login != "sem login")
+            {
+                usuarios = _context.Usuarios.Where(x => x.Login == login).ToList();
+            }
+            if (nome != "sem nome" && login != "sem login")
+            {
+                usuarios = _context.Usuarios.Where(x => x.Nome == nome && x.Login == login).ToList();
+            }
+
+            if (tamanho != 0)
+            {
+                var skip = ((pagina - 1) * tamanho);
+                usuarios = usuarios.Skip(skip).Take(tamanho).ToList();
+            }
+            return usuarios;
         }
 
         public Usuario ObterPorLoginESenha(string login, string senha)
