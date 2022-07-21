@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    [Migration("20220721155353_init")]
-    partial class init
+    [Migration("20220721170317_TabelaUsuarioComBaseEntity")]
+    partial class TabelaUsuarioComBaseEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -130,7 +130,7 @@ namespace DEVinBricks.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("DataDeAlteracao")
+                    b.Property<DateTime?>("DataDeAlteracao")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataDeInclusao")
@@ -139,12 +139,6 @@ namespace DEVinBricks.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdUsuarioAlteracao")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("IdUsuarioInclusao")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -187,6 +181,12 @@ namespace DEVinBricks.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DataDeAlteracao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataDeInclusao")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -203,7 +203,17 @@ namespace DEVinBricks.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UsuarioAlteracaoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioInclusaoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioAlteracaoId");
+
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Usuarios");
                 });
@@ -356,6 +366,25 @@ namespace DEVinBricks.Migrations
                         .WithOne()
                         .HasForeignKey("DEVinBricks.Repositories.Models.Produto", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("UsuarioAlteracao");
+
+                    b.Navigation("UsuarioInclusao");
+                });
+
+            modelBuilder.Entity("DEVinBricks.Repositories.Models.Usuario", b =>
+                {
+                    b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UsuarioAlteracao");

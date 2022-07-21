@@ -1,5 +1,6 @@
 ﻿using DEVinBricks.Repositories.Models;
 using DEVinBricks.Repositories;
+using DEVinBricks.Services.Interfaces;
 
 namespace DEVinBricks.Services
 {
