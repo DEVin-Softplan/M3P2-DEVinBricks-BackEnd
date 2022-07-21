@@ -76,5 +76,11 @@ namespace DEVinBricks.Services
                 throw new Exception($"mensagem,: {ex.Message}", ex.InnerException);
             }
         }
+
+        public Usuario ObterUsuarioPorId(int id)
+        {
+            return _context.Usuarios.Find(id);
+        }
+
     }
 }
