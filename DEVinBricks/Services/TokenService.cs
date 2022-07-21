@@ -1,4 +1,4 @@
-﻿using DEVinBricks.Models;
+﻿using DEVinBricks.Repositories.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

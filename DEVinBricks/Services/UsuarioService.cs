@@ -1,4 +1,4 @@
-﻿using DEVinBricks.Models;
+﻿using DEVinBricks.Repositories.Models;
 using DEVinBricks.Repositories;
 
 namespace DEVinBricks.Services

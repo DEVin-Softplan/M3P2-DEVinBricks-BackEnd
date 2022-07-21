@@ -1,4 +1,4 @@
-﻿using DEVinBricks.Models;
+﻿using DEVinBricks.Repositories.Models;
 using FluentValidation;
 
 namespace DEVinBricks.Controllers.Validacoes

@@ -3,11 +3,11 @@ using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
 using DEVinBricks.Services;
 using DEVinBricks.Services.Interfaces;
-using DEVinBricks.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +40,6 @@ builder.Services.AddAuthentication(x =>
 		};
 	});
 
-builder.Services.AddScoped<IFretePorEstadoRepository, FretePorEstadoRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
