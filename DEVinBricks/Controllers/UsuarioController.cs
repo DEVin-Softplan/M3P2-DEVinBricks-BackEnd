@@ -21,6 +21,13 @@ namespace DEVinBricks.Controllers
             _usuarioService = usuarioService;
         }
 
+        [HttpGet("ObterListaUsuarios/{nome?}/{login?}/{tamanho:int?}/{pagina:int?}")]
+        public IActionResult ObterListaUsuarios(string nome = "sem nome", string login = "sem login", int tamanho = 0, int pagina = 1)
+        {
+            var usuarios = _usuarioRepository.listarUsuarios(nome, login, tamanho, pagina);
+            return Ok(usuarios);
+        }
+
         [HttpPost("/usuario")]
         public async Task<IActionResult> Cadastrar([FromBody] Usuario usuario)
         {
