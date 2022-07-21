@@ -32,7 +32,12 @@ namespace DEVinBricks.Repositories.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-         
+            modelBuilder.Entity<Comprador>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Frete>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Produto>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Venda>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<VendasProduto>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<ValorFretePorEstadoModel>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
