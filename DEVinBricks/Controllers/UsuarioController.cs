@@ -1,5 +1,5 @@
 ﻿using DEVinBricks.Controllers.Validacoes;
-using DEVinBricks.Models;
+using DEVinBricks.Repositories.Models;
 using DEVinBricks.Repositories;
 using DEVinBricks.Services;
 using Microsoft.AspNetCore.Http;

@@ -1,5 +1,5 @@
 ﻿using DEVinBricks.DTO;
-using DEVinBricks.Models;
+using DEVinBricks.Repositories.Models;
 using DEVinBricks.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

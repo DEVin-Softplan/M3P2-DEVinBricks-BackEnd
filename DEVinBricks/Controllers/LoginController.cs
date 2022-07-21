@@ -1,5 +1,5 @@
 ﻿using DEVinBricks.DTO;
-using DEVinBricks.Models;
+using DEVinBricks.Repositories.Models;
 using DEVinBricks.Repositories;
 using DEVinBricks.Services;
 using Microsoft.AspNetCore.Authorization;
