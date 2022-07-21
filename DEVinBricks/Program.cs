@@ -1,5 +1,8 @@
-using DEVinBricks.Models;
+
 using DEVinBricks.Repositories;
+using DEVinBricks.Repositories.Models;
+using DEVinBricks.Services;
+using DEVinBricks.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IFretePorEstadoRepository, FretePorEstadoRepository>();
+builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRepository>();
+builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 
 var app = builder.Build();

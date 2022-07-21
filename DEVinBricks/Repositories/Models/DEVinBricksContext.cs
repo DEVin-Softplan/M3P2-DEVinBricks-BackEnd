@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace DEVinBricks.Models
+namespace DEVinBricks.Repositories.Models
 {
     public partial class DEVinBricksContext : DbContext
     {
@@ -21,7 +21,7 @@ namespace DEVinBricks.Models
         public virtual DbSet<Frete> Fretes { get; set; } = null!;
         public virtual DbSet<Produto> Produtos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
-        public virtual DbSet<ValorFreteEstado> ValorFreteEstados { get; set; } = null!;
+        public virtual DbSet<ValorFretePorEstadoModel> ValorFreteEstados { get; set; } = null!;
         public virtual DbSet<Venda> Vendas { get; set; } = null!;
         public virtual DbSet<VendasProduto> VendasProdutos { get; set; } = null!;
 
@@ -32,7 +32,7 @@ namespace DEVinBricks.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+         
         }
     }
 }
