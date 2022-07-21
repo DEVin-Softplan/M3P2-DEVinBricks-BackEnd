@@ -23,6 +23,11 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "true"));
+});
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
