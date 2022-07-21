@@ -9,8 +9,9 @@ namespace DEVinBricks.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class UsuarioController : ControllerBase 
     {
+
         private readonly IUsuarioService _usuarioService;
         private readonly IUsuarioRepository _usuarioRepository;
 
@@ -20,6 +21,16 @@ namespace DEVinBricks.Controllers
             _usuarioRepository = usuarioRepository;
             _usuarioService = usuarioService;
         }
+
+        [HttpGet("/Usuario/{id}")]
+        public async Task<ActionResult<IEnumerable<Usuario>>> ObterUsuarioPorId(int id)
+        {
+            var usuario = _usuarioRepository.ObterUsuarioPorId(id);
+            if (usuario == null) return NotFound("Usuario não encontrado");
+            return Ok(usuario);
+        }
+
+
 
         [HttpGet("ObterListaUsuarios/{nome?}/{login?}/{tamanho:int?}/{pagina:int?}")]
         public IActionResult ObterListaUsuarios(string nome = "sem nome", string login = "sem login", int tamanho = 0, int pagina = 1)

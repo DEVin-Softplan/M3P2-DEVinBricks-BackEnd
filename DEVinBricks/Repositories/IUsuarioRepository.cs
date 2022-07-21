@@ -10,6 +10,8 @@ namespace DEVinBricks.Repositories
         Task<int> CadastrarUsuario(Usuario usuario);
         Task<bool> VerificaSeEmailExiste(string email);
 
+        public Usuario ObterUsuarioPorId(int id); 
+
     }
 
 }
