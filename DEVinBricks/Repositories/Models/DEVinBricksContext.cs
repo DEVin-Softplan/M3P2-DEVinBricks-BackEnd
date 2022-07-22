@@ -42,6 +42,7 @@ namespace DEVinBricks.Repositories.Models
             modelBuilder.Entity<Usuario>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Usuario>().HasData(UsuarioSeed.usuario);
+            modelBuilder.Entity<Estado>().HasData(EstadoSeed.Seed);
         }
     }
 }
