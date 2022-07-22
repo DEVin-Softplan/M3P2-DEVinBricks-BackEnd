@@ -31,12 +31,13 @@ namespace DEVinBricks.Controllers
        [Route("editar/{id}")]
        public IActionResult Editar([FromBody] ValorFretePorEstadoDTO dto, int id)
         {
-            if (dto.Id == id)
+            if (dto.Id != id)
                 return BadRequest("Dados inconsistentes");
 
             // verificar se o ID existe
-            if (!_service.VerificarSeExiste(id))
-                return BadRequest("Id não encontrado");
+           
+            if (_service.VerificarSeExiste(id))
+                return NotFound("Id não encontrado");
             
             
             // sucesso editado 201

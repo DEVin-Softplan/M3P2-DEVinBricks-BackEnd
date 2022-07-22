@@ -37,12 +37,26 @@ namespace DEVinBricks.Teste
             var controller = new FretePorEstadoController(service);
             var dto = new ValorFretePorEstadoDTO
             {
-                Id = 1,
+                Id = 1656546,
                 Valor = 100
             };
-            var response =  controller.Editar(dto, 1) as Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
+            var response =  controller.Editar(dto, 1656546) as Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
 
-            Assert.AreEqual(response.Value,"Dados inconsistentes");
+            Assert.AreEqual(response.Value, "Id não encontrado");
+        }
+        public void EditaValorFretePorEstadoIdConflitanteBadRequest()
+        {
+            var service = new ValorFretePorEstadoService(new ValorFretePorEstadoRepository(new DEVinBricksContext(_contextOptions)));
+
+            var controller = new FretePorEstadoController(service);
+            var dto = new ValorFretePorEstadoDTO
+            {
+                Id = 2,
+                Valor = 100
+            };
+            var response = controller.Editar(dto, 1) as Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
+
+            Assert.AreEqual(response.Value, "Dados inconsistentes");
         }
     }
 }
