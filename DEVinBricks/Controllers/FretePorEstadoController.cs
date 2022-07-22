@@ -48,6 +48,21 @@ namespace DEVinBricks.Controllers
             return Ok(model);
         }
 
+        /// <summary>
+        /// Consulta lista de Valores de Frete por.
+        /// </summary>
+        /// <param name="nome">Filtra por nome do Estado.</param>
+        /// <param name="page">Número da página.</param>
+        /// <param name="size">Tamanho da página.</param>
+        /// <returns>Valor do Frete por Estado.</returns>
+        /// <response code="200">Valor do Frete por Estado consultado.</response>
+        /// <response code="400">Requisição inválida.</response>
+        /// <response code="404">Valor do Frete por Estado não encontrado.</response>
+        /// <response code="500">Ocorreu uma exceção durante a consulta.</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ValorFretePorEstadoDTO>>> Consulta(string? nome, int? page, int? size)
         {
