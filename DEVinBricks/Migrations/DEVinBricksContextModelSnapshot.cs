@@ -211,10 +211,23 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId")
-                        .IsUnique();
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Admin = true,
+                            Ativo = true,
+                            DataDeInclusao = new DateTime(2022, 7, 21, 21, 33, 5, 633, DateTimeKind.Local).AddTicks(2112),
+                            Email = "admin@gmail.com",
+                            Login = "admin",
+                            Nome = "Admin",
+                            Senha = "admin123",
+                            UsuarioInclusaoId = 1
+                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.ValorFretePorEstadoModel", b =>
@@ -373,8 +386,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithOne()
-                        .HasForeignKey("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusaoId")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
