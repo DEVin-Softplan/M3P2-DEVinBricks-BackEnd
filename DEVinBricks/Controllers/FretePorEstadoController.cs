@@ -1,9 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-using DEVinBricks.Repositories.Models;
 using DEVinBricks.Services.Interfaces;
 using DEVinBricks.DTO;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DEVinBricks.Controllers
@@ -38,7 +36,7 @@ namespace DEVinBricks.Controllers
         [Route("editar/{id}")]
        public IActionResult Editar([FromBody] ValorFretePorEstadoDTO dto, int id)
         {
-            var teste = User.Identity.Name;
+            var teste = User.Identity.Name ;
             if (dto.Id != id)
                 return BadRequest("Dados inconsistentes");
 
