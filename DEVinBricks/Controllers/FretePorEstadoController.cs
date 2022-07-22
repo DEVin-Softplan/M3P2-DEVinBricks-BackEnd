@@ -10,6 +10,7 @@ namespace DEVinBricks.Controllers
     public class FretePorEstadoController : ControllerBase
     {
         private readonly IValorFretePorEstadoService _service;
+        const int maxPageSize = 20;
 
         public FretePorEstadoController(IValorFretePorEstadoService service)
         {
@@ -64,8 +65,13 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ValorFretePorEstadoDTO>>> Consulta(string? nome, int? page, int? size)
+        public async Task<ActionResult<IEnumerable<ValorFretePorEstadoDTO>>> Consulta(string? nome, int page = 1, int size = 10)
         {
+            if (size > maxPageSize)
+            {
+                size = maxPageSize;
+            }
+
             return Ok();
         }
     }
