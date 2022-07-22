@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    partial class DEVinBricksContextModelSnapshot : ModelSnapshot
+    [Migration("20220722225905_InclusaoSeed_Estado")]
+    partial class InclusaoSeed_Estado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -399,7 +401,7 @@ namespace DEVinBricks.Migrations
                             Id = 1,
                             Admin = true,
                             Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 22, 20, 22, 12, 733, DateTimeKind.Local).AddTicks(1208),
+                            DataDeInclusao = new DateTime(2022, 7, 22, 19, 59, 4, 458, DateTimeKind.Local).AddTicks(6194),
                             Email = "admin@gmail.com",
                             Login = "admin",
                             Nome = "Admin",
@@ -444,16 +446,6 @@ namespace DEVinBricks.Migrations
                         .IsUnique();
 
                     b.ToTable("ValorFreteEstados");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 22, 20, 22, 12, 735, DateTimeKind.Local).AddTicks(8833),
-                            EstadoId = 42,
-                            UsuarioInclusaoId = 1,
-                            Valor = 100m
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Venda", b =>

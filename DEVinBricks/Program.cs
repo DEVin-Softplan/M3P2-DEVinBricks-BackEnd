@@ -58,6 +58,19 @@ builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRe
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "True"));
+});
+
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(builder =>
+	{
+		builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+	});
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
