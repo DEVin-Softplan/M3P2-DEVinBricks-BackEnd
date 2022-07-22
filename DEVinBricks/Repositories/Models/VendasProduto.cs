@@ -10,9 +10,5 @@ namespace DEVinBricks.Repositories.Models
         public Produto IdProduto { get; set; }
         public int Valor { get; set; }
         public int Quantidade { get; set; }
-        public DateTime DataDeInclusao { get; set; }
-        public Usuario IdUsuarioInclusao { get; set; }
-        public DateTime DataDeAlteracao { get; set; }
-        public Usuario IdUsuarioAlteracao { get; set; }
     }
 }
