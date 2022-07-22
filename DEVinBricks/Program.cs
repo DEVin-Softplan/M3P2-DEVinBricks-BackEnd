@@ -23,10 +23,6 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 
 var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
-builder.Services.AddAuthorization(options =>
-{
-	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "true"));
-});
 
 builder.Services.AddAuthentication(x =>
 {
@@ -50,6 +46,19 @@ builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRe
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "True"));
+});
+
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(builder =>
+	{
+		builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+	});
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -61,9 +70,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
