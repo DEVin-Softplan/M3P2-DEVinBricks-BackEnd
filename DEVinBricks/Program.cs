@@ -33,7 +33,7 @@ var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
 builder.Services.AddAuthorization(options =>
 {
-	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "true"));
+	options.AddPolicy("Admin", policy => policy.RequireClaim("is_admin", "true"));
 });
 
 builder.Services.AddAuthentication(x =>
@@ -69,9 +69,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 

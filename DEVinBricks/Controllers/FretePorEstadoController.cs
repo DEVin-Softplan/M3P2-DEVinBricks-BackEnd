@@ -58,13 +58,16 @@ namespace DEVinBricks.Controllers
         /// <returns>Valor do Frete por Estado.</returns>
         /// <response code="200">Valor do Frete por Estado consultado.</response>
         /// <response code="400">Requisição inválida.</response>
+        /// <response code="401">Usuário não autorizado.</response>
         /// <response code="404">Valor do Frete por Estado não encontrado.</response>
         /// <response code="500">Ocorreu uma exceção durante a consulta.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
+        [Authorize(Policy = "Admin")]
         public IActionResult Consulta(string? nome, int page = 1, int size = 10)
         {
             if (size > maxPageSize)

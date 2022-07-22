@@ -15,7 +15,7 @@ namespace DEVinBricks.Services
                     new Claim("id", usuario.Id.ToString()),
                     new Claim(ClaimTypes.Name, usuario.Nome),
                     new Claim(ClaimTypes.Email, usuario.Email),
-                    new Claim("is_admin", usuario.Admin.ToString()),
+                    new Claim("is_admin", usuario.Admin.ToString().ToLower()),
                 };
             return GerarToken(claims);
         }
