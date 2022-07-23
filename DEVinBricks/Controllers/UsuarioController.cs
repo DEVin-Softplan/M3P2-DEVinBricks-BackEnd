@@ -4,6 +4,7 @@ using DEVinBricks.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DEVinBricks.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DEVinBricks.Controllers
 {
@@ -22,7 +23,22 @@ namespace DEVinBricks.Controllers
             _usuarioService = usuarioService;
         }
 
+
+        /// <summary>
+        /// Busca usuário pelo Id
+        /// </summary>
+        /// <param name="id">Filtra pelo Id do usuário.</param>
+        /// <returns>Dados do usuário</returns>
+        /// <response code="200">Usuário encontrado.</response>
+        /// <response code="401">Seu usuário não está autenticado no sistema.</response>
+        /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
+        /// <response code="404">Usuário não encontrado.</response>
         [HttpGet("/Usuario/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "admin")]
         public async Task<ActionResult<IEnumerable<Usuario>>> ObterUsuarioPorId(int id)
         {
             var usuario = _usuarioRepository.ObterUsuarioPorId(id);
@@ -31,15 +47,41 @@ namespace DEVinBricks.Controllers
         }
 
 
-
+        /// <summary>
+        /// Obtem a lista de usuários do sistema
+        /// </summary>
+        /// <returns>Lista de usuários</returns>
+        /// <response code="200">Usuários encontrados.</response>
+        /// <response code="401">Seu usuário não está autenticado no sistema.</response>
+        /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
+        /// <response code="404">Nenhum usuário encontrado.</response>
         [HttpGet("ObterListaUsuarios/{nome?}/{login?}/{tamanho:int?}/{pagina:int?}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Policy = "admin")]
         public IActionResult ObterListaUsuarios(string nome = "sem nome", string login = "sem login", int tamanho = 0, int pagina = 1)
         {
             var usuarios = _usuarioRepository.listarUsuarios(nome, login, tamanho, pagina);
             return Ok(usuarios);
         }
 
+
+        /// <summary>
+        /// Cadastra novo usuário no sistema
+        /// </summary>
+        /// <returns>Inclusão de usuário no sistema</returns>
+        /// <response code="200">Usuário cadastrado.</response>
+        /// <response code="401">Seu usuário não está autenticado no sistema.</response>
+        /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
+        /// <response code="422">Já existe um usuário cadastrado com esse mesmo email.</response>
         [HttpPost("/usuario")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [Authorize(Policy = "admin")]
         public async Task<IActionResult> Cadastrar([FromBody] Usuario usuario)
         {
             try

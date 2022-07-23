@@ -30,6 +30,7 @@ namespace DEVinBricks.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public IActionResult Login([FromBody] LoginDTO dto)
         {
             var usuario = _service.ObterPorLoginESenha(dto.Login, dto.Senha);
