@@ -17,7 +17,7 @@ namespace DEVinBricks.Services
             return await _usuarioRepository.CadastrarUsuario(usuario);
         }
 
-        public async Task<bool> VerificaSeEmailExiste(string email)
+        public async Task<bool> VerificarSeEmailExiste(string email)
         {
             return await _usuarioRepository.VerificaSeEmailExiste(email);
         }

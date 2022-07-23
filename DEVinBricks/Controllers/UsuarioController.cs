@@ -91,7 +91,7 @@ namespace DEVinBricks.Controllers
 
                 if (valido.IsValid)
                 {
-                    if (await _usuarioService.VerificaSeEmailExiste(usuario.Email))
+                    if (await _usuarioService.VerificarSeEmailExiste(usuario.Email))
                     {
                         return UnprocessableEntity(new { message = "Já existe um usuário cadastrado com esse mesmo email" });
                     }
