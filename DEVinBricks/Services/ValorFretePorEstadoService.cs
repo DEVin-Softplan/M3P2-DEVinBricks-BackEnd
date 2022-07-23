@@ -14,10 +14,12 @@ namespace DEVinBricks.Services
             _repository = repository;
         }
 
-        public ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto)
+        public ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto, int idUsuarioAlteracao)
         {
             var model = _repository.ObterPeloId(dto.Id);
             model.Valor = dto.Valor;
+            model.UsuarioAlteracaoId = idUsuarioAlteracao;
+            model.DataDeAlteracao = DateTime.Now;
             return _repository.EditarValorFreteEstado(model);
         }
 
