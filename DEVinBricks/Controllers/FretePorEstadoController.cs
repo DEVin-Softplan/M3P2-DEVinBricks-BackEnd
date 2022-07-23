@@ -67,7 +67,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
-        [Authorize(Policy = "Admin")]
+        [Authorize(Policy = "admin")]
         public IActionResult Consulta(string? nome, int page = 1, int size = 10)
         {
             if (size > maxPageSize)
