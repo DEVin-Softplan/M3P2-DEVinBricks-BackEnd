@@ -21,6 +21,11 @@ namespace DEVinBricks.Services
             return _repository.EditarValorFreteEstado(model);
         }
 
+        public IEnumerable<ValorFretePorEstadoModel> Consultar(string? nome, int page, int size)
+        {
+            return _repository.ConsultarValorFreteEstado(nome, page, size);
+        }
+
         public bool VerificarSeExiste(int id) => _repository.ObterPeloId(id) == null;
 
 

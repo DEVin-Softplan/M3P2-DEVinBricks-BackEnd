@@ -9,6 +9,6 @@ namespace DEVinBricks.Services.Interfaces
        bool VerificarSeExiste(int id);
 
         ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto);
-       
+        IEnumerable<ValorFretePorEstadoModel> Consultar(string? nome, int page, int size);
     }
 }
