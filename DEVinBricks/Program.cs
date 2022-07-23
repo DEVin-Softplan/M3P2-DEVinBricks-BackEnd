@@ -49,9 +49,12 @@ builder.Services.AddAuthentication(x =>
 		};
 	});
 
+builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
+
 builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
+
 
 builder.Services.AddAuthorization(options =>
 {
