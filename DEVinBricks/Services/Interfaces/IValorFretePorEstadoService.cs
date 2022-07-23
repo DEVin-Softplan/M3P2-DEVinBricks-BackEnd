@@ -1,4 +1,4 @@
-﻿using DEVinBricks.DTO;
+using DEVinBricks.DTO;
 using DEVinBricks.Repositories.Models;
 
 namespace DEVinBricks.Services.Interfaces
@@ -10,5 +10,8 @@ namespace DEVinBricks.Services.Interfaces
 
         ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto, int idUsuarioAlteracao);
        
+
+        IEnumerable<ValorFretePorEstadoModel> Consultar(string? nome, int page, int size);
+
     }
 }
