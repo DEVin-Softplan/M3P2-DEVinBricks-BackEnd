@@ -6,5 +6,6 @@ namespace DEVinBricks.Services.Interfaces
     {
         Task<int> CadastrarUsuario(Usuario usuario);
         Task<bool> VerificarSeEmailExiste(string email);
+        void EnviarEmailParaFila(Usuario usuario);
     }
 }
