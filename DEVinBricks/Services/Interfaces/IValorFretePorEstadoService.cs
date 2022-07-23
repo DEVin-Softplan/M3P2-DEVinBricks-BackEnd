@@ -8,7 +8,7 @@ namespace DEVinBricks.Services.Interfaces
     {
        bool VerificarSeExiste(int id);
 
-        ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto);
+        ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto, int idUsuarioAlteracao);
        
     }
 }

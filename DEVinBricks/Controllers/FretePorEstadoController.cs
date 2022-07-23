@@ -34,11 +34,11 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut]
-        [Authorize]
+        [Authorize(Policy = "admin")]
         [Route("editar/{id}")]
        public IActionResult Editar([FromBody] ValorFretePorEstadoDTO dto, int id)
         {
-            var teste = User.Identity.Name;
+            var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value) ;
             if (dto.Id != id)
                 return BadRequest("Dados inconsistentes");
 
@@ -49,7 +49,7 @@ namespace DEVinBricks.Controllers
             
             
             // sucesso editado 201
-           var model = _service.Atualizar(dto);
+           var model = _service.Atualizar(dto, IdUsuarioAlteracao);
             
                 
             return Ok(model);
