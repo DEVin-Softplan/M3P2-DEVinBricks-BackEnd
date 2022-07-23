@@ -7,6 +7,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
 		<LangVersion>preview</LangVersion>
+		<UserSecretsId>767c86e8-901f-4bdf-9902-be3d3e94eaa7</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -22,6 +23,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>
 
