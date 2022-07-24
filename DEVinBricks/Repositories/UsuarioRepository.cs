@@ -62,7 +62,7 @@ namespace DEVinBricks.Services
             return _context.Usuarios.FirstOrDefault(x => x.Login.ToLower() == login && x.Senha == senha);
         }
 
-        public async Task<bool> VerificaSeEmailExiste(string email)
+        public async Task<bool> VerificarSeEmailExiste(string email)
         {
             try
             {
@@ -80,6 +80,22 @@ namespace DEVinBricks.Services
         public Usuario ObterUsuarioPorId(int id)
         {
             return _context.Usuarios.Find(id);
+        }
+
+        public async Task AlterarDados(Usuario usuario)
+        {
+            try
+            {
+                _context.Usuarios.Update(usuario);
+
+                await _context.SaveChangesAsync();
+
+                return;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException);
+            }
         }
 
     }
