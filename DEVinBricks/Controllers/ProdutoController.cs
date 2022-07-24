@@ -16,11 +16,20 @@ namespace DEVinBricks.Controllers
             _service = service;
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
         public ActionResult ObterProduto(int id)
         {
-            var response = _service.ObterProdutoPorId(id);
-            return Ok(response);
+            try
+            {
+                var response = _service.ObterProdutoPorId(id);
+                return Ok(response);
+            }catch (Exception ex)
+            {
+                return NotFound("Produto Inexistente");
+            }
         }
     }
 }

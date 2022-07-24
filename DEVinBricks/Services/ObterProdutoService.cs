@@ -1,4 +1,5 @@
-﻿using DEVinBricks.Repositories;
+﻿using DEVinBricks.DTO;
+using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
 using DEVinBricks.Services.Interfaces;
 
@@ -11,11 +12,19 @@ namespace DEVinBricks.Services
         {
             _service = service;
         }
-        public Produto ObterProdutoPorId(int id)
+        public ObterProdutoPorIdDTO ObterProdutoPorId(int id)
         {
             var model = _service.ObterProdutoPorId(id);
+            var produtoDTO = new ObterProdutoPorIdDTO()
+            {
+                Id = id,
+                Nome = model.Nome,
+                Descricao = model.Descricao,
+                UrlDaImagem = model.UrlDaImagem,
+                Ativo = model.Ativo,
+            };
 
-            return model;
+            return produtoDTO;
         }
     }
 }

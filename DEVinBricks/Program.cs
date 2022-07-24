@@ -45,11 +45,12 @@ builder.Services.AddAuthentication(x =>
 			ValidateIssuerSigningKey = true,
 			IssuerSigningKey = new SymmetricSecurityKey(key),
 			ValidateIssuer = false,
-			ValidateAudience = false
+			ValidateAudience = false	
 		};
 	});
 
 builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
+builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
 
 builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
