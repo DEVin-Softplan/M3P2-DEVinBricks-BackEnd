@@ -27,6 +27,7 @@ builder.Services.AddSwaggerGen(opt =>
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ICompradorRepository, CompradorRepository>();
 
 
 var key = Encoding.ASCII.GetBytes(Settings.Secret);

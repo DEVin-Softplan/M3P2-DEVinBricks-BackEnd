@@ -12,7 +12,6 @@ namespace DEVinBricks.Repositories.Models
         public DateTime DataDeInclusao { get; set; }
         [ForeignKey("UsuarioInclusao")]
         public int UsuarioInclusaoId { get; set; }
-      
         public Usuario UsuarioInclusao { get; set; }
         public DateTime? DataDeAlteracao { get; set; }
         [ForeignKey("UsuarioAlteracao")]
