@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DEVinBricks.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -228,6 +228,11 @@ namespace DEVinBricks.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Usuarios",
+                columns: new[] { "Id", "Admin", "Ativo", "DataDeAlteracao", "DataDeInclusao", "Email", "Login", "Nome", "Senha", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
+                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 21, 21, 33, 5, 633, DateTimeKind.Local).AddTicks(2112), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Compradores_UsuarioAlteracaoId",
                 table: "Compradores",
@@ -269,8 +274,7 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_UsuarioInclusaoId",
                 table: "Usuarios",
-                column: "UsuarioInclusaoId",
-                unique: true);
+                column: "UsuarioInclusaoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ValorFreteEstados_EstadoId",

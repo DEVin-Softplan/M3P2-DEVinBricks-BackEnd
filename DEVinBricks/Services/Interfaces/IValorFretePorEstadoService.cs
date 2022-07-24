@@ -1,4 +1,4 @@
-﻿using DEVinBricks.DTO;
+using DEVinBricks.DTO;
 using DEVinBricks.Repositories.Models;
 
 namespace DEVinBricks.Services.Interfaces
@@ -8,7 +8,10 @@ namespace DEVinBricks.Services.Interfaces
     {
        bool VerificarSeExiste(int id);
 
-        ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto);
+        ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto, int idUsuarioAlteracao);
        
+
+        IEnumerable<ValorFretePorEstadoModel> Consultar(string? nome, int page, int size);
+
     }
 }

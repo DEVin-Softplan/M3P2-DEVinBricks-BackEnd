@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DEVinBricks.Seeds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -39,6 +40,11 @@ namespace DEVinBricks.Repositories.Models
             modelBuilder.Entity<VendasProduto>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ValorFretePorEstadoModel>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Usuario>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Usuario>().HasIndex(prop => prop.Email).IsUnique();
+
+            modelBuilder.Entity<Usuario>().HasData(UsuarioSeed.usuario);
+            modelBuilder.Entity<Estado>().HasData(EstadoSeed.Seed);
+            modelBuilder.Entity<ValorFretePorEstadoModel>().HasData(ValorFretePorEstadoSeed.Seed);
         }
     }
 }

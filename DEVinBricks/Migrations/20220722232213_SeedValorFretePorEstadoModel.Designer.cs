@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    partial class DEVinBricksContextModelSnapshot : ModelSnapshot
+    [Migration("20220722232213_SeedValorFretePorEstadoModel")]
+    partial class SeedValorFretePorEstadoModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -365,7 +367,7 @@ namespace DEVinBricks.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -387,9 +389,6 @@ namespace DEVinBricks.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("UsuarioAlteracaoId");
 
                     b.HasIndex("UsuarioInclusaoId");
@@ -402,7 +401,7 @@ namespace DEVinBricks.Migrations
                             Id = 1,
                             Admin = true,
                             Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 914, DateTimeKind.Local).AddTicks(8578),
+                            DataDeInclusao = new DateTime(2022, 7, 22, 20, 22, 12, 733, DateTimeKind.Local).AddTicks(1208),
                             Email = "admin@gmail.com",
                             Login = "admin",
                             Nome = "Admin",
@@ -452,7 +451,7 @@ namespace DEVinBricks.Migrations
                         new
                         {
                             Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 917, DateTimeKind.Local).AddTicks(4028),
+                            DataDeInclusao = new DateTime(2022, 7, 22, 20, 22, 12, 735, DateTimeKind.Local).AddTicks(8833),
                             EstadoId = 42,
                             UsuarioInclusaoId = 1,
                             Valor = 100m
