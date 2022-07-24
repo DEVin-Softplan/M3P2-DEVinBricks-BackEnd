@@ -29,11 +29,13 @@ namespace DEVinBricks.Services
             return await _usuarioRepository.VerificarSeEmailExiste(email);
         }
 
-        public async Task<Usuario> VerificarDadosAlterados(EditarUsuarioDTO usuarioAlterado)
+        public async Task<Usuario?> VerificarDadosAlterados(EditarUsuarioDTO usuarioAlterado)
         {
             try
             {
                 var usuario = _usuarioRepository.ObterUsuarioPorId(usuarioAlterado.Id);
+
+                if(usuario == null) return null;
 
                 if (verificaSeTemConteudo(usuarioAlterado.Nome))
                 {
