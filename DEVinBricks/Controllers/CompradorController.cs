@@ -44,7 +44,7 @@ namespace DEVinBricks.Controllers
         public ActionResult<Comprador> GetComprador(string? nome, string? cpf, int? pagina, int? tamanhopagina)
         {
             CompradorGetDTO comprador = CompradorGetDTO.ConverterParaEntidadeCompradorGetDTO(nome, cpf, pagina, tamanhopagina);
-            var resultado = _service.ListarComprador(comprador);
+            var resultado = _service.ListarGetComprador(comprador);
             return Ok(resultado);
         }
     }

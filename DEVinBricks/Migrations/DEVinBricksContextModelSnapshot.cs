@@ -68,8 +68,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId")
-                        .IsUnique();
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Compradores");
                 });
@@ -283,8 +282,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId")
-                        .IsUnique();
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Fretes");
                 });
@@ -337,8 +335,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId")
-                        .IsUnique();
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Produtos");
                 });
@@ -402,7 +399,7 @@ namespace DEVinBricks.Migrations
                             Id = 1,
                             Admin = true,
                             Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 914, DateTimeKind.Local).AddTicks(8578),
+                            DataDeInclusao = new DateTime(2022, 7, 24, 17, 17, 1, 481, DateTimeKind.Local).AddTicks(8728),
                             Email = "admin@gmail.com",
                             Login = "admin",
                             Nome = "Admin",
@@ -443,8 +440,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId")
-                        .IsUnique();
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("ValorFreteEstados");
 
@@ -452,7 +448,7 @@ namespace DEVinBricks.Migrations
                         new
                         {
                             Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 917, DateTimeKind.Local).AddTicks(4028),
+                            DataDeInclusao = new DateTime(2022, 7, 24, 17, 17, 1, 486, DateTimeKind.Local).AddTicks(7500),
                             EstadoId = 42,
                             UsuarioInclusaoId = 1,
                             Valor = 100m
@@ -483,8 +479,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId")
-                        .IsUnique();
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Vendas");
                 });
@@ -513,8 +508,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId")
-                        .IsUnique();
+                    b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("VendasProdutos");
                 });
@@ -526,8 +520,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithOne()
-                        .HasForeignKey("DEVinBricks.Repositories.Models.Comprador", "UsuarioInclusaoId")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -543,8 +537,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithOne()
-                        .HasForeignKey("DEVinBricks.Repositories.Models.Frete", "UsuarioInclusaoId")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -560,8 +554,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithOne()
-                        .HasForeignKey("DEVinBricks.Repositories.Models.Produto", "UsuarioInclusaoId")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -600,8 +594,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithOne()
-                        .HasForeignKey("DEVinBricks.Repositories.Models.ValorFretePorEstadoModel", "UsuarioInclusaoId")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -619,8 +613,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithOne()
-                        .HasForeignKey("DEVinBricks.Repositories.Models.Venda", "UsuarioInclusaoId")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -636,8 +630,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithOne()
-                        .HasForeignKey("DEVinBricks.Repositories.Models.VendasProduto", "UsuarioInclusaoId")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

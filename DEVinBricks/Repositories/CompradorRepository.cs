@@ -17,9 +17,11 @@ namespace DEVinBricks.Repositories
             await _context.SaveChangesAsync();
             return resultado.Entity.Id;
         }
-        public IEnumerable<Comprador> ListarComprador(CompradorGetDTO comprador)
+        public IEnumerable<Comprador> ListarGetComprador(CompradorGetDTO comprador)
         {
             var queryableComprador = _context.Compradores as IQueryable<Comprador>;
+            if (!string.IsNullOrWhiteSpace(comprador.Nome))
+                queryableComprador = queryableComprador.Where(c => c.Nome.Contains(comprador.Nome));
             var resultado = queryableComprador.OrderBy(c => c.Nome).ToList();
             return resultado;
         }
