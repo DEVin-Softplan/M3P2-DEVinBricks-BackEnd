@@ -19,7 +19,7 @@ namespace DEVinBricks.Controllers
         /// </summary>
         /// <returns>Comprador cadastrado com sucesso!</returns>
         /// <response code="200">Cadastro realizado com sucesso.</response>
-        /// <response code="404">Já existe Comprador com este E-mail ou CPF cadastrado.</response>
+        /// <response code="400">Já existe Comprador com este E-mail ou CPF cadastrado.</response>
         [HttpPost(Name = "CriarComprador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
