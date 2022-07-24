@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DEVinBricks.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using DEVinBricks.DTO;
+using System.Security.Claims;
 
 namespace DEVinBricks.Controllers
 {
@@ -101,6 +103,52 @@ namespace DEVinBricks.Controllers
                 else
                 {
                     return UnprocessableEntity(new { message = valido.ToString() });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException); ;
+            }
+        }
+
+        /// <summary>
+        /// Altera dados do usuário
+        /// </summary>
+        /// <returns>Alteração de dados do usuário</returns>
+        /// <response code="200">Usuário alterado.</response>
+        /// <response code="401">Seu usuário não está autenticado no sistema.</response>
+        /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
+        /// <response code="422">Dados Inválidos.</response>
+        [HttpPost("/usuario")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [Authorize(Policy = "admin")]
+        public async Task<IActionResult> EditarDados([FromBody] EditarUsuarioDTO usuarioAlterado)
+        {
+            try
+            {
+                var usuario = await _usuarioService.VerificarDadosAlterados(usuarioAlterado);
+
+                var validador = new ValidarUsuario();
+                var valido = validador.Validate(usuario);
+
+                if (valido.IsValid)
+                {
+                    var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                    usuario.DataDeAlteracao = DateTime.Now;
+                    usuario.UsuarioAlteracaoId = IdUsuarioAlteracao;
+                    usuario.UsuarioAlteracao = _usuarioRepository.ObterUsuarioPorId(IdUsuarioAlteracao);
+
+                    await _usuarioRepository.AlterarDados(usuario);
+
+                    return Ok("Usuario alterado com sucesso!");
+                }
+                else
+                {
+                    return UnprocessableEntity(valido.ToString());
                 }
             }
             catch (Exception ex)

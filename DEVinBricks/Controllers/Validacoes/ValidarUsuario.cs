@@ -18,9 +18,9 @@ namespace DEVinBricks.Controllers.Validacoes
                 .MinimumLength(4)
                 .WithMessage("É necessário informar uma senha com tamanho mínimo de 3 caracteres");
 
-            RuleFor(x => x.Admin.Equals(true))
-                .NotNull()
-                .WithMessage("É necessário que o usuário seja um Admin");
+            RuleFor(x => x.Email.Contains("@"))
+                    .NotNull()
+                    .WithMessage("Email Inválido");
         }
     }
 }
