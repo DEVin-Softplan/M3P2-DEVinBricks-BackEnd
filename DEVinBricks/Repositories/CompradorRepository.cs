@@ -17,5 +17,13 @@ namespace DEVinBricks.Repositories
             await _context.SaveChangesAsync();
             return resultado.Entity.Id;
         }
+        public bool VerificaSeExisteCPFComprador(string cpf)
+        {
+            return _context.Compradores.Any(x => x.CPF == cpf);
+        }
+        public bool VerificaSeExisteEmailComprador(string email)
+        {
+            return _context.Compradores.Any(x => x.Email == email);
+        }
     }
 }
