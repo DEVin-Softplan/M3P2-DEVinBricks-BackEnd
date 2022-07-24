@@ -121,7 +121,7 @@ namespace DEVinBricks.Controllers
         /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
         /// <response code="422">Dados Inválidos.</response>
         /// <response code="404">Nenhum usuário encontrado.</response>
-        [HttpPost("/usuario")]
+        [HttpPatch("/usuario/editar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
