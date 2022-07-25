@@ -9,7 +9,7 @@ namespace DEVinBricks.Repositories
         public Usuario ObterPorLoginESenha(string login, string senha);
         Task<int> CadastrarUsuario(Usuario usuario);
         Task<bool> VerificarSeEmailExiste(string email);
-
+        Task<bool> VerificarSeLoginExiste(string login);
         public Usuario ObterUsuarioPorId(int id); 
         Task AlterarDados(Usuario usuario);
     }

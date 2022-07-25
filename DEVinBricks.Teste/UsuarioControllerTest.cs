@@ -138,7 +138,7 @@ namespace DEVinBricks.Teste
             var expected = (response as ObjectResult);
 
             Assert.That(expected.Value.ToString(), Is.EqualTo("Usuario não encontrado"));
-            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
+            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("404"));
         }
 
         [Test]
@@ -151,10 +151,10 @@ namespace DEVinBricks.Teste
             var usuario = new Usuario()
             {
                 Id = 3,
-                Nome = "Teste",
-                Email = "Teste@gmail.com",
+                Nome = "Teste1",
+                Email = "Teste1@gmail.com",
                 Senha = "teste123",
-                Login = "Teste",
+                Login = "Teste1",
                 Admin = false,
                 Ativo = true,
                 DataDeInclusao = DateTime.Now,
@@ -193,6 +193,93 @@ namespace DEVinBricks.Teste
             Assert.That(usuarioDepoisDaAlteracao.DataDeAlteracao, Is.Not.Null);
         }
 
+        [Test]
+        public async Task EditarDadosComEmailExistente()
+        {
+
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new UsuarioRepository(context);
+            var service = new UsuarioService(repository);
+
+            var controller = new UsuarioController(repository, service);
+
+            var usuario = new Usuario()
+            {
+                Id = 5,
+                Nome = "Teste2",
+                Email = "Teste2@gmail.com",
+                Senha = "teste123",
+                Login = "Teste2",
+                Admin = false,
+                Ativo = true,
+                DataDeInclusao = DateTime.Now,
+                UsuarioInclusaoId = 1,
+                DataDeAlteracao = DateTime.Now,
+                UsuarioAlteracaoId = 1
+            };
+
+            await context.Usuarios.AddAsync(usuario);
+
+            await context.SaveChangesAsync();
+
+
+            var usuarioEditar = new EditarUsuarioDTO()
+            {
+                Id = 5,
+                Email = "Teste2@gmail.com"
+            };
+
+            var response = await controller.EditarDados(usuarioEditar);
+
+            var expected = (response as ObjectResult);
+
+            Assert.That(expected.Value.ToString(), Is.EqualTo("O email informado já existe."));
+            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
+        }
+
+        [Test]
+        public async Task EditarDadosComLoginExistente()
+        {
+
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new UsuarioRepository(context);
+            var service = new UsuarioService(repository);
+
+            var controller = new UsuarioController(repository, service);
+
+            var usuario = new Usuario()
+            {
+                Id = 6,
+                Nome = "Teste3",
+                Email = "Teste3@gmail.com",
+                Senha = "teste123",
+                Login = "Teste3",
+                Admin = false,
+                Ativo = true,
+                DataDeInclusao = DateTime.Now,
+                UsuarioInclusaoId = 1,
+                DataDeAlteracao = DateTime.Now,
+                UsuarioAlteracaoId = 1
+            };
+
+            await context.Usuarios.AddAsync(usuario);
+
+            await context.SaveChangesAsync();
+
+
+            var usuarioEditar = new EditarUsuarioDTO()
+            {
+                Id = 6,
+                Login = "Teste3"
+            };
+
+            var response = await controller.EditarDados(usuarioEditar);
+
+            var expected = (response as ObjectResult);
+
+            Assert.That(expected.Value.ToString(), Is.EqualTo("O login informado já existe."));
+            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
+        }
     }
 }
 
