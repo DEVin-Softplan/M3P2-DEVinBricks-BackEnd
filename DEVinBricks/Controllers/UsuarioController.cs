@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DEVinBricks.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using DEVinBricks.DTO;
+using System.Security.Claims;
 
 namespace DEVinBricks.Controllers
 {
@@ -101,6 +103,58 @@ namespace DEVinBricks.Controllers
                 else
                 {
                     return UnprocessableEntity(new { message = valido.ToString() });
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException); ;
+            }
+        }
+
+        /// <summary>
+        /// Altera dados do usuário
+        /// </summary>
+        /// <returns>Alteração de dados do usuário</returns>
+        /// <response code="200">Usuário alterado.</response>
+        /// <response code="401">Seu usuário não está autenticado no sistema.</response>
+        /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
+        /// <response code="422">Dados Inválidos.</response>
+        /// <response code="404">Nenhum usuário encontrado.</response>
+        /// <response code="400">Email ou Login já existente</response>
+        [HttpPatch("/usuario/editar")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "admin")]
+        public async Task<IActionResult> EditarDados([FromBody] EditarUsuarioDTO usuarioAlterado)
+        {
+            try
+            {
+                if(await _usuarioService.VerificarSeEmailExiste(usuarioAlterado.Email)) return BadRequest("O email informado já existe.");
+
+                if (await _usuarioService.VerificarSeLoginExiste(usuarioAlterado.Login)) return BadRequest("O login informado já existe.");
+
+                var usuario = await _usuarioService.VerificarDadosAlterados(usuarioAlterado);
+                if (usuario == null) return NotFound("Usuario não encontrado");
+
+                var validador = new ValidarUsuario();
+                var valido = validador.Validate(usuario);
+
+                if (valido.IsValid)
+                {
+                    int IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                    await _usuarioService.AlterarDadosUsuario(usuario, IdUsuarioAlteracao);
+
+                    return Ok("Usuario alterado com sucesso!");
+                }
+                else
+                {
+                    return UnprocessableEntity(valido.ToString());
                 }
             }
             catch (Exception ex)

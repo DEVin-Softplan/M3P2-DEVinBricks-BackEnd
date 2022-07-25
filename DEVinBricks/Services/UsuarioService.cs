@@ -4,6 +4,7 @@ using DEVinBricks.Services.Interfaces;
 using RabbitMQ.Client;
 using System.Text;
 using Newtonsoft.Json;
+using DEVinBricks.DTO;
 
 namespace DEVinBricks.Services
 {
@@ -25,7 +26,79 @@ namespace DEVinBricks.Services
 
         public async Task<bool> VerificarSeEmailExiste(string email)
         {
-            return await _usuarioRepository.VerificaSeEmailExiste(email);
+            return await _usuarioRepository.VerificarSeEmailExiste(email);
+        }
+
+        public async Task<bool> VerificarSeLoginExiste(string login)
+        {
+            return await _usuarioRepository.VerificarSeLoginExiste(login);
+        }
+
+        public async Task<Usuario?> VerificarDadosAlterados(EditarUsuarioDTO usuarioAlterado)
+        {
+            try
+            {
+                var usuario = _usuarioRepository.ObterUsuarioPorId(usuarioAlterado.Id);
+
+                if(usuario == null) return null;
+
+                if (verificaSeTemConteudo(usuarioAlterado.Nome))
+                {
+                    usuario.Nome = usuarioAlterado.Nome;
+                }
+
+                if (verificaSeTemConteudo(usuarioAlterado.Email))
+                {
+                    usuario.Email = usuarioAlterado.Email;
+                }
+
+                if (verificaSeTemConteudo(usuarioAlterado.Login))
+                {
+                    usuario.Login = usuarioAlterado.Login;
+                }
+
+                if (usuarioAlterado.Admin != null)
+                {
+                    usuario.Admin = (bool)usuarioAlterado.Admin;
+                }
+
+                if (usuarioAlterado.Ativo != null)
+                {
+                    usuario.Ativo = (bool)usuarioAlterado.Ativo;
+                }
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException); ;
+            }
+        }
+
+        public async Task AlterarDadosUsuario(Usuario usuarioAlterado, int idUsuarioAlteracao)
+        {
+            try
+            {
+                usuarioAlterado.DataDeAlteracao = DateTime.Now;
+                usuarioAlterado.UsuarioAlteracaoId = idUsuarioAlteracao;
+                usuarioAlterado.UsuarioAlteracao = _usuarioRepository.ObterUsuarioPorId(idUsuarioAlteracao);
+
+                await _usuarioRepository.AlterarDados(usuarioAlterado);
+
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException); ;
+            }
+        }
+
+        public bool verificaSeTemConteudo(string texto)
+        {
+            if (texto == null || texto == "" || texto == " ") return false;
+            return true;
         }
 
         public void EnviarEmailParaFila(Usuario usuario)

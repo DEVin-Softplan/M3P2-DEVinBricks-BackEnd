@@ -46,17 +46,19 @@ builder.Services.AddAuthentication(x =>
 		};
 	});
 
-// Interfaces dos Repositios e Serviços
+// Interfaces dos Repositios e Serviï¿½os
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<ICompradorRepository, CompradorRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
+builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
+builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
 
 // Context para o Server Connection
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 
-// Autorização Admin
+// Autorizaï¿½ï¿½o Admin
 builder.Services.AddAuthorization(options =>
 {
 	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "True"));

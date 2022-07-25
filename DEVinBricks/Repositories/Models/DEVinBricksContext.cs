@@ -41,8 +41,9 @@ namespace DEVinBricks.Repositories.Models
             modelBuilder.Entity<ValorFretePorEstadoModel>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Usuario>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Usuario>().HasIndex(prop => prop.Email).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(prop => prop.Login).IsUnique();
 
-            modelBuilder.Entity<Usuario>().HasData(UsuarioSeed.usuario);
+            modelBuilder.Entity<Usuario>().HasData(UsuarioSeed.Seed);
             modelBuilder.Entity<Estado>().HasData(EstadoSeed.Seed);
             modelBuilder.Entity<ValorFretePorEstadoModel>().HasData(ValorFretePorEstadoSeed.Seed);
         }
