@@ -18,12 +18,12 @@ namespace DEVinBricks.DTO
         public DateTime? DataDeAlteracao { get; set; }
         public int? UsuarioAlteracaoId { get; set; }
 
-        public static Frete ConverterParaEntidade(FreteDTO requisicao, int id = 0)
+        public static FreteModel ConverterParaEntidade(FreteDTO requisicao, int id = 0)
         {
             if (requisicao == null)
                 return null;
 
-            return new Frete()
+            return new FreteModel()
             {
                 Id = id,
                 Cep = requisicao.Cep,
