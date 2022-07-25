@@ -77,6 +77,21 @@ namespace DEVinBricks.Services
             }
         }
 
+        public async Task<bool> VerificarSeLoginExiste(string login)
+        {
+            try
+            {
+                var resultado = await _context.Usuarios.Where(x => x.Login == login)
+                    .AsNoTracking()
+                    .AnyAsync();
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException);
+            }
+        }
+
         public Usuario ObterUsuarioPorId(int id)
         {
             return _context.Usuarios.Find(id);

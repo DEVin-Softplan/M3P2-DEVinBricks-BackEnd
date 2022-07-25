@@ -1,4 +1,5 @@
 ﻿using DEVinBricks.Controllers;
+using DEVinBricks.DTO;
 using DEVinBricks.Repositories.Models;
 using DEVinBricks.Seeds;
 using DEVinBricks.Services;
@@ -115,6 +116,169 @@ namespace DEVinBricks.Teste
 
             Assert.That(expected.Value.ToString(), Is.EqualTo("Usuario não encontrado"));
             Assert.That(expected.StatusCode.ToString(), Is.EqualTo("404"));
+        }
+
+        [Test]
+        public async Task EditarDadosComIdInexistente()
+        {
+
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new UsuarioRepository(context);
+            var service = new UsuarioService(repository);
+
+            var controller = new UsuarioController(repository, service);
+
+            var usuario = new EditarUsuarioDTO()
+            {
+                Id = 4
+            };
+
+            var response = await controller.EditarDados(usuario);
+
+            var expected = (response as ObjectResult);
+
+            Assert.That(expected.Value.ToString(), Is.EqualTo("Usuario não encontrado"));
+            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("404"));
+        }
+
+        [Test]
+        public async Task EditarDados()
+        {
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new UsuarioRepository(context);
+            var service = new UsuarioService(repository);
+
+            var usuario = new Usuario()
+            {
+                Id = 3,
+                Nome = "Teste1",
+                Email = "Teste1@gmail.com",
+                Senha = "teste123",
+                Login = "Teste1",
+                Admin = false,
+                Ativo = true,
+                DataDeInclusao = DateTime.Now,
+                UsuarioInclusaoId = 1,
+                DataDeAlteracao = DateTime.Now,
+                UsuarioAlteracaoId = 1
+            };
+
+            await context.Usuarios.AddAsync(usuario);
+
+            await context.SaveChangesAsync();
+
+            var usuarioEditar = new EditarUsuarioDTO()
+            {
+                Id = 3,
+                Nome = "Alterado",
+                Email = "Alterado@gmail.com",
+                Login = "Alterado",
+                Admin = true,
+                Ativo = false
+            };
+
+            var usuarioAlterado = await service.VerificarDadosAlterados(usuarioEditar);
+
+            await service.AlterarDadosUsuario(usuarioAlterado,1);
+
+            Usuario usuarioDepoisDaAlteracao = await context.Usuarios.FindAsync(usuario.Id);
+
+            Assert.That(usuarioDepoisDaAlteracao.Nome, Is.EqualTo(usuarioEditar.Nome));
+            Assert.That(usuarioDepoisDaAlteracao.Email, Is.EqualTo(usuarioEditar.Email));
+            Assert.That(usuarioDepoisDaAlteracao.Login, Is.EqualTo(usuarioEditar.Login));
+            Assert.That(usuarioDepoisDaAlteracao.Admin, Is.EqualTo(usuarioEditar.Admin));
+            Assert.That(usuarioDepoisDaAlteracao.Ativo, Is.EqualTo(usuarioEditar.Ativo));
+            Assert.That(usuarioDepoisDaAlteracao.UsuarioAlteracao, Is.Not.Null);
+            Assert.That(usuarioDepoisDaAlteracao.UsuarioAlteracaoId, Is.Not.Null);
+            Assert.That(usuarioDepoisDaAlteracao.DataDeAlteracao, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task EditarDadosComEmailExistente()
+        {
+
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new UsuarioRepository(context);
+            var service = new UsuarioService(repository);
+
+            var controller = new UsuarioController(repository, service);
+
+            var usuario = new Usuario()
+            {
+                Id = 5,
+                Nome = "Teste2",
+                Email = "Teste2@gmail.com",
+                Senha = "teste123",
+                Login = "Teste2",
+                Admin = false,
+                Ativo = true,
+                DataDeInclusao = DateTime.Now,
+                UsuarioInclusaoId = 1,
+                DataDeAlteracao = DateTime.Now,
+                UsuarioAlteracaoId = 1
+            };
+
+            await context.Usuarios.AddAsync(usuario);
+
+            await context.SaveChangesAsync();
+
+
+            var usuarioEditar = new EditarUsuarioDTO()
+            {
+                Id = 5,
+                Email = "Teste2@gmail.com"
+            };
+
+            var response = await controller.EditarDados(usuarioEditar);
+
+            var expected = (response as ObjectResult);
+
+            Assert.That(expected.Value.ToString(), Is.EqualTo("O email informado já existe."));
+            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
+        }
+
+        [Test]
+        public async Task EditarDadosComLoginExistente()
+        {
+
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new UsuarioRepository(context);
+            var service = new UsuarioService(repository);
+
+            var controller = new UsuarioController(repository, service);
+
+            var usuario = new Usuario()
+            {
+                Id = 6,
+                Nome = "Teste3",
+                Email = "Teste3@gmail.com",
+                Senha = "teste123",
+                Login = "Teste3",
+                Admin = false,
+                Ativo = true,
+                DataDeInclusao = DateTime.Now,
+                UsuarioInclusaoId = 1,
+                DataDeAlteracao = DateTime.Now,
+                UsuarioAlteracaoId = 1
+            };
+
+            await context.Usuarios.AddAsync(usuario);
+
+            await context.SaveChangesAsync();
+
+
+            var usuarioEditar = new EditarUsuarioDTO()
+            {
+                Id = 6,
+                Login = "Teste3"
+            };
+
+            var response = await controller.EditarDados(usuarioEditar);
+
+            var expected = (response as ObjectResult);
+
+            Assert.That(expected.Value.ToString(), Is.EqualTo("O login informado já existe."));
+            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
         }
     }
 }

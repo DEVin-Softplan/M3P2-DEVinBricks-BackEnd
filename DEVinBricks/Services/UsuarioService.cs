@@ -29,6 +29,11 @@ namespace DEVinBricks.Services
             return await _usuarioRepository.VerificarSeEmailExiste(email);
         }
 
+        public async Task<bool> VerificarSeLoginExiste(string login)
+        {
+            return await _usuarioRepository.VerificarSeLoginExiste(login);
+        }
+
         public async Task<Usuario?> VerificarDadosAlterados(EditarUsuarioDTO usuarioAlterado)
         {
             try
@@ -44,11 +49,7 @@ namespace DEVinBricks.Services
 
                 if (verificaSeTemConteudo(usuarioAlterado.Email))
                 {
-                    var existeEmail = await VerificarSeEmailExiste(usuarioAlterado.Email);
-                    if (!existeEmail)
-                    {
-                        usuario.Email = usuarioAlterado.Email;
-                    }
+                    usuario.Email = usuarioAlterado.Email;
                 }
 
                 if (verificaSeTemConteudo(usuarioAlterado.Login))
@@ -67,6 +68,25 @@ namespace DEVinBricks.Services
                 }
 
                 return usuario;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException); ;
+            }
+        }
+
+        public async Task AlterarDadosUsuario(Usuario usuarioAlterado, int idUsuarioAlteracao)
+        {
+            try
+            {
+                usuarioAlterado.DataDeAlteracao = DateTime.Now;
+                usuarioAlterado.UsuarioAlteracaoId = idUsuarioAlteracao;
+                usuarioAlterado.UsuarioAlteracao = _usuarioRepository.ObterUsuarioPorId(idUsuarioAlteracao);
+
+                await _usuarioRepository.AlterarDados(usuarioAlterado);
+
+                return;
             }
             catch (Exception ex)
             {
