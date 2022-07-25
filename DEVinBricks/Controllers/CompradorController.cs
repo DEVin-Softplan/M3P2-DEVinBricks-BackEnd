@@ -32,5 +32,23 @@ namespace DEVinBricks.Controllers
             var resultado = await _service.CadastrarComprador(comprador);
             return Ok(new { message = "Comprador cadastrado com sucesso!", Id = resultado, NovoComprador = comprador });
         }
+
+        /// <summary>
+        /// Busca Comprador pelo Id
+        /// </summary>
+        /// <param name="id">Busca Id do Comprador.</param>
+        /// <returns>Dados do Comprador</returns>
+        /// <response code="200">Comprador encontrado.</response>
+        /// <response code="404">Comprador não encontrado.</response>
+        [HttpGet("/Comprador/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+    
+        public async Task<ActionResult<IEnumerable<Repositories.Models.Comprador>>> ObterCompradorPeloId(int id)
+        {
+            var comprador = _service.ObterPeloId(id);
+            if (comprador == null) return NotFound("Comprador não encontrado");
+            return Ok(comprador);
+        }
     }
 }
