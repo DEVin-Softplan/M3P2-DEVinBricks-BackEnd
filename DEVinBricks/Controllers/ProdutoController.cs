@@ -24,6 +24,7 @@ namespace DEVinBricks.Controllers
         {
             try
             {
+                
                 var response = _service.ObterProdutoPorId(id);
                 return Ok(response);
             }
