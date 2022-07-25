@@ -121,20 +121,25 @@ namespace DEVinBricks.Controllers
         /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
         /// <response code="422">Dados Inválidos.</response>
         /// <response code="404">Nenhum usuário encontrado.</response>
+        /// <response code="400">Email ou Login já existente</response>
         [HttpPatch("/usuario/editar")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Policy = "admin")]
         public async Task<IActionResult> EditarDados([FromBody] EditarUsuarioDTO usuarioAlterado)
         {
             try
             {
-                var usuario = await _usuarioService.VerificarDadosAlterados(usuarioAlterado);
+                if(await _usuarioService.VerificarSeEmailExiste(usuarioAlterado.Email)) return BadRequest("O email informado já existe.");
 
-                if (usuario == null) return BadRequest("Usuario não encontrado");
+                if (await _usuarioService.VerificarSeLoginExiste(usuarioAlterado.Login)) return BadRequest("O login informado já existe.");
+
+                var usuario = await _usuarioService.VerificarDadosAlterados(usuarioAlterado);
+                if (usuario == null) return NotFound("Usuario não encontrado");
 
                 var validador = new ValidarUsuario();
                 var valido = validador.Validate(usuario);
