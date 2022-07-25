@@ -34,9 +34,9 @@ namespace DEVinBricks.Seeds
                 DataDeEntrega = DateTime.Now,
                 ValorFrete = 53M,
                 DataDeInclusao = DateTime.Now,
-                UsuarioInclusaoId = 2,
+                UsuarioInclusaoId = 1,
                 DataDeAlteracao = DateTime.Now,
-                UsuarioAlteracaoId = 2
+                UsuarioAlteracaoId = 1
             },
             new Frete
             {
@@ -50,9 +50,9 @@ namespace DEVinBricks.Seeds
                 DataDeEntrega = DateTime.Now,
                 ValorFrete = 32M,
                 DataDeInclusao = DateTime.Now,
-                UsuarioInclusaoId = 3,
+                UsuarioInclusaoId = 1,
                 DataDeAlteracao = DateTime.Now,
-                UsuarioAlteracaoId = 3
+                UsuarioAlteracaoId = 1
             },
         };
     }
