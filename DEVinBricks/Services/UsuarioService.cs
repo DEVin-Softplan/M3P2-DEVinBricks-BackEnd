@@ -75,6 +75,25 @@ namespace DEVinBricks.Services
             }
         }
 
+        public async Task AlterarDadosUsuario(Usuario usuarioAlterado, int idUsuarioAlteracao)
+        {
+            try
+            {
+                usuarioAlterado.DataDeAlteracao = DateTime.Now;
+                usuarioAlterado.UsuarioAlteracaoId = idUsuarioAlteracao;
+                usuarioAlterado.UsuarioAlteracao = _usuarioRepository.ObterUsuarioPorId(idUsuarioAlteracao);
+
+                await _usuarioRepository.AlterarDados(usuarioAlterado);
+
+                return;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"mensagem,: {ex.Message}", ex.InnerException); ;
+            }
+        }
+
         public bool verificaSeTemConteudo(string texto)
         {
             if (texto == null || texto == "" || texto == " ") return false;

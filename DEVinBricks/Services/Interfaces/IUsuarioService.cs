@@ -10,5 +10,6 @@ namespace DEVinBricks.Services.Interfaces
         void EnviarEmailParaFila(Usuario usuario);
         Task<Usuario> VerificarDadosAlterados(EditarUsuarioDTO usuarioAlterado);
         bool verificaSeTemConteudo(string texto);
+        Task AlterarDadosUsuario(Usuario usuarioAlterado, int idUsuarioAlteracao);
     }
 }
