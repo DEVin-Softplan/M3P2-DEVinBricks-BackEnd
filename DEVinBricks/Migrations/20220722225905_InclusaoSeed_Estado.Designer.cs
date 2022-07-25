@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    partial class DEVinBricksContextModelSnapshot : ModelSnapshot
+    [Migration("20220722225905_InclusaoSeed_Estado")]
+    partial class InclusaoSeed_Estado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +73,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Compradores", (string)null);
+                    b.ToTable("Compradores");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Estado", b =>
@@ -92,7 +94,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estados", (string)null);
+                    b.ToTable("Estados");
 
                     b.HasData(
                         new
@@ -286,7 +288,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Fretes", (string)null);
+                    b.ToTable("Fretes");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Produto", b =>
@@ -340,7 +342,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Produtos", (string)null);
+                    b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Usuario", b =>
@@ -365,7 +367,7 @@ namespace DEVinBricks.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -387,14 +389,11 @@ namespace DEVinBricks.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("UsuarioAlteracaoId");
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Usuarios");
 
                     b.HasData(
                         new
@@ -402,7 +401,7 @@ namespace DEVinBricks.Migrations
                             Id = 1,
                             Admin = true,
                             Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 914, DateTimeKind.Local).AddTicks(8578),
+                            DataDeInclusao = new DateTime(2022, 7, 22, 19, 59, 4, 458, DateTimeKind.Local).AddTicks(6194),
                             Email = "admin@gmail.com",
                             Login = "admin",
                             Nome = "Admin",
@@ -446,17 +445,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("ValorFreteEstados", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 917, DateTimeKind.Local).AddTicks(4028),
-                            EstadoId = 42,
-                            UsuarioInclusaoId = 1,
-                            Valor = 100m
-                        });
+                    b.ToTable("ValorFreteEstados");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Venda", b =>
@@ -486,7 +475,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Vendas", (string)null);
+                    b.ToTable("Vendas");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.VendasProduto", b =>
@@ -516,7 +505,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("VendasProdutos", (string)null);
+                    b.ToTable("VendasProdutos");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Comprador", b =>

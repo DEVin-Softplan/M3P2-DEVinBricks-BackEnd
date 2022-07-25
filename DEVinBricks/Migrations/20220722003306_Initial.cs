@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DEVinBricks.Migrations
 {
-    public partial class InitalCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +14,7 @@ namespace DEVinBricks.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UF = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
@@ -31,7 +29,7 @@ namespace DEVinBricks.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Admin = table.Column<bool>(type: "bit", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
@@ -124,11 +122,9 @@ namespace DEVinBricks.Migrations
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UrlDaImagem = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    IdUsuarioInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdUsuarioAlteracao = table.Column<int>(type: "int", nullable: false),
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
+                    DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UsuarioAlteracaoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -233,48 +229,9 @@ namespace DEVinBricks.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Estados",
-                columns: new[] { "Id", "Nome", "UF" },
-                values: new object[,]
-                {
-                    { 11, "Rondônia", "RO" },
-                    { 12, "Acre", "AC" },
-                    { 13, "Amazonas", "AM" },
-                    { 14, "Roraima", "RR" },
-                    { 15, "Pará", "PA" },
-                    { 16, "Amapá", "AP" },
-                    { 17, "Tocantins", "TO" },
-                    { 21, "Maranhão", "MA" },
-                    { 22, "Piauí", "PI" },
-                    { 23, "Ceará", "CE" },
-                    { 24, "Rio Grande do Norte", "RN" },
-                    { 25, "Paraíba", "PB" },
-                    { 26, "Pernanmbuco", "PE" },
-                    { 27, "Alagoas", "AL" },
-                    { 28, "Sergipe", "SE" },
-                    { 29, "Bahia", "BA" },
-                    { 31, "Minas Gerais", "MG" },
-                    { 32, "Espírito Santo", "ES" },
-                    { 33, "Rio de Janeiro", "RJ" },
-                    { 35, "São Paulo", "SP" },
-                    { 41, "Paraná", "PR" },
-                    { 42, "Santa Catarina", "SC" },
-                    { 43, "Rio Grande do Sul", "RS" },
-                    { 50, "Mato Grosso do Sul", "MS" },
-                    { 51, "Mato Grosso", "MT" },
-                    { 52, "Goiás", "GO" },
-                    { 53, "Distrito Federal", "DF" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Admin", "Ativo", "DataDeAlteracao", "DataDeInclusao", "Email", "Login", "Nome", "Senha", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
-                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 24, 17, 17, 1, 481, DateTimeKind.Local).AddTicks(8728), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
-
-            migrationBuilder.InsertData(
-                table: "ValorFreteEstados",
-                columns: new[] { "Id", "DataDeAlteracao", "DataDeInclusao", "EstadoId", "UsuarioAlteracaoId", "UsuarioInclusaoId", "Valor" },
-                values: new object[] { 1, null, new DateTime(2022, 7, 24, 17, 17, 1, 486, DateTimeKind.Local).AddTicks(7500), 42, null, 1, 100m });
+                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 21, 21, 33, 5, 633, DateTimeKind.Local).AddTicks(2112), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Compradores_UsuarioAlteracaoId",
@@ -284,7 +241,8 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Compradores_UsuarioInclusaoId",
                 table: "Compradores",
-                column: "UsuarioInclusaoId");
+                column: "UsuarioInclusaoId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Fretes_UsuarioAlteracaoId",
@@ -294,7 +252,8 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Fretes_UsuarioInclusaoId",
                 table: "Fretes",
-                column: "UsuarioInclusaoId");
+                column: "UsuarioInclusaoId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_UsuarioAlteracaoId",
@@ -304,12 +263,7 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Produtos_UsuarioInclusaoId",
                 table: "Produtos",
-                column: "UsuarioInclusaoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_Email",
-                table: "Usuarios",
-                column: "Email",
+                column: "UsuarioInclusaoId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -335,7 +289,8 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ValorFreteEstados_UsuarioInclusaoId",
                 table: "ValorFreteEstados",
-                column: "UsuarioInclusaoId");
+                column: "UsuarioInclusaoId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vendas_UsuarioAlteracaoId",
@@ -345,7 +300,8 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Vendas_UsuarioInclusaoId",
                 table: "Vendas",
-                column: "UsuarioInclusaoId");
+                column: "UsuarioInclusaoId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_VendasProdutos_UsuarioAlteracaoId",
@@ -355,7 +311,8 @@ namespace DEVinBricks.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_VendasProdutos_UsuarioInclusaoId",
                 table: "VendasProdutos",
-                column: "UsuarioInclusaoId");
+                column: "UsuarioInclusaoId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
