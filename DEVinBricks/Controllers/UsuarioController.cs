@@ -141,12 +141,9 @@ namespace DEVinBricks.Controllers
 
                 if (valido.IsValid)
                 {
-                    var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                    usuario.DataDeAlteracao = DateTime.Now;
-                    usuario.UsuarioAlteracaoId = IdUsuarioAlteracao;
-                    usuario.UsuarioAlteracao = _usuarioRepository.ObterUsuarioPorId(IdUsuarioAlteracao);
+                    int IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-                    await _usuarioRepository.AlterarDados(usuario);
+                    await _usuarioService.AlterarDadosUsuario(usuario, IdUsuarioAlteracao);
 
                     return Ok("Usuario alterado com sucesso!");
                 }

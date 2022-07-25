@@ -179,7 +179,7 @@ namespace DEVinBricks.Teste
 
             var usuarioAlterado = await service.VerificarDadosAlterados(usuarioEditar);
 
-            await repository.AlterarDados(usuarioAlterado);
+            await service.AlterarDadosUsuario(usuarioAlterado,1);
 
             Usuario usuarioDepoisDaAlteracao = await context.Usuarios.FindAsync(usuario.Id);
 
@@ -188,6 +188,9 @@ namespace DEVinBricks.Teste
             Assert.That(usuarioDepoisDaAlteracao.Login, Is.EqualTo(usuarioEditar.Login));
             Assert.That(usuarioDepoisDaAlteracao.Admin, Is.EqualTo(usuarioEditar.Admin));
             Assert.That(usuarioDepoisDaAlteracao.Ativo, Is.EqualTo(usuarioEditar.Ativo));
+            Assert.That(usuarioDepoisDaAlteracao.UsuarioAlteracao, Is.Not.Null);
+            Assert.That(usuarioDepoisDaAlteracao.UsuarioAlteracaoId, Is.Not.Null);
+            Assert.That(usuarioDepoisDaAlteracao.DataDeAlteracao, Is.Not.Null);
         }
 
     }
