@@ -45,6 +45,7 @@ namespace DEVinBricks.Repositories.Models
             modelBuilder.Entity<Usuario>().HasData(UsuarioSeed.Seed);
             modelBuilder.Entity<Estado>().HasData(EstadoSeed.Seed);
             modelBuilder.Entity<ValorFretePorEstadoModel>().HasData(ValorFretePorEstadoSeed.Seed);
+            modelBuilder.Entity<Frete>().HasData(FreteSeed.Seed);
         }
     }
 }
