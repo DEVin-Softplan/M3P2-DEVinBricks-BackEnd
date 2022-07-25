@@ -71,7 +71,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Compradores");
+                    b.ToTable("Compradores", (string)null);
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Estado", b =>
@@ -92,7 +92,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estados");
+                    b.ToTable("Estados", (string)null);
 
                     b.HasData(
                         new
@@ -309,7 +309,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Fretes");
+                    b.ToTable("Fretes", (string)null);
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Produto", b =>
@@ -363,7 +363,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Produtos");
+                    b.ToTable("Produtos", (string)null);
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Usuario", b =>
@@ -417,7 +417,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
 
                     b.HasData(
                         new
@@ -469,7 +469,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("ValorFreteEstados");
+                    b.ToTable("ValorFreteEstados", (string)null);
 
                     b.HasData(
                         new
@@ -509,7 +509,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("Vendas");
+                    b.ToTable("Vendas", (string)null);
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.VendasProduto", b =>
@@ -539,7 +539,7 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId")
                         .IsUnique();
 
-                    b.ToTable("VendasProdutos");
+                    b.ToTable("VendasProdutos", (string)null);
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Comprador", b =>
