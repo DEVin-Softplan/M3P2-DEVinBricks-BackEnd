@@ -38,6 +38,7 @@ namespace DEVinBricks.Repositories.Models
 
             var freteEntityBuilder = modelBuilder.Entity<Frete>();
             freteEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            freteEntityBuilder.HasData(FreteSeed.Seed);
 
             var produtoEntityBuilder = modelBuilder.Entity<Produto>();
             produtoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
@@ -60,9 +61,6 @@ namespace DEVinBricks.Repositories.Models
 
             var estadoEntityBuilder = modelBuilder.Entity<Estado>();
             estadoEntityBuilder.HasData(EstadoSeed.Seed);
-            
-            var freteEntityBuilder = modelBuilder.Entity<Frete>();
-            freteEntityBuilder.HasData(FreteSeed.Seed);
         }
     }
 }
