@@ -52,6 +52,8 @@ namespace DEVinBricks.Controllers
             if (comprador == null) return NotFound("Comprador não encontrado");
             return Ok(comprador);
         }
+
+        /// <summary>
         /// Retorna a lista de Comprador(es) conforme os parâmetros passados
         /// </summary>
         /// <returns>Lista de Comprador(es) conforme os parâmetros passados</returns>

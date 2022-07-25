@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DEVinBricks.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +32,7 @@ namespace DEVinBricks.Migrations
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Login = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Admin = table.Column<bool>(type: "bit", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -275,22 +275,22 @@ namespace DEVinBricks.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Admin", "Ativo", "DataDeAlteracao", "DataDeInclusao", "Email", "Login", "Nome", "Senha", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
-                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 25, 17, 9, 58, 974, DateTimeKind.Local).AddTicks(7088), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
+                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 25, 18, 59, 41, 316, DateTimeKind.Local).AddTicks(1687), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Fretes",
                 columns: new[] { "Id", "Bairro", "Cep", "Cidade", "Complemento", "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao", "EstadoId", "Logadouro", "UsuarioAlteracaoId", "UsuarioInclusaoId", "ValorFrete" },
                 values: new object[,]
                 {
-                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(958), new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(504), new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(957), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
-                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1376), new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1373), new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1375), 12, "Rua Dino, 456", 1, 1, 53m },
-                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1379), new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1378), new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1378), 13, "Rua do Acai, 789", 1, 1, 32m }
+                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(6176), new DateTime(2022, 7, 25, 18, 59, 41, 303, DateTimeKind.Local).AddTicks(5979), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(5566), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
+                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7080), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084), 12, "Rua Dino, 456", 1, 1, 53m },
+                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7089), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088), 13, "Rua do Acai, 789", 1, 1, 32m }
                 });
 
             migrationBuilder.InsertData(
                 table: "ValorFreteEstados",
                 columns: new[] { "Id", "DataDeAlteracao", "DataDeInclusao", "EstadoId", "UsuarioAlteracaoId", "UsuarioInclusaoId", "Valor" },
-                values: new object[] { 1, null, new DateTime(2022, 7, 25, 17, 9, 58, 977, DateTimeKind.Local).AddTicks(6272), 42, null, 1, 100m });
+                values: new object[] { 1, null, new DateTime(2022, 7, 25, 18, 59, 41, 307, DateTimeKind.Local).AddTicks(7232), 42, null, 1, 100m });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Compradores_UsuarioAlteracaoId",
@@ -326,6 +326,12 @@ namespace DEVinBricks.Migrations
                 name: "IX_Usuarios_Email",
                 table: "Usuarios",
                 column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_Login",
+                table: "Usuarios",
+                column: "Login",
                 unique: true);
 
             migrationBuilder.CreateIndex(

@@ -33,20 +33,34 @@ namespace DEVinBricks.Repositories.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Comprador>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Frete>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Produto>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Venda>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<VendasProduto>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<ValorFretePorEstadoModel>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Usuario>().HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Usuario>().HasIndex(prop => prop.Email).IsUnique();
-            modelBuilder.Entity<Usuario>().HasIndex(prop => prop.Login).IsUnique();
+            var compradorEntityBuilder = modelBuilder.Entity<Comprador>();
+            compradorEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Usuario>().HasData(UsuarioSeed.Seed);
-            modelBuilder.Entity<Estado>().HasData(EstadoSeed.Seed);
-            modelBuilder.Entity<ValorFretePorEstadoModel>().HasData(ValorFretePorEstadoSeed.Seed);
-            modelBuilder.Entity<Frete>().HasData(FreteSeed.Seed);
+            var freteEntityBuilder = modelBuilder.Entity<Frete>();
+            freteEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            freteEntityBuilder.HasData(FreteSeed.Seed);
+
+            var produtoEntityBuilder = modelBuilder.Entity<Produto>();
+            produtoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            var vendaEntityBuilder = modelBuilder.Entity<Venda>();
+            vendaEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            var vendasProdutoEntityBuilder = modelBuilder.Entity<VendasProduto>();
+            vendasProdutoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            var valorFreteEstadosModelEntityBuilder = modelBuilder.Entity<ValorFretePorEstadoModel>();
+            valorFreteEstadosModelEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            valorFreteEstadosModelEntityBuilder.HasData(ValorFretePorEstadoSeed.Seed);
+
+            var usuarioEntityBuilder = modelBuilder.Entity<Usuario>();
+            usuarioEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            usuarioEntityBuilder.HasIndex(prop => prop.Email).IsUnique();
+            usuarioEntityBuilder.HasIndex(prop => prop.Login).IsUnique();
+            usuarioEntityBuilder.HasData(UsuarioSeed.Seed);
+
+            var estadoEntityBuilder = modelBuilder.Entity<Estado>();
+            estadoEntityBuilder.HasData(EstadoSeed.Seed);
         }
     }
 }
