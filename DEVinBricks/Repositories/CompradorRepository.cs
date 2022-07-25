@@ -39,5 +39,9 @@ namespace DEVinBricks.Repositories
         {
             return _context.Compradores.Any(x => x.Email == email);
         }
+        public Comprador ObterPeloId(int id)
+        {
+            return _context.Compradores.FirstOrDefault(x => x.Id == id);
+        }
     }
 }

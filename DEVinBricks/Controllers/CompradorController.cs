@@ -36,6 +36,22 @@ namespace DEVinBricks.Controllers
         }
 
         /// <summary>
+        /// Busca Comprador pelo Id
+        /// </summary>
+        /// <param name="id">Busca Id do Comprador.</param>
+        /// <returns>Dados do Comprador</returns>
+        /// <response code="200">Comprador encontrado.</response>
+        /// <response code="404">Comprador não encontrado.</response>
+        [HttpGet("/Comprador/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+    
+        public async Task<ActionResult<IEnumerable<Repositories.Models.Comprador>>> ObterCompradorPeloId(int id)
+        {
+            var comprador = _service.ObterPeloId(id);
+            if (comprador == null) return NotFound("Comprador não encontrado");
+            return Ok(comprador);
+        }
         /// Retorna a lista de Comprador(es) conforme os parâmetros passados
         /// </summary>
         /// <returns>Lista de Comprador(es) conforme os parâmetros passados</returns>

@@ -9,5 +9,7 @@ namespace DEVinBricks.Repositories
         IEnumerable<Comprador> ListarGetComprador(CompradorGetDTO comprador);
         bool VerificaSeExisteCPFComprador(string cpf);
         bool VerificaSeExisteEmailComprador(string email);
+        public Comprador ObterPeloId(int id);
+
     }
 }
