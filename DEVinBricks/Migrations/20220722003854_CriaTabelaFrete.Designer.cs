@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    partial class DEVinBricksContextModelSnapshot : ModelSnapshot
+    [Migration("20220722003854_CriaTabelaFrete")]
+    partial class CriaTabelaFrete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,181 +84,9 @@ namespace DEVinBricks.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UF")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Estados");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 11,
-                            Nome = "Rondônia",
-                            UF = "RO"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Nome = "Acre",
-                            UF = "AC"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Nome = "Amazonas",
-                            UF = "AM"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Nome = "Roraima",
-                            UF = "RR"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Nome = "Pará",
-                            UF = "PA"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Nome = "Amapá",
-                            UF = "AP"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Nome = "Tocantins",
-                            UF = "TO"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Nome = "Maranhão",
-                            UF = "MA"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Nome = "Piauí",
-                            UF = "PI"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Nome = "Ceará",
-                            UF = "CE"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Nome = "Rio Grande do Norte",
-                            UF = "RN"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Nome = "Paraíba",
-                            UF = "PB"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Nome = "Pernanmbuco",
-                            UF = "PE"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Nome = "Alagoas",
-                            UF = "AL"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Nome = "Sergipe",
-                            UF = "SE"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Nome = "Bahia",
-                            UF = "BA"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Nome = "Minas Gerais",
-                            UF = "MG"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Nome = "Espírito Santo",
-                            UF = "ES"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Nome = "Rio de Janeiro",
-                            UF = "RJ"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Nome = "São Paulo",
-                            UF = "SP"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            Nome = "Paraná",
-                            UF = "PR"
-                        },
-                        new
-                        {
-                            Id = 42,
-                            Nome = "Santa Catarina",
-                            UF = "SC"
-                        },
-                        new
-                        {
-                            Id = 43,
-                            Nome = "Rio Grande do Sul",
-                            UF = "RS"
-                        },
-                        new
-                        {
-                            Id = 50,
-                            Nome = "Mato Grosso do Sul",
-                            UF = "MS"
-                        },
-                        new
-                        {
-                            Id = 51,
-                            Nome = "Mato Grosso",
-                            UF = "MT"
-                        },
-                        new
-                        {
-                            Id = 52,
-                            Nome = "Goiás",
-                            UF = "GO"
-                        },
-                        new
-                        {
-                            Id = 53,
-                            Nome = "Distrito Federal",
-                            UF = "DF"
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Frete", b =>
@@ -388,7 +218,7 @@ namespace DEVinBricks.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .IsRequired()
@@ -410,28 +240,12 @@ namespace DEVinBricks.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("Usuarios");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Admin = true,
-                            Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 914, DateTimeKind.Local).AddTicks(8578),
-                            Email = "admin@gmail.com",
-                            Login = "admin",
-                            Nome = "Admin",
-                            Senha = "admin123",
-                            UsuarioInclusaoId = 1
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.ValorFretePorEstadoModel", b =>
@@ -470,16 +284,6 @@ namespace DEVinBricks.Migrations
                         .IsUnique();
 
                     b.ToTable("ValorFreteEstados");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 24, 10, 51, 9, 917, DateTimeKind.Local).AddTicks(4028),
-                            EstadoId = 42,
-                            UsuarioInclusaoId = 1,
-                            Valor = 100m
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Venda", b =>
@@ -600,8 +404,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioAlteracaoId");
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
