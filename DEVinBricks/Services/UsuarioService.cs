@@ -29,6 +29,11 @@ namespace DEVinBricks.Services
             return await _usuarioRepository.VerificarSeEmailExiste(email);
         }
 
+        public async Task<bool> VerificarSeLoginExiste(string login)
+        {
+            return await _usuarioRepository.VerificarSeLoginExiste(login);
+        }
+
         public async Task<Usuario?> VerificarDadosAlterados(EditarUsuarioDTO usuarioAlterado)
         {
             try
@@ -44,11 +49,7 @@ namespace DEVinBricks.Services
 
                 if (verificaSeTemConteudo(usuarioAlterado.Email))
                 {
-                    var existeEmail = await VerificarSeEmailExiste(usuarioAlterado.Email);
-                    if (!existeEmail)
-                    {
-                        usuario.Email = usuarioAlterado.Email;
-                    }
+                    usuario.Email = usuarioAlterado.Email;
                 }
 
                 if (verificaSeTemConteudo(usuarioAlterado.Login))

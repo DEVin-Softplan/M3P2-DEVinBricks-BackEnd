@@ -11,5 +11,6 @@ namespace DEVinBricks.Services.Interfaces
         Task<Usuario> VerificarDadosAlterados(EditarUsuarioDTO usuarioAlterado);
         bool verificaSeTemConteudo(string texto);
         Task AlterarDadosUsuario(Usuario usuarioAlterado, int idUsuarioAlteracao);
+        Task<bool> VerificarSeLoginExiste(string login);
     }
 }
