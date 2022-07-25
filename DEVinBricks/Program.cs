@@ -25,11 +25,7 @@ builder.Services.AddSwaggerGen(opt =>
 	opt.IncludeXmlComments(xmlPath);
 });
 
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<ICompradorRepository, CompradorRepository>();
-
-
+// Token Authentication
 var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
 builder.Services.AddAuthentication(x =>
@@ -50,15 +46,23 @@ builder.Services.AddAuthentication(x =>
 		};
 	});
 
+// Interfaces dos Repositios e Serviços
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ICompradorRepository, CompradorRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
+
+// Context para o Server Connection
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 
+// Autorização Admin
 builder.Services.AddAuthorization(options =>
 {
 	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "True"));
 });
 
+// Ajuste de CORS
 builder.Services.AddCors(options =>
 {
 	options.AddDefaultPolicy(builder =>
