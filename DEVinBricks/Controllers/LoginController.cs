@@ -39,7 +39,7 @@ namespace DEVinBricks.Controllers
 
             var token = TokenService.GerarToken(usuario);
 
-            return Ok($"Bem-vindo(a) {usuario.Nome} ao sistema da DEVinBricks!. Segue seu token: \n\n" + token);
+            return Ok(token);
         }
     }
 }
