@@ -49,7 +49,7 @@ namespace DEVinBricks.Controllers
             var resultado = _service.ListarGetComprador(comprador);
             if (resultado.Count() == 0)
                 return NotFound("Nenhum resultado encontrado com os parâmetros passados.");
-            return Ok(resultado);
+            return Ok(new { Pagina = pagina, TamanhoPagina = tamanhopagina, Resultados = resultado });
         }
     }
 }
