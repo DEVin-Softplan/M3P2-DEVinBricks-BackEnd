@@ -12,7 +12,7 @@ namespace DEVinBricks.DTO
         public string CPF { get; set; }
         public bool Ativo { get; set; }
 
-        public static Comprador ConverterParaEntidade(CompradorPostDTO requisicao, int id = 0)
+        public static Comprador ConverterParaEntidadeComprador(CompradorPostDTO requisicao, int id = 0)
         {
             if (requisicao == null)
                 return null;
@@ -35,10 +35,10 @@ namespace DEVinBricks.DTO
     {
         public string? Nome { get; set; }
         public string? CPF { get; set; }
-        public int? Pagina { get; set; }
-        public int? TamanhoPagina { get; set; }
+        public int Pagina { get; set; }
+        public int TamanhoPagina { get; set; }
 
-        public static CompradorGetDTO ConverterParaEntidadeCompradorGetDTO(string? nome, string? cpf, int? pagina, int? tamanhopagina)
+        public static CompradorGetDTO ConverterParaEntidadeCompradorGetDTO(string? nome, string? cpf, int pagina, int tamanhopagina)
         {
             return new CompradorGetDTO()
             {

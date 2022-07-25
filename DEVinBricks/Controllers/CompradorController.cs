@@ -39,12 +39,16 @@ namespace DEVinBricks.Controllers
         /// </summary>
         /// <returns>Lista de Comprador(es) conforme os parâmetros passados</returns>
         /// <response code="200">Lista retornada com sucesso.</response>
+        /// <response code="404">Nenhum resultado encontrado.</response>
         [HttpGet(Name = "GetComprador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<Comprador> GetComprador(string? nome, string? cpf, int? pagina, int? tamanhopagina)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Comprador> GetComprador(string? nome, string? cpf, int pagina = 0, int tamanhopagina = 10)
         {
             CompradorGetDTO comprador = CompradorGetDTO.ConverterParaEntidadeCompradorGetDTO(nome, cpf, pagina, tamanhopagina);
             var resultado = _service.ListarGetComprador(comprador);
+            if (resultado.Count() == 0)
+                return NotFound("Nenhum resultado encontrado com os parâmetros passados.");
             return Ok(resultado);
         }
     }
