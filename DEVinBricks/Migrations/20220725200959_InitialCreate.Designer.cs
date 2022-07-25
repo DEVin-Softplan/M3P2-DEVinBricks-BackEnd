@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    partial class DEVinBricksContextModelSnapshot : ModelSnapshot
+    [Migration("20220725200959_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +72,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("Compradores", (string)null);
+                    b.ToTable("Compradores");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Estado", b =>
@@ -91,7 +93,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estados", (string)null);
+                    b.ToTable("Estados");
 
                     b.HasData(
                         new
@@ -313,7 +315,6 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-
                     b.ToTable("Fretes");
 
                     b.HasData(
@@ -411,7 +412,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("Produtos", (string)null);
+                    b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Usuario", b =>
@@ -465,7 +466,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Usuarios");
 
                     b.HasData(
                         new
@@ -516,7 +517,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("ValorFreteEstados", (string)null);
+                    b.ToTable("ValorFreteEstados");
 
                     b.HasData(
                         new
@@ -555,7 +556,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("Vendas", (string)null);
+                    b.ToTable("Vendas");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.VendasProduto", b =>
@@ -584,7 +585,7 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioInclusaoId");
 
-                    b.ToTable("VendasProdutos", (string)null);
+                    b.ToTable("VendasProdutos");
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Comprador", b =>
