@@ -60,6 +60,9 @@ namespace DEVinBricks.Repositories.Models
 
             var estadoEntityBuilder = modelBuilder.Entity<Estado>();
             estadoEntityBuilder.HasData(EstadoSeed.Seed);
+            
+            var freteEntityBuilder = modelBuilder.Entity<Frete>();
+            freteEntityBuilder.HasData(FreteSeed.Seed);
         }
     }
 }

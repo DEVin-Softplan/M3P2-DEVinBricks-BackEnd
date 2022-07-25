@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    partial class DEVinBricksContextModelSnapshot : ModelSnapshot
+    [Migration("20220725152815_AlteraTabelaFrete")]
+    partial class AlteraTabelaFrete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,9 +325,9 @@ namespace DEVinBricks.Migrations
                             Cep = "0123456-789",
                             Cidade = "Porto Velho",
                             Complemento = "Casa 98",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(958),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(504),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(957),
+                            DataDeAlteracao = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8391),
+                            DataDeEntrega = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8001),
+                            DataDeInclusao = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8389),
                             EstadoId = 11,
                             Logadouro = "Rua Vasco da Gama, 123",
                             UsuarioAlteracaoId = 1,
@@ -339,13 +341,13 @@ namespace DEVinBricks.Migrations
                             Cep = "345631-127",
                             Cidade = "Parque Jurassico",
                             Complemento = "Casa 47",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1376),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1373),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1375),
+                            DataDeAlteracao = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8861),
+                            DataDeEntrega = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8858),
+                            DataDeInclusao = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8860),
                             EstadoId = 12,
                             Logadouro = "Rua Dino, 456",
-                            UsuarioAlteracaoId = 1,
-                            UsuarioInclusaoId = 1,
+                            UsuarioAlteracaoId = 2,
+                            UsuarioInclusaoId = 2,
                             ValorFrete = 53m
                         },
                         new
@@ -355,13 +357,13 @@ namespace DEVinBricks.Migrations
                             Cep = "999999-888",
                             Cidade = "Manaus",
                             Complemento = "Casa 12",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1379),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1378),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 17, 9, 58, 978, DateTimeKind.Local).AddTicks(1378),
+                            DataDeAlteracao = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8865),
+                            DataDeEntrega = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8863),
+                            DataDeInclusao = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(8864),
                             EstadoId = 13,
                             Logadouro = "Rua do Acai, 789",
-                            UsuarioAlteracaoId = 1,
-                            UsuarioInclusaoId = 1,
+                            UsuarioAlteracaoId = 3,
+                            UsuarioInclusaoId = 3,
                             ValorFrete = 32m
                         });
                 });
@@ -377,7 +379,7 @@ namespace DEVinBricks.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("DataDeAlteracao")
+                    b.Property<DateTime>("DataDeAlteracao")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataDeInclusao")
@@ -386,6 +388,12 @@ namespace DEVinBricks.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdUsuarioAlteracao")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("IdUsuarioInclusao")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -439,7 +447,7 @@ namespace DEVinBricks.Migrations
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -460,9 +468,6 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.HasIndex("Login")
-                        .IsUnique();
-
                     b.HasIndex("UsuarioAlteracaoId");
 
                     b.HasIndex("UsuarioInclusaoId");
@@ -475,7 +480,7 @@ namespace DEVinBricks.Migrations
                             Id = 1,
                             Admin = true,
                             Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 25, 17, 9, 58, 974, DateTimeKind.Local).AddTicks(7088),
+                            DataDeInclusao = new DateTime(2022, 7, 25, 12, 28, 14, 473, DateTimeKind.Local).AddTicks(9492),
                             Email = "admin@gmail.com",
                             Login = "admin",
                             Nome = "Admin",
@@ -524,7 +529,7 @@ namespace DEVinBricks.Migrations
                         new
                         {
                             Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 25, 17, 9, 58, 977, DateTimeKind.Local).AddTicks(6272),
+                            DataDeInclusao = new DateTime(2022, 7, 25, 12, 28, 14, 477, DateTimeKind.Local).AddTicks(2579),
                             EstadoId = 42,
                             UsuarioInclusaoId = 1,
                             Valor = 100m
