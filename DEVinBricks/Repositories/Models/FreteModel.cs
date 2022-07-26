@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DEVinBricks.Repositories.Models
 {
-    public partial class Frete : BaseEntity
+    public partial class FreteModel : BaseEntity
     {
         public string Cep { get; set; }
         public int EstadoId { get; set; }

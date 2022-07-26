@@ -4,9 +4,9 @@ namespace DEVinBricks.Seeds
 {
     public class FreteSeed
     {
-        public static List<Frete> Seed { get; set; } = new List<Frete>()
+        public static List<FreteModel> Seed { get; set; } = new List<FreteModel>()
         {
-            new Frete 
+            new FreteModel 
             {
                 Id = 1,
                 Cep = "0123456-789",
@@ -22,7 +22,7 @@ namespace DEVinBricks.Seeds
                 DataDeAlteracao = DateTime.Now,
                 UsuarioAlteracaoId = 1
             },
-            new Frete
+            new FreteModel
             {
                 Id = 2,
                 Cep = "345631-127",
@@ -38,7 +38,7 @@ namespace DEVinBricks.Seeds
                 DataDeAlteracao = DateTime.Now,
                 UsuarioAlteracaoId = 1
             },
-            new Frete
+            new FreteModel
             {
                 Id = 3,
                 Cep = "999999-888",

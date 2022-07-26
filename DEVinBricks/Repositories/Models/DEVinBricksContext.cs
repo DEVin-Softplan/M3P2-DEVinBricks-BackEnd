@@ -19,7 +19,7 @@ namespace DEVinBricks.Repositories.Models
 
         public virtual DbSet<Comprador> Compradores { get; set; } = null!;
         public virtual DbSet<Estado> Estados { get; set; } = null!;
-        public virtual DbSet<Frete> Fretes { get; set; } = null!;
+        public virtual DbSet<FreteModel> Fretes { get; set; } = null!;
         public virtual DbSet<Produto> Produtos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<ValorFretePorEstadoModel> ValorFreteEstados { get; set; } = null!;
@@ -36,7 +36,7 @@ namespace DEVinBricks.Repositories.Models
             var compradorEntityBuilder = modelBuilder.Entity<Comprador>();
             compradorEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
 
-            var freteEntityBuilder = modelBuilder.Entity<Frete>();
+            var freteEntityBuilder = modelBuilder.Entity<FreteModel>();
             freteEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             freteEntityBuilder.HasData(FreteSeed.Seed);
 
