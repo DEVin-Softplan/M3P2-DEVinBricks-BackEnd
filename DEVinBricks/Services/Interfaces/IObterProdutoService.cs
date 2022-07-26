@@ -5,5 +5,6 @@ namespace DEVinBricks.Services.Interfaces
     public interface IObterProdutoService
     {
         public ObterProdutoPorIdDTO ObterProdutoPorId(int id);
+        public List<ObterListaProdutoDTO> ObterListaProduto(string nome, int pagina, int tamanhoPagina);
     }
 }
