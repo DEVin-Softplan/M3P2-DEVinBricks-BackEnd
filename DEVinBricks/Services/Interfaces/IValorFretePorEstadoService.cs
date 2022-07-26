@@ -12,6 +12,8 @@ namespace DEVinBricks.Services.Interfaces
        
 
         IEnumerable<ValorFretePorEstadoModel> Consultar(string? nome, int page, int size);
+        bool VerificarSeExisteCadastroDoEstado(int estadoId);
 
+        ValorFretePorEstadoPostDTO Adicionar(ValorFretePorEstadoPostDTO dto);
     }
 }

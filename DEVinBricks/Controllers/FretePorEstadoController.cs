@@ -18,6 +18,19 @@ namespace DEVinBricks.Controllers
             _service = service;
         }
 
+        [HttpPost]
+        [Route("novo")]
+        [Authorize(Policy = "admin")]
+        public IActionResult Adicionar([FromBody] ValorFretePorEstadoPostDTO dto)
+        {
+            if (_service.VerificarSeExisteCadastroDoEstado(dto.EstadoId))
+            {
+                return BadRequest("Já existe um cadastro desse estado. Tente editar o cadastro existente.");
+            }
+
+        }
+
+
         /// <summary>
         /// Edita o valor do Frete por Estado
         /// </summary>

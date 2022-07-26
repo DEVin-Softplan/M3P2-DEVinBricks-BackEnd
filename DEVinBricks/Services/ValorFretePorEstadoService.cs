@@ -30,7 +30,21 @@ namespace DEVinBricks.Services
 
         public bool VerificarSeExiste(int id) => _repository.ObterPeloId(id) == null;
 
+        public bool VerificarSeExisteCadastroDoEstado(int estadoId)
+        {
+            var cadastro = _repository.ObterPeloEstadoId(estadoId);
+            return cadastro != null;
+        }
 
-
+        public ValorFretePorEstadoPostDTO Adicionar(ValorFretePorEstadoPostDTO dto)
+        {
+            var model = new ValorFretePorEstadoModel()
+            {
+                DataDeInclusao = DateTime.Now,
+                EstadoId = dto.EstadoId,
+                UsuarioInclusaoId = 
+            }
+            _repository.Adicionar
+        }
     }
 }
