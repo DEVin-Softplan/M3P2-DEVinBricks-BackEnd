@@ -17,6 +17,8 @@ namespace DEVinBricks.Repositories
             await _context.SaveChangesAsync();
             return resultado.Entity.Id;
         }
+
+
         public IEnumerable<Comprador> ListarGetComprador(CompradorGetDTO comprador)
         {
             var queryableComprador = _context.Compradores as IQueryable<Comprador>;
@@ -31,17 +33,42 @@ namespace DEVinBricks.Repositories
             var resultado = queryableComprador.OrderBy(c => c.Nome).ToList();
             return resultado;
         }
+
+
         public bool VerificaSeExisteCPFComprador(string cpf)
         {
             return _context.Compradores.Any(x => x.CPF == cpf);
         }
+
+
         public bool VerificaSeExisteEmailComprador(string email)
         {
             return _context.Compradores.Any(x => x.Email == email);
         }
+
+
         public Comprador ObterPeloId(int id)
         {
             return _context.Compradores.FirstOrDefault(x => x.Id == id);
+        }
+
+
+        public Comprador EditarComprador(CompradorPatchDTO dto, int id)
+        {
+            var model = ObterPeloId(id);
+            if (VerificaSeTemConteudo(dto.Email)) model.Email = dto.Email;
+            if (VerificaSeTemConteudo(dto.Telefone)) model.Telefone = dto.Telefone;
+            _context.Update(model);
+            _context.SaveChanges();
+
+            return model;
+        }
+
+
+        public bool VerificaSeTemConteudo(string texto)
+        {
+            if (texto == null || texto == "" || texto == " " || texto == "string") return false;
+            return true;
         }
     }
 }

@@ -11,10 +11,12 @@ namespace DEVinBricks.Controllers
     public class CompradorController : ControllerBase
     {
         private ICompradorRepository _service;
+    
         public CompradorController(ICompradorRepository context)
         {
             _service = context;
         }
+       
 
         /// <summary>
         /// Cadastra um Comprador
@@ -73,5 +75,37 @@ namespace DEVinBricks.Controllers
                 return NotFound("Nenhum resultado encontrado com os parâmetros passados.");
             return Ok(new { Pagina = pagina, TamanhoPagina = tamanhopagina, Resultados = resultado });
         }
+
+        /// <summary>
+        /// Altera dados do Comprador
+        /// </summary>
+        /// <param name="id">Busca Id do Comprador.</param>
+        /// <returns>Alteração de dados do Comprador</returns>
+        /// <response code="200">Comprador alterado.</response>
+        /// <response code="404">Nenhum Comprador encontrado.</response>
+        /// <response code="400">Email já existente</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPatch]
+        [Route("/Editar/{id}")]
+        public IActionResult Editar([FromBody] CompradorPatchDTO alteracao, int id)
+        {
+
+            // verificar se o ID existe
+            
+            if (_service.ObterPeloId(id) == null)
+                return NotFound("Id não encontrado");
+
+            if (_service.VerificaSeExisteEmailComprador(alteracao.Email)) return BadRequest("O Email informado já existe.");
+
+            // sucesso editado 201
+
+            var model = _service.EditarComprador(alteracao, id);
+
+            return Ok(model);
+
+        }
+
     }
 }
