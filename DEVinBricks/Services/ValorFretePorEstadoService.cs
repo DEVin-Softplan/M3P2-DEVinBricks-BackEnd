@@ -36,15 +36,16 @@ namespace DEVinBricks.Services
             return cadastro != null;
         }
 
-        public ValorFretePorEstadoPostDTO Adicionar(ValorFretePorEstadoPostDTO dto)
+        public ValorFretePorEstadoModel Adicionar(ValorFretePorEstadoPostDTO dto, int idUsuarioInclusao)
         {
             var model = new ValorFretePorEstadoModel()
             {
                 DataDeInclusao = DateTime.Now,
                 EstadoId = dto.EstadoId,
-                UsuarioInclusaoId = 
-            }
-            _repository.Adicionar
+                UsuarioInclusaoId = idUsuarioInclusao,
+                Valor = dto.Valor
+            };
+            return _repository.Adicionar(model);
         }
     }
 }
