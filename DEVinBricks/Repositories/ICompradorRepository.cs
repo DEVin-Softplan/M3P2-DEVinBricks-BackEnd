@@ -10,6 +10,10 @@ namespace DEVinBricks.Repositories
         bool VerificaSeExisteCPFComprador(string cpf);
         bool VerificaSeExisteEmailComprador(string email);
         public Comprador ObterPeloId(int id);
+        public Comprador EditarComprador(CompradorPatchDTO dto, int id);
+
+        public bool VerificaSeTemConteudo(string texto);
+
 
     }
 }
