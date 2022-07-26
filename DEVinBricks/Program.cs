@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,16 +18,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-
-
-var key = Encoding.ASCII.GetBytes(Settings.Secret);
-
-builder.Services.AddAuthorization(options =>
+builder.Services.AddSwaggerGen(opt =>
 {
-	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "true"));
+	var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+	var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+	opt.IncludeXmlComments(xmlPath);
 });
+
+// Token Authentication
+var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
 builder.Services.AddAuthentication(x =>
 {
@@ -46,9 +46,32 @@ builder.Services.AddAuthentication(x =>
 		};
 	});
 
+// Interfaces Repositories and Services
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<ICompradorRepository, CompradorRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRepository>();
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
+builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
+builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
+
+// Context para o Server Connection
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
+
+// Admin Authorization
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "True"));
+});
+
+// Ajuste de CORS
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(builder =>
+	{
+		builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+	});
+});
 
 var app = builder.Build();
 
@@ -61,10 +84,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

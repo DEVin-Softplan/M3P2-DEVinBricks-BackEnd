@@ -30,6 +30,7 @@ namespace DEVinBricks.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public IActionResult Login([FromBody] LoginDTO dto)
         {
             var usuario = _service.ObterPorLoginESenha(dto.Login, dto.Senha);
@@ -38,7 +39,7 @@ namespace DEVinBricks.Controllers
 
             var token = TokenService.GerarToken(usuario);
 
-            return Ok($"Bem-vindo(a) {usuario.Nome} ao sistema da DEVinBricks!. Segue seu token: \n\n" + token);
+            return Ok(token);
         }
     }
 }

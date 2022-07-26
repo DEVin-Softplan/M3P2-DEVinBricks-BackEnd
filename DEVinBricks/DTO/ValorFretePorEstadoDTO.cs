@@ -8,5 +8,6 @@ namespace DEVinBricks.DTO
         [Range(0, int.MaxValue,
       ErrorMessage = "Valor deve ser positivo")]
         public decimal Valor { get; set; }
+
     }
 }

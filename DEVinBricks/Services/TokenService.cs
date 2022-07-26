@@ -12,7 +12,7 @@ namespace DEVinBricks.Services
         {
             var claims = new Claim[]
                 {
-                    new Claim("id", usuario.Id.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
                     new Claim(ClaimTypes.Name, usuario.Nome),
                     new Claim(ClaimTypes.Email, usuario.Email),
                     new Claim("is_admin", usuario.Admin.ToString()),

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DEVinBricks.Seeds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -18,7 +19,7 @@ namespace DEVinBricks.Repositories.Models
 
         public virtual DbSet<Comprador> Compradores { get; set; } = null!;
         public virtual DbSet<Estado> Estados { get; set; } = null!;
-        public virtual DbSet<Frete> Fretes { get; set; } = null!;
+        public virtual DbSet<FreteModel> Fretes { get; set; } = null!;
         public virtual DbSet<Produto> Produtos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<ValorFretePorEstadoModel> ValorFreteEstados { get; set; } = null!;
@@ -32,12 +33,34 @@ namespace DEVinBricks.Repositories.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Comprador>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Frete>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Produto>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Venda>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<VendasProduto>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<ValorFretePorEstadoModel>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
+            var compradorEntityBuilder = modelBuilder.Entity<Comprador>();
+            compradorEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            var freteEntityBuilder = modelBuilder.Entity<FreteModel>();
+            freteEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            freteEntityBuilder.HasData(FreteSeed.Seed);
+
+            var produtoEntityBuilder = modelBuilder.Entity<Produto>();
+            produtoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            var vendaEntityBuilder = modelBuilder.Entity<Venda>();
+            vendaEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            var vendasProdutoEntityBuilder = modelBuilder.Entity<VendasProduto>();
+            vendasProdutoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+
+            var valorFreteEstadosModelEntityBuilder = modelBuilder.Entity<ValorFretePorEstadoModel>();
+            valorFreteEstadosModelEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            valorFreteEstadosModelEntityBuilder.HasData(ValorFretePorEstadoSeed.Seed);
+
+            var usuarioEntityBuilder = modelBuilder.Entity<Usuario>();
+            usuarioEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            usuarioEntityBuilder.HasIndex(prop => prop.Email).IsUnique();
+            usuarioEntityBuilder.HasIndex(prop => prop.Login).IsUnique();
+            usuarioEntityBuilder.HasData(UsuarioSeed.Seed);
+
+            var estadoEntityBuilder = modelBuilder.Entity<Estado>();
+            estadoEntityBuilder.HasData(EstadoSeed.Seed);
         }
     }
 }
