@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    partial class DEVinBricksContextModelSnapshot : ModelSnapshot
+    [Migration("20220721232708_AddTeste")]
+    partial class AddTeste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +60,7 @@ namespace DEVinBricks.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsuarioAlteracaoId")
+                    b.Property<int>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -68,7 +70,8 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("Compradores");
                 });
@@ -81,181 +84,9 @@ namespace DEVinBricks.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UF")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Estados");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 11,
-                            Nome = "Rondônia",
-                            UF = "RO"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Nome = "Acre",
-                            UF = "AC"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Nome = "Amazonas",
-                            UF = "AM"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Nome = "Roraima",
-                            UF = "RR"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Nome = "Pará",
-                            UF = "PA"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Nome = "Amapá",
-                            UF = "AP"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Nome = "Tocantins",
-                            UF = "TO"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Nome = "Maranhão",
-                            UF = "MA"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Nome = "Piauí",
-                            UF = "PI"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Nome = "Ceará",
-                            UF = "CE"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Nome = "Rio Grande do Norte",
-                            UF = "RN"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Nome = "Paraíba",
-                            UF = "PB"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Nome = "Pernanmbuco",
-                            UF = "PE"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Nome = "Alagoas",
-                            UF = "AL"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Nome = "Sergipe",
-                            UF = "SE"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Nome = "Bahia",
-                            UF = "BA"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Nome = "Minas Gerais",
-                            UF = "MG"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Nome = "Espírito Santo",
-                            UF = "ES"
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Nome = "Rio de Janeiro",
-                            UF = "RJ"
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Nome = "São Paulo",
-                            UF = "SP"
-                        },
-                        new
-                        {
-                            Id = 41,
-                            Nome = "Paraná",
-                            UF = "PR"
-                        },
-                        new
-                        {
-                            Id = 42,
-                            Nome = "Santa Catarina",
-                            UF = "SC"
-                        },
-                        new
-                        {
-                            Id = 43,
-                            Nome = "Rio Grande do Sul",
-                            UF = "RS"
-                        },
-                        new
-                        {
-                            Id = 50,
-                            Nome = "Mato Grosso do Sul",
-                            UF = "MS"
-                        },
-                        new
-                        {
-                            Id = 51,
-                            Nome = "Mato Grosso",
-                            UF = "MT"
-                        },
-                        new
-                        {
-                            Id = 52,
-                            Nome = "Goiás",
-                            UF = "GO"
-                        },
-                        new
-                        {
-                            Id = 53,
-                            Nome = "Distrito Federal",
-                            UF = "DF"
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Frete", b =>
@@ -266,104 +97,26 @@ namespace DEVinBricks.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cep")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Cidade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Complemento")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("DataDeAlteracao")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DataDeEntrega")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EstadoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Logadouro")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UsuarioAlteracaoId")
+                    b.Property<int>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("ValorFrete")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("Fretes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Bairro = "Vasco",
-                            Cep = "0123456-789",
-                            Cidade = "Porto Velho",
-                            Complemento = "Casa 98",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(6176),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 18, 59, 41, 303, DateTimeKind.Local).AddTicks(5979),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(5566),
-                            EstadoId = 11,
-                            Logadouro = "Rua Vasco da Gama, 123",
-                            UsuarioAlteracaoId = 1,
-                            UsuarioInclusaoId = 1,
-                            ValorFrete = 27m
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Bairro = "T-REX",
-                            Cep = "345631-127",
-                            Cidade = "Parque Jurassico",
-                            Complemento = "Casa 47",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7080),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084),
-                            EstadoId = 12,
-                            Logadouro = "Rua Dino, 456",
-                            UsuarioAlteracaoId = 1,
-                            UsuarioInclusaoId = 1,
-                            ValorFrete = 53m
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Bairro = "Acai",
-                            Cep = "999999-888",
-                            Cidade = "Manaus",
-                            Complemento = "Casa 12",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7089),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088),
-                            EstadoId = 13,
-                            Logadouro = "Rua do Acai, 789",
-                            UsuarioAlteracaoId = 1,
-                            UsuarioInclusaoId = 1,
-                            ValorFrete = 32m
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Produto", b =>
@@ -401,7 +154,7 @@ namespace DEVinBricks.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsuarioAlteracaoId")
+                    b.Property<int>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -414,7 +167,8 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("Produtos");
                 });
@@ -441,11 +195,11 @@ namespace DEVinBricks.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -455,7 +209,7 @@ namespace DEVinBricks.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UsuarioAlteracaoId")
+                    b.Property<int>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -463,31 +217,11 @@ namespace DEVinBricks.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("Login")
-                        .IsUnique();
-
                     b.HasIndex("UsuarioAlteracaoId");
 
                     b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Usuarios");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Admin = true,
-                            Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 316, DateTimeKind.Local).AddTicks(1687),
-                            Email = "admin@gmail.com",
-                            Login = "admin",
-                            Nome = "Admin",
-                            Senha = "admin123",
-                            UsuarioInclusaoId = 1
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.ValorFretePorEstadoModel", b =>
@@ -507,7 +241,7 @@ namespace DEVinBricks.Migrations
                     b.Property<int>("EstadoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioAlteracaoId")
+                    b.Property<int>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -522,19 +256,10 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("ValorFreteEstados");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 307, DateTimeKind.Local).AddTicks(7232),
-                            EstadoId = 42,
-                            UsuarioInclusaoId = 1,
-                            Valor = 100m
-                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Venda", b =>
@@ -554,7 +279,7 @@ namespace DEVinBricks.Migrations
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UsuarioAlteracaoId")
+                    b.Property<int>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -564,7 +289,8 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("Vendas");
                 });
@@ -583,7 +309,7 @@ namespace DEVinBricks.Migrations
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UsuarioAlteracaoId")
+                    b.Property<int>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
@@ -593,7 +319,8 @@ namespace DEVinBricks.Migrations
 
                     b.HasIndex("UsuarioAlteracaoId");
 
-                    b.HasIndex("UsuarioInclusaoId");
+                    b.HasIndex("UsuarioInclusaoId")
+                        .IsUnique();
 
                     b.ToTable("VendasProdutos");
                 });
@@ -602,11 +329,13 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId");
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.Comprador", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -619,11 +348,13 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId");
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.Frete", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -636,11 +367,13 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId");
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.Produto", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -653,12 +386,14 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId");
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
                         .WithMany()
                         .HasForeignKey("UsuarioInclusaoId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("UsuarioAlteracao");
@@ -676,11 +411,13 @@ namespace DEVinBricks.Migrations
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId");
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.ValorFretePorEstadoModel", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -695,11 +432,13 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId");
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.Venda", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -712,11 +451,13 @@ namespace DEVinBricks.Migrations
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
-                        .HasForeignKey("UsuarioAlteracaoId");
+                        .HasForeignKey("UsuarioAlteracaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioInclusao")
-                        .WithMany()
-                        .HasForeignKey("UsuarioInclusaoId")
+                        .WithOne()
+                        .HasForeignKey("DEVinBricks.Repositories.Models.VendasProduto", "UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
