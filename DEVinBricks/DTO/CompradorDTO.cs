@@ -4,7 +4,6 @@ namespace DEVinBricks.DTO
 {
     public class CompradorPostDTO
     {
-        public int UsuarioInclusaoId { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }
@@ -12,7 +11,7 @@ namespace DEVinBricks.DTO
         public string CPF { get; set; }
         public bool Ativo { get; set; }
 
-        public static Comprador ConverterParaEntidadeComprador(CompradorPostDTO requisicao, int id = 0)
+        public static Comprador ConverterParaEntidadeComprador(CompradorPostDTO requisicao, int authUserId, int id = 0)
         {
             if (requisicao == null)
                 return null;
@@ -20,7 +19,7 @@ namespace DEVinBricks.DTO
             return new Comprador()
             {
                 Id = id,
-                UsuarioInclusaoId = requisicao.UsuarioInclusaoId,
+                UsuarioInclusaoId = authUserId,
                 DataDeInclusao = DateTime.UtcNow,
                 Nome = requisicao.Nome,
                 Email = requisicao.Email,

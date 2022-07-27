@@ -3,6 +3,7 @@ using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace DEVinBricks.Controllers
 {
@@ -10,13 +11,12 @@ namespace DEVinBricks.Controllers
     [ApiController]
     public class CompradorController : ControllerBase
     {
-        private ICompradorRepository _service;
+        private ICompradorRepository _compradorRepository;
     
-        public CompradorController(ICompradorRepository context)
+        public CompradorController(ICompradorRepository compradorContext)
         {
-            _service = context;
+            _compradorRepository = compradorContext;
         }
-       
 
         /// <summary>
         /// Cadastra um Comprador
@@ -27,13 +27,15 @@ namespace DEVinBricks.Controllers
         [HttpPost(Name = "CriarComprador")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Policy = "admin")]
         public async Task<IActionResult> CriarComprador([FromBody] CompradorPostDTO comprador)
         {
-            if (_service.VerificaSeExisteEmailComprador(comprador.Email))
+            int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (_compradorRepository.VerificaSeExisteEmailComprador(comprador.Email))
                 return BadRequest($"O E-mail '{comprador.Email}' já está cadastrado");
-            if (_service.VerificaSeExisteCPFComprador(comprador.CPF))
+            if (_compradorRepository.VerificaSeExisteCPFComprador(comprador.CPF))
                 return BadRequest($"O CPF '{comprador.CPF}' já está cadastrado");
-            var resultado = await _service.CadastrarComprador(comprador);
+            var resultado = await _compradorRepository.CadastrarComprador(comprador, authUserId);
             return Ok(new { message = "Comprador cadastrado com sucesso!", Id = resultado, NovoComprador = comprador });
         }
 
@@ -48,9 +50,9 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
     
-        public async Task<ActionResult<IEnumerable<Repositories.Models.Comprador>>> ObterCompradorPeloId(int id)
+        public async Task<ActionResult<IEnumerable<Comprador>>> ObterCompradorPeloId(int id)
         {
-            var comprador = _service.ObterPeloId(id);
+            var comprador = _compradorRepository.ObterPeloId(id);
             if (comprador == null) return NotFound("Comprador não encontrado");
             return Ok(comprador);
         }
@@ -67,10 +69,10 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Policy = "admin")]
-        public ActionResult<Comprador> GetComprador(string? nome, string? cpf, int pagina = 0, int tamanhopagina = 10)
+        public ActionResult<Comprador> ObterComprador(string? nome, string? cpf, int pagina = 0, int tamanhopagina = 10)
         {
             CompradorGetDTO comprador = CompradorGetDTO.ConverterParaEntidadeCompradorGetDTO(nome, cpf, pagina, tamanhopagina);
-            var resultado = _service.ListarGetComprador(comprador);
+            var resultado = _compradorRepository.ListarGetComprador(comprador);
             if (resultado.Count() == 0)
                 return NotFound("Nenhum resultado encontrado com os parâmetros passados.");
             return Ok(new { Pagina = pagina, TamanhoPagina = tamanhopagina, Resultados = resultado });
@@ -94,14 +96,14 @@ namespace DEVinBricks.Controllers
 
             // verificar se o ID existe
             
-            if (_service.ObterPeloId(id) == null)
+            if (_compradorRepository.ObterPeloId(id) == null)
                 return NotFound("Id não encontrado");
 
-            if (_service.VerificaSeExisteEmailComprador(alteracao.Email)) return BadRequest("O Email informado já existe.");
+            if (_compradorRepository.VerificaSeExisteEmailComprador(alteracao.Email)) return BadRequest("O Email informado já existe.");
 
             // sucesso editado 201
 
-            var model = _service.EditarComprador(alteracao, id);
+            var model = _compradorRepository.EditarComprador(alteracao, id);
 
             return Ok(model);
 
