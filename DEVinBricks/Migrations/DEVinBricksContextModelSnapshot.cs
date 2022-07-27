@@ -71,6 +71,20 @@ namespace DEVinBricks.Migrations
                     b.HasIndex("UsuarioInclusaoId");
 
                     b.ToTable("Compradores");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nome = "teste",
+                            Email = "teste",
+                            Telefone = "1234",
+                            DataDeNascimento = new DateTime(2022, 7, 25, 18, 59, 41, 316, DateTimeKind.Local).AddTicks(1687),
+                            CPF = "123455",
+                            Ativo = true,
+                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 316, DateTimeKind.Local).AddTicks(1687),
+                            UsuarioInclusaoId = 1
+                        });
                 });
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Estado", b =>
