@@ -39,7 +39,7 @@ namespace DEVinBricks.Teste
                 Id = 1656546,
                 Valor = 100
             };
-            var response =  controller.Editar(dto, 1656546) as Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
+            var response =  controller.Editar(dto, 1656546) as Microsoft.AspNetCore.Mvc.NotFoundObjectResult;
 
             Assert.AreEqual(response.Value, "Id não encontrado");
         }
