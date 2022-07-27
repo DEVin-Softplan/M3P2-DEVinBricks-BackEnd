@@ -1,17 +1,18 @@
-using DEVinBricks.Controllers;
+ using DEVinBricks.Controllers;
 using DEVinBricks.DTO;
 using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
 using DEVinBricks.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NUnit.Framework;
-
-
+using System.Security.Claims;
 
 namespace DEVinBricks.Teste
 {
-    public class Tests
+    public class FretePorEstadoControllerTest
     {
 
         private DbContextOptions<DEVinBricksContext> _contextOptions;
@@ -32,9 +33,7 @@ namespace DEVinBricks.Teste
         [Test]
         public void EditaValorFretePorEstadoIdNaoEcontrado()
         {
-            var service = new ValorFretePorEstadoService(new ValorFretePorEstadoRepository(new DEVinBricksContext(_contextOptions)));
-
-            var controller = new FretePorEstadoController(service);
+            var controller = retornaController();
             var dto = new ValorFretePorEstadoDTO
             {
                 Id = 1656546,
@@ -44,11 +43,12 @@ namespace DEVinBricks.Teste
 
             Assert.AreEqual(response.Value, "Id não encontrado");
         }
+        [Test]
         public void EditaValorFretePorEstadoIdConflitanteBadRequest()
         {
-            var service = new ValorFretePorEstadoService(new ValorFretePorEstadoRepository(new DEVinBricksContext(_contextOptions)));
 
-            var controller = new FretePorEstadoController(service);
+
+            var controller = retornaController();
             var dto = new ValorFretePorEstadoDTO
             {
                 Id = 2,
@@ -57,6 +57,48 @@ namespace DEVinBricks.Teste
             var response = controller.Editar(dto, 1) as Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
 
             Assert.AreEqual(response.Value, "Dados inconsistentes");
+        }
+
+        public void EditaValorFretePorEstadoSucesso()
+        {
+
+
+            var controller = retornaController();
+            var dto = new ValorFretePorEstadoDTO
+            {
+                Id = 1,
+                Valor = 200
+            };
+            var response = (controller.Editar(dto, 1) as Microsoft.AspNetCore.Mvc.OkObjectResult).Value as ValorFretePorEstadoModel;
+
+            Assert.AreEqual(response.Valor, 200);
+        }
+
+
+        public FretePorEstadoController retornaController()
+        {
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new ValorFretePorEstadoRepository(context);
+            var service = new ValorFretePorEstadoService(repository);
+            var controller = new FretePorEstadoController(service);
+            var claims = new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, "1"),
+                    new Claim(ClaimTypes.Name, "Admin"),
+                    new Claim(ClaimTypes.Email, "admin@gmail.com"),
+                    new Claim("is_admin","True"),
+                };
+            var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "mock"));
+            var controllercontext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = user
+                }
+            };
+            controller.ControllerContext = controllercontext;
+            return controller;
+
         }
     }
 }
