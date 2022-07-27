@@ -73,6 +73,10 @@ builder.Services.AddCors(options =>
 	});
 });
 
+// Resolver o looping ao dar include em um objeto no context.
+builder.Services.AddControllers().AddNewtonsoftJson(
+	options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
