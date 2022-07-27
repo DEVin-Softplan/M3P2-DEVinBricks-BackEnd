@@ -2,10 +2,10 @@
 
 namespace DEVinBricks.Repositories
 {
-    public class ObterProdutoRepository : IObterProdutoRepository
+    public class ProdutoRepository : IProdutoRepository
     {
         private readonly DEVinBricksContext _context;
-        public ObterProdutoRepository(DEVinBricksContext context)
+        public ProdutoRepository(DEVinBricksContext context)
         {
             _context = context;
         }
@@ -29,6 +29,21 @@ namespace DEVinBricks.Repositories
             }
 
             return produtos;
+        }
+
+        public Produto EditarProduto(Produto produto)
+        {
+            _context.Produtos.Update(produto);
+            _context.SaveChanges();
+
+            return produto;
+        }
+
+        public bool VerificaNome(string nome)
+        {
+            var response = _context.Produtos.Any(x => x.Nome == nome);
+
+            return response;
         }
     }
 }
