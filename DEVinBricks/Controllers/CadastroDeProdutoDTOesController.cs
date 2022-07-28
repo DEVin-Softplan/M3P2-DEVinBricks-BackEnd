@@ -28,9 +28,9 @@ namespace DEVinBricks.Controllers
         /// <returns>Produto cadastrado com sucesso!</returns>
         /// <response code="200">Cadastro realizado com sucesso.</response>
         /// <response code="400">Já existe Produto cadastrado.</response>
-        [HttpPost("api/Produto/CadastraProduto")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPost("api/Produto/CadastraProduto")]
         public async Task<ActionResult> CriarCadastroDeProduto([FromBody] CadastroDeProdutoDTO produtoDTO)
         {
             if (_service.VerificaSeExisteProduto(produtoDTO.Nome))
