@@ -1,4 +1,6 @@
 ﻿using DEVinBricks.Repositories.Models;
+using System.ComponentModel.DataAnnotations;
+using Xunit;
 
 namespace DEVinBricks.DTO
 {
@@ -7,6 +9,8 @@ namespace DEVinBricks.DTO
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
+        [Range(0, int.MaxValue,
+        ErrorMessage = "Valor deve ser positivo")]
         public decimal Valor { get; set; }
         public string UrlDaImagem { get; set; }
         public Boolean Ativo { get; set; }
