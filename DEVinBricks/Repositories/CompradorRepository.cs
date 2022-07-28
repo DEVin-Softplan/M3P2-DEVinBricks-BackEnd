@@ -22,7 +22,7 @@ namespace DEVinBricks.Repositories
 
         public IEnumerable<Comprador> ListarGetComprador(CompradorGetDTO comprador)
         {
-            var queryableComprador = _compradorContext.Compradores.Include(ui => ui.UsuarioInclusao).Include(ua => ua.UsuarioAlteracao) as IQueryable<Comprador>;
+            var queryableComprador = _compradorContext.Compradores.Include(ui => ui.UsuarioInclusao).ThenInclude(ua => ua.UsuarioAlteracao) as IQueryable<Comprador>;
             if (!string.IsNullOrWhiteSpace(comprador.Nome))
                 queryableComprador = queryableComprador.Where(c => c.Nome.Contains(comprador.Nome));
             if (!string.IsNullOrWhiteSpace(comprador.CPF))
@@ -35,11 +35,13 @@ namespace DEVinBricks.Repositories
             return resultado;
         }
 
-        public Comprador EditarComprador(CompradorPatchDTO dto, int id)
+        public Comprador EditarComprador(CompradorPatchDTO dto, int authUserId, int id)
         {
             var model = ObterPeloId(id);
             if (VerificaSeTemConteudo(dto.Email)) model.Email = dto.Email;
             if (VerificaSeTemConteudo(dto.Telefone)) model.Telefone = dto.Telefone;
+            model.UsuarioAlteracaoId = authUserId;
+            model.DataDeAlteracao = DateTime.UtcNow;
             _compradorContext.Update(model);
             _compradorContext.SaveChanges();
 
@@ -58,7 +60,7 @@ namespace DEVinBricks.Repositories
 
         public Comprador ObterPeloId(int id)
         {
-            return _compradorContext.Compradores.FirstOrDefault(x => x.Id == id);
+            return _compradorContext.Compradores.Include(ui => ui.UsuarioInclusao).ThenInclude(ua => ua.UsuarioAlteracao).FirstOrDefault(x => x.Id == id);
         }
 
         public bool VerificaSeTemConteudo(string texto)

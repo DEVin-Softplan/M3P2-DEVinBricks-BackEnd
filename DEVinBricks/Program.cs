@@ -20,9 +20,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(opt =>
 {
-	var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-	var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-	opt.IncludeXmlComments(xmlPath);
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
 });
 
 // Token Authentication
@@ -33,18 +33,18 @@ builder.Services.AddAuthentication(x =>
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-	.AddJwtBearer(x =>
-	{
-		x.RequireHttpsMetadata = false;
-		x.SaveToken = true;
-		x.TokenValidationParameters = new TokenValidationParameters
-		{
-			ValidateIssuerSigningKey = true,
-			IssuerSigningKey = new SymmetricSecurityKey(key),
-			ValidateIssuer = false,
-			ValidateAudience = false
-		};
-	});
+    .AddJwtBearer(x =>
+    {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 // Interfaces Repositories and Services
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -61,21 +61,21 @@ builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServe
 // Admin Authorization
 builder.Services.AddAuthorization(options =>
 {
-	options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "True"));
+    options.AddPolicy("admin", policy => policy.RequireClaim("is_admin", "True"));
 });
 
 // Ajuste de CORS
 builder.Services.AddCors(options =>
 {
-	options.AddDefaultPolicy(builder =>
-	{
-		builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-	});
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
 });
 
 // Resolver o looping ao dar include em um objeto no context.
 builder.Services.AddControllers().AddNewtonsoftJson(
-	options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
 var app = builder.Build();
 
