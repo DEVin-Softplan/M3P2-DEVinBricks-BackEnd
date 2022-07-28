@@ -1,6 +1,6 @@
 ﻿namespace DEVinBricks.Repositories.Models
 {
-    public partial class ProdutoModel : BaseEntity
+    public partial class Produto : BaseEntity
     {
 
         public string Nome { get; set; }
@@ -9,7 +9,7 @@
         public string UrlDaImagem { get; set; }
         public Boolean Ativo { get; set; }
 
-        public ProdutoModel()
+        public Produto()
         {
 
         }

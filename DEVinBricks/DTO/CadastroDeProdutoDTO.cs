@@ -15,12 +15,12 @@ namespace DEVinBricks.DTO
         public string UrlDaImagem { get; set; }
         public Boolean Ativo { get; set; }
 
-        public static ProdutoModel ConverterParaEntidadeCadastro(CadastroDeProdutoDTO requerido, int id = 0)
+        public static Produto ConverterParaEntidadeCadastro(CadastroDeProdutoDTO requerido, int id = 0)
         {
             if (requerido == null)
                 return null;
 
-            return new ProdutoModel()
+            return new Produto()
             {
                 Id = id,
                 Nome = requerido.Nome,

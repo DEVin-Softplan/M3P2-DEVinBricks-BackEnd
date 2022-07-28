@@ -16,9 +16,9 @@ namespace DEVinBricks.Repositories
             return resultadoDeCadastro.Entity.Id;
         }
 
-        public IEnumerable<ProdutoModel> ListarProdutos(CadastroGetDoDTO produtoDTO)
+        public IEnumerable<Produto> ListarProdutos(CadastroGetDoDTO produtoDTO)
         {
-            var queryableProdutoModel = _context.Produtos as IQueryable<ProdutoModel>;
+            var queryableProdutoModel = _context.Produtos as IQueryable<Produto>;
             if (!string.IsNullOrWhiteSpace(produtoDTO.Nome))
                 queryableProdutoModel = queryableProdutoModel.Where(c => c.Nome.Contains(produtoDTO.Nome));
             if (produtoDTO.PaginaDoCadastro > 0)
@@ -29,7 +29,7 @@ namespace DEVinBricks.Repositories
             return resultado;
         }
 
-        public ProdutoModel ObterProduto(int id)
+        public Produto ObterProduto(int id)
         {
             throw new NotImplementedException();
         }
@@ -38,7 +38,7 @@ namespace DEVinBricks.Repositories
         {
             return _context.Produtos.Any(x => x.Nome == nome);
         }
-        public ProdutoModel ObterPeloIdCadastro(int id)
+        public Produto ObterPeloIdCadastro(int id)
         {
             return _context.Produtos.FirstOrDefault(x => x.Id == id);
         }

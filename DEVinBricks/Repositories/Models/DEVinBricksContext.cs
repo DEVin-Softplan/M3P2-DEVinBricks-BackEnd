@@ -19,7 +19,7 @@ namespace DEVinBricks.Repositories.Models
         public virtual DbSet<Comprador> Compradores { get; set; } = null!;
         public virtual DbSet<Estado> Estados { get; set; } = null!;
         public virtual DbSet<Frete> Fretes { get; set; } = null!;
-        public virtual DbSet<ProdutoModel> Produtos { get; set; } = null!;
+        public virtual DbSet<Produto> Produtos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<ValorFretePorEstadoModel> ValorFreteEstados { get; set; } = null!;
         public virtual DbSet<Venda> Vendas { get; set; } = null!;
@@ -34,7 +34,7 @@ namespace DEVinBricks.Repositories.Models
         {
             modelBuilder.Entity<Comprador>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Frete>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<ProdutoModel>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Produto>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Venda>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<VendasProduto>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ValorFretePorEstadoModel>().HasOne(prop => prop.UsuarioInclusao).WithOne().OnDelete(DeleteBehavior.NoAction);

@@ -7,8 +7,8 @@ namespace DEVinBricks.Repositories
     public interface ICadastroDeProdutoRepository
     {
         public Task<int> CadastrarProduto(CadastroDeProdutoDTO produtoDTO);
-        IEnumerable<ProdutoModel> ListarProdutos(CadastroGetDoDTO produtoDTO);
+        IEnumerable<Produto> ListarProdutos(CadastroGetDoDTO produtoDTO);
         bool VerificaSeExisteProduto(string nome);
-        public ProdutoModel ObterPeloIdCadastro(int id);
+        public Produto ObterPeloIdCadastro(int id);
     }
 }
