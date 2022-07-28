@@ -61,7 +61,7 @@ namespace DEVinBricks.Controllers
         /// <returns>Dados do Comprador</returns>
         /// <response code="200">Comprador encontrado.</response>
         /// <response code="404">Comprador não encontrado.</response>
-        [HttpGet]
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<Comprador>>> ObterCompradorPeloId(int id)
