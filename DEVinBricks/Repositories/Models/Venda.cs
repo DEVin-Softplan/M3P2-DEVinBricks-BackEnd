@@ -8,6 +8,6 @@ namespace DEVinBricks.Repositories.Models
         public int Id { get; set; }
         public Comprador CompradorId { get; set; }
         public Usuario VendedorId { get; set; }
-        public Frete FreteId { get; set; }
+        //public Frete FreteId { get; set; }
     }
 }
