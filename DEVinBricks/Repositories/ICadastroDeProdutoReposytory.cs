@@ -1,7 +1,14 @@
-﻿namespace DEVinBricks.Repositories
+﻿using DEVinBricks.DTO;
+using DEVinBricks.Repositories.Models;
+using static DEVinBricks.DTO.CadastroDeProdutoDTO;
+
+namespace DEVinBricks.Repositories
 {
-    public class ICadastroDeProdutoReposytory
+    public interface ICadastroDeProdutoRepository
     {
-        public int MyProperty { get; set; }
+        public Task<int> CadastrarProduto(CadastroDeProdutoDTO produtoDTO);
+        IEnumerable<ProdutoModel> ListarProdutos(CadastroGetDoDTO produtoDTO);
+        bool VerificaSeExisteProduto(string nome);
+        public ProdutoModel ObterPeloIdCadastro(int id);
     }
 }
