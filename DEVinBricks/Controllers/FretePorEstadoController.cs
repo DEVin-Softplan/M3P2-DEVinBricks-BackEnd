@@ -91,7 +91,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
         [Authorize(Policy = "admin")]
-        public IActionResult Consulta(string? nome, int page = 1, int size = 10)
+        public IActionResult Consultar(string? nome, int page = 1, int size = 10)
         {
             if (size > maxPageSize)
             {
