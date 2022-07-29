@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DEVinBricks.Migrations
 {
     [DbContext(typeof(DEVinBricksContext))]
-    [Migration("20220725215942_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220729231012_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,9 @@ namespace DEVinBricks.Migrations
                     b.Property<string>("CPF")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CompradorId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DataDeAlteracao")
                         .HasColumnType("datetime2");
@@ -260,7 +263,7 @@ namespace DEVinBricks.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DEVinBricks.Repositories.Models.Frete", b =>
+            modelBuilder.Entity("DEVinBricks.Repositories.Models.FreteModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -325,9 +328,9 @@ namespace DEVinBricks.Migrations
                             Cep = "0123456-789",
                             Cidade = "Porto Velho",
                             Complemento = "Casa 98",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(6176),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 18, 59, 41, 303, DateTimeKind.Local).AddTicks(5979),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(5566),
+                            DataDeAlteracao = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(922),
+                            DataDeEntrega = new DateTime(2022, 7, 29, 20, 10, 11, 869, DateTimeKind.Local).AddTicks(2898),
+                            DataDeInclusao = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(400),
                             EstadoId = 11,
                             Logadouro = "Rua Vasco da Gama, 123",
                             UsuarioAlteracaoId = 1,
@@ -341,9 +344,9 @@ namespace DEVinBricks.Migrations
                             Cep = "345631-127",
                             Cidade = "Parque Jurassico",
                             Complemento = "Casa 47",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7080),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084),
+                            DataDeAlteracao = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1630),
+                            DataDeEntrega = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1627),
+                            DataDeInclusao = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1629),
                             EstadoId = 12,
                             Logadouro = "Rua Dino, 456",
                             UsuarioAlteracaoId = 1,
@@ -357,9 +360,9 @@ namespace DEVinBricks.Migrations
                             Cep = "999999-888",
                             Cidade = "Manaus",
                             Complemento = "Casa 12",
-                            DataDeAlteracao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7089),
-                            DataDeEntrega = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088),
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088),
+                            DataDeAlteracao = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1634),
+                            DataDeEntrega = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1633),
+                            DataDeInclusao = new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1633),
                             EstadoId = 13,
                             Logadouro = "Rua do Acai, 789",
                             UsuarioAlteracaoId = 1,
@@ -477,7 +480,7 @@ namespace DEVinBricks.Migrations
                             Id = 1,
                             Admin = true,
                             Ativo = true,
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 316, DateTimeKind.Local).AddTicks(1687),
+                            DataDeInclusao = new DateTime(2022, 7, 29, 20, 10, 11, 878, DateTimeKind.Local).AddTicks(9894),
                             Email = "admin@gmail.com",
                             Login = "admin",
                             Nome = "Admin",
@@ -526,7 +529,7 @@ namespace DEVinBricks.Migrations
                         new
                         {
                             Id = 1,
-                            DataDeInclusao = new DateTime(2022, 7, 25, 18, 59, 41, 307, DateTimeKind.Local).AddTicks(7232),
+                            DataDeInclusao = new DateTime(2022, 7, 29, 20, 10, 11, 872, DateTimeKind.Local).AddTicks(9266),
                             EstadoId = 42,
                             UsuarioInclusaoId = 1,
                             Valor = 100m
@@ -541,11 +544,17 @@ namespace DEVinBricks.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CompradorId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DataDeAlteracao")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("FreteIdId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
@@ -553,7 +562,12 @@ namespace DEVinBricks.Migrations
                     b.Property<int>("UsuarioInclusaoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("VendedorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("FreteIdId");
 
                     b.HasIndex("UsuarioAlteracaoId");
 
@@ -576,13 +590,29 @@ namespace DEVinBricks.Migrations
                     b.Property<DateTime>("DataDeInclusao")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdProdutoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdVendaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("int");
+
                     b.Property<int?>("UsuarioAlteracaoId")
                         .HasColumnType("int");
 
                     b.Property<int>("UsuarioInclusaoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Valor")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IdProdutoId");
+
+                    b.HasIndex("IdVendaId");
 
                     b.HasIndex("UsuarioAlteracaoId");
 
@@ -608,7 +638,7 @@ namespace DEVinBricks.Migrations
                     b.Navigation("UsuarioInclusao");
                 });
 
-            modelBuilder.Entity("DEVinBricks.Repositories.Models.Frete", b =>
+            modelBuilder.Entity("DEVinBricks.Repositories.Models.FreteModel", b =>
                 {
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
@@ -686,6 +716,12 @@ namespace DEVinBricks.Migrations
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.Venda", b =>
                 {
+                    b.HasOne("DEVinBricks.Repositories.Models.FreteModel", "FreteId")
+                        .WithMany()
+                        .HasForeignKey("FreteIdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
                         .HasForeignKey("UsuarioAlteracaoId");
@@ -695,6 +731,8 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("FreteId");
 
                     b.Navigation("UsuarioAlteracao");
 
@@ -703,6 +741,18 @@ namespace DEVinBricks.Migrations
 
             modelBuilder.Entity("DEVinBricks.Repositories.Models.VendasProduto", b =>
                 {
+                    b.HasOne("DEVinBricks.Repositories.Models.Produto", "IdProduto")
+                        .WithMany()
+                        .HasForeignKey("IdProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DEVinBricks.Repositories.Models.Venda", "IdVenda")
+                        .WithMany()
+                        .HasForeignKey("IdVendaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DEVinBricks.Repositories.Models.Usuario", "UsuarioAlteracao")
                         .WithMany()
                         .HasForeignKey("UsuarioAlteracaoId");
@@ -712,6 +762,10 @@ namespace DEVinBricks.Migrations
                         .HasForeignKey("UsuarioInclusaoId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("IdProduto");
+
+                    b.Navigation("IdVenda");
 
                     b.Navigation("UsuarioAlteracao");
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DEVinBricks.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,6 +61,7 @@ namespace DEVinBricks.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CompradorId = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -192,6 +193,9 @@ namespace DEVinBricks.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CompradorId = table.Column<int>(type: "int", nullable: false),
+                    VendedorId = table.Column<int>(type: "int", nullable: false),
+                    FreteIdId = table.Column<int>(type: "int", nullable: false),
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -200,6 +204,12 @@ namespace DEVinBricks.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vendas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vendas_Fretes_FreteIdId",
+                        column: x => x.FreteIdId,
+                        principalTable: "Fretes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Vendas_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
@@ -218,6 +228,10 @@ namespace DEVinBricks.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IdVendaId = table.Column<int>(type: "int", nullable: false),
+                    IdProdutoId = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<int>(type: "int", nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -226,6 +240,12 @@ namespace DEVinBricks.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VendasProdutos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VendasProdutos_Produtos_IdProdutoId",
+                        column: x => x.IdProdutoId,
+                        principalTable: "Produtos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_VendasProdutos_Usuarios_UsuarioAlteracaoId",
                         column: x => x.UsuarioAlteracaoId,
@@ -236,6 +256,12 @@ namespace DEVinBricks.Migrations
                         column: x => x.UsuarioInclusaoId,
                         principalTable: "Usuarios",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_VendasProdutos_Vendas_IdVendaId",
+                        column: x => x.IdVendaId,
+                        principalTable: "Vendas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -275,22 +301,22 @@ namespace DEVinBricks.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Admin", "Ativo", "DataDeAlteracao", "DataDeInclusao", "Email", "Login", "Nome", "Senha", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
-                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 25, 18, 59, 41, 316, DateTimeKind.Local).AddTicks(1687), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
+                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 29, 20, 10, 11, 878, DateTimeKind.Local).AddTicks(9894), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Fretes",
                 columns: new[] { "Id", "Bairro", "Cep", "Cidade", "Complemento", "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao", "EstadoId", "Logadouro", "UsuarioAlteracaoId", "UsuarioInclusaoId", "ValorFrete" },
                 values: new object[,]
                 {
-                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(6176), new DateTime(2022, 7, 25, 18, 59, 41, 303, DateTimeKind.Local).AddTicks(5979), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(5566), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
-                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7080), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084), 12, "Rua Dino, 456", 1, 1, 53m },
-                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7089), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088), 13, "Rua do Acai, 789", 1, 1, 32m }
+                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(922), new DateTime(2022, 7, 29, 20, 10, 11, 869, DateTimeKind.Local).AddTicks(2898), new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(400), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
+                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1630), new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1627), new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1629), 12, "Rua Dino, 456", 1, 1, 53m },
+                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1634), new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1633), new DateTime(2022, 7, 29, 20, 10, 11, 871, DateTimeKind.Local).AddTicks(1633), 13, "Rua do Acai, 789", 1, 1, 32m }
                 });
 
             migrationBuilder.InsertData(
                 table: "ValorFreteEstados",
                 columns: new[] { "Id", "DataDeAlteracao", "DataDeInclusao", "EstadoId", "UsuarioAlteracaoId", "UsuarioInclusaoId", "Valor" },
-                values: new object[] { 1, null, new DateTime(2022, 7, 25, 18, 59, 41, 307, DateTimeKind.Local).AddTicks(7232), 42, null, 1, 100m });
+                values: new object[] { 1, null, new DateTime(2022, 7, 29, 20, 10, 11, 872, DateTimeKind.Local).AddTicks(9266), 42, null, 1, 100m });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Compradores_UsuarioAlteracaoId",
@@ -360,6 +386,11 @@ namespace DEVinBricks.Migrations
                 column: "UsuarioInclusaoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Vendas_FreteIdId",
+                table: "Vendas",
+                column: "FreteIdId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vendas_UsuarioAlteracaoId",
                 table: "Vendas",
                 column: "UsuarioAlteracaoId");
@@ -368,6 +399,16 @@ namespace DEVinBricks.Migrations
                 name: "IX_Vendas_UsuarioInclusaoId",
                 table: "Vendas",
                 column: "UsuarioInclusaoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VendasProdutos_IdProdutoId",
+                table: "VendasProdutos",
+                column: "IdProdutoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VendasProdutos_IdVendaId",
+                table: "VendasProdutos",
+                column: "IdVendaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VendasProdutos_UsuarioAlteracaoId",
@@ -386,22 +427,22 @@ namespace DEVinBricks.Migrations
                 name: "Compradores");
 
             migrationBuilder.DropTable(
-                name: "Fretes");
-
-            migrationBuilder.DropTable(
-                name: "Produtos");
-
-            migrationBuilder.DropTable(
                 name: "ValorFreteEstados");
-
-            migrationBuilder.DropTable(
-                name: "Vendas");
 
             migrationBuilder.DropTable(
                 name: "VendasProdutos");
 
             migrationBuilder.DropTable(
                 name: "Estados");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
+
+            migrationBuilder.DropTable(
+                name: "Vendas");
+
+            migrationBuilder.DropTable(
+                name: "Fretes");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
