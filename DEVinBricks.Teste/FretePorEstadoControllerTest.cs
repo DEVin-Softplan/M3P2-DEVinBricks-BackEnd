@@ -30,6 +30,28 @@ namespace DEVinBricks.Teste
             context.Database.EnsureCreated();
         }
 
+        /// <summary>
+        /// Teste que valida adição e validação de não adicionar quando já há cadastro do estado
+        /// </summary>
+        [Test]
+        public void AdicionarValorFretePorEstado()
+        {
+            var controller = retornaController();
+            var dto = new ValorFretePorEstadoPostDTO()
+            {
+                Valor = 100,
+                EstadoId = 1
+            };
+            var response = controller.Adicionar(dto) as CreatedResult;
+            Assert.AreEqual(response.StatusCode, 201);
+
+            dto.Valor = 200;
+
+            var responseCriacaoExistente = controller.Adicionar(dto) as BadRequestObjectResult;
+
+            Assert.AreEqual(responseCriacaoExistente.StatusCode, 400);
+        }
+
         [Test]
         public void EditaValorFretePorEstadoIdNaoEcontrado()
         {
