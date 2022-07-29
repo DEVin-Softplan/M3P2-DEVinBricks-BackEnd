@@ -42,5 +42,17 @@ namespace DEVinBricks.Repositories
         {
             return _context.ValorFreteEstados.FirstOrDefault(x => x.Id == id);
         }
+
+        public ValorFretePorEstadoModel ObterPeloEstadoId(int estadoId)
+        {
+            return _context.ValorFreteEstados.FirstOrDefault(x => x.EstadoId == estadoId);
+        }
+
+        public ValorFretePorEstadoModel Adicionar(ValorFretePorEstadoModel model)
+        {
+            _context.Add(model);
+            _context.SaveChanges();
+            return model;
+        }
     }
 }

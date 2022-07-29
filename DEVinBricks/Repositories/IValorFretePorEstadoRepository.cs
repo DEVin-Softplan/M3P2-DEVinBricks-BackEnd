@@ -7,5 +7,9 @@ namespace DEVinBricks.Repositories
         public ValorFretePorEstadoModel EditarValorFreteEstado(ValorFretePorEstadoModel frete);
         public ValorFretePorEstadoModel ObterPeloId(int id);
         public IEnumerable<ValorFretePorEstadoModel> ConsultarValorFreteEstado(string? nome, int page, int size);
+
+        public ValorFretePorEstadoModel ObterPeloEstadoId(int estadoId);
+
+        ValorFretePorEstadoModel Adicionar(ValorFretePorEstadoModel model);
     }
 }

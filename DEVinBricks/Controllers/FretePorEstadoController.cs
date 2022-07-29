@@ -19,6 +19,28 @@ namespace DEVinBricks.Controllers
         }
 
         /// <summary>
+        /// Adiciona um valor do Frete por Estado
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>Valor do Frete por Estado criado</returns>
+        /// <response code="201">Valor do Frete por Estado criado com sucesso</response>
+        /// <response code="400">Já existe um cadastro desse estado</response>
+        [HttpPost]
+        [Route("novo")]
+        [Authorize(Policy = "admin")]
+        public IActionResult Adicionar([FromBody] ValorFretePorEstadoPostDTO dto)
+        {
+            var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (_service.VerificarSeExisteCadastroDoEstado(dto.EstadoId))
+            {
+                return BadRequest("Já existe um cadastro desse estado. Tente editar o cadastro existente.");
+            } 
+            _service.Adicionar(dto, IdUsuarioAlteracao);
+            return Created("Sucesso", dto);
+        }
+
+
+        /// <summary>
         /// Edita o valor do Frete por Estado
         /// </summary>
         /// <returns>Valor do Frete por Estado Atualizado</returns>
@@ -33,7 +55,7 @@ namespace DEVinBricks.Controllers
         [Route("editar/{id}")]
         public IActionResult Editar([FromBody] ValorFretePorEstadoDTO dto, int id)
         {
-            var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value) ;
+            var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             if (dto.Id != id)
                 return BadRequest("Dados inconsistentes");
 

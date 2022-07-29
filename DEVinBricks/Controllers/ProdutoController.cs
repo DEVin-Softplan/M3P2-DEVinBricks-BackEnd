@@ -1,9 +1,9 @@
-﻿using DEVinBricks.Repositories.Models;
+﻿using DEVinBricks.DTO;
+using DEVinBricks.Repositories;
 using DEVinBricks.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
+using System.Security.Claims;
 
 namespace DEVinBricks.Controllers
 {
@@ -11,9 +11,9 @@ namespace DEVinBricks.Controllers
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly IObterProdutoService _service;
+        private readonly IProdutoService _service;
 
-        public ProdutoController(IObterProdutoService service)
+        public ProdutoController(IProdutoService service)
         {
             _service = service;
         }
@@ -26,7 +26,7 @@ namespace DEVinBricks.Controllers
         /// <response code="404">Nenhum resultado encontrado.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet]
+        [Route("ObterProduto"),HttpGet]
         public ActionResult ObterProduto(int id)
         {
             try
@@ -40,7 +40,6 @@ namespace DEVinBricks.Controllers
             }
         }
 
-
         /// <summary>
         /// Retorna Lista de Produtos.
         /// </summary>
@@ -51,7 +50,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpPost]
+        [Route("ListaProdutos"), HttpPost]
         //[Authorize(Policy = "admin")]
         public IActionResult ObterListaProduto(string? nome, int pagina, int tamanhoPagina)
         {
@@ -59,6 +58,33 @@ namespace DEVinBricks.Controllers
 
             if (response.Count == 0)
                 return NotFound("Nenhum Produto Encontrado");
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Edita um produto.
+        /// </summary>
+        /// <response code="200">Lista retornada com sucesso.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Parametro inválido.</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("Editar"), HttpPut]
+       // [Authorize(Policy = "admin")]
+        public IActionResult EditarProduto([FromBody] ObterProdutoPorIdDTO dto)
+        {
+
+            var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            if (dto.Valor == 0)
+                return BadRequest("Valor deve ser maior que zero.");
+
+            if (_service.VerificaNome(dto.Nome))
+                return BadRequest("Produto com nome já existente.");
+
+            var response = _service.EditarProduto(dto, IdUsuarioAlteracao);
 
             return Ok(response);
         }
