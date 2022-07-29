@@ -5,15 +5,12 @@ namespace DEVinBricks.Repositories
 {
     public interface ICompradorRepository
     {
-        Task<int> CadastrarComprador(CompradorPostDTO comprador);
+        Task<int> CadastrarComprador(CompradorPostDTO comprador, int authUserId, DateTime dataDeNascimento);
         IEnumerable<Comprador> ListarGetComprador(CompradorGetDTO comprador);
+        Comprador ObterPeloId(int id);
+        Comprador EditarComprador(CompradorPatchDTO dto, int authUserId, int id);
         bool VerificaSeExisteCPFComprador(string cpf);
         bool VerificaSeExisteEmailComprador(string email);
-        public Comprador ObterPeloId(int id);
-        public Comprador EditarComprador(CompradorPatchDTO dto, int id);
-
-        public bool VerificaSeTemConteudo(string texto);
-
-
+        bool VerificaSeTemConteudo(string texto);
     }
 }
