@@ -64,7 +64,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize(Policy = "admin")]
+        //[Authorize(Policy = "admin")]
         public ActionResult<Comprador> GetComprador(string? nome, string? cpf, int pagina = 0, int tamanhopagina = 10)
         {
             CompradorGetDTO comprador = CompradorGetDTO.ConverterParaEntidadeCompradorGetDTO(nome, cpf, pagina, tamanhopagina);

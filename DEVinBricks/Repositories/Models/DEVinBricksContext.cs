@@ -24,7 +24,7 @@ namespace DEVinBricks.Repositories.Models
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<ValorFretePorEstadoModel> ValorFreteEstados { get; set; } = null!;
         public virtual DbSet<Venda> Vendas { get; set; } = null!;
-        public virtual DbSet<VendasProduto> VendasProdutos { get; set; } = null!;
+        public virtual DbSet<VendaProduto> VendasProdutos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -35,6 +35,7 @@ namespace DEVinBricks.Repositories.Models
         {
             var compradorEntityBuilder = modelBuilder.Entity<Comprador>();
             compradorEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            compradorEntityBuilder.HasData(CompradorSeed.Seed);
 
             var freteEntityBuilder = modelBuilder.Entity<FreteModel>();
             freteEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
@@ -42,12 +43,15 @@ namespace DEVinBricks.Repositories.Models
 
             var produtoEntityBuilder = modelBuilder.Entity<Produto>();
             produtoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            produtoEntityBuilder.HasData(ProdutoSeed.Seed);
 
             var vendaEntityBuilder = modelBuilder.Entity<Venda>();
             vendaEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            vendaEntityBuilder.HasData(VendaSeed.Seed);
 
-            var vendasProdutoEntityBuilder = modelBuilder.Entity<VendasProduto>();
+            var vendasProdutoEntityBuilder = modelBuilder.Entity<VendaProduto>();
             vendasProdutoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            vendasProdutoEntityBuilder.HasData(VendaProdutoSeed.Seed);
 
             var valorFreteEstadosModelEntityBuilder = modelBuilder.Entity<ValorFretePorEstadoModel>();
             valorFreteEstadosModelEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);

@@ -54,6 +54,9 @@ builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRe
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
 builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
 builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
+builder.Services.AddScoped<IObterVendaProdutoRepository, ObterVendaProdutoRepository>();
+builder.Services.AddScoped<IObterVendaProdutoService, ObterVendaProdutoService>();
+
 
 // Context para o Server Connection
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));

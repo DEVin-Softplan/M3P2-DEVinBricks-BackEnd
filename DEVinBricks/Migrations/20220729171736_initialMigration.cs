@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DEVinBricks.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -192,6 +192,8 @@ namespace DEVinBricks.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CompradorId = table.Column<int>(type: "int", nullable: false),
+                    VendedorId = table.Column<int>(type: "int", nullable: false),
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -218,6 +220,10 @@ namespace DEVinBricks.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IdVenda = table.Column<int>(type: "int", nullable: false),
+                    IdProduto = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<double>(type: "float", nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false),
                     DataDeInclusao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsuarioInclusaoId = table.Column<int>(type: "int", nullable: false),
                     DataDeAlteracao = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -275,22 +281,57 @@ namespace DEVinBricks.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Admin", "Ativo", "DataDeAlteracao", "DataDeInclusao", "Email", "Login", "Nome", "Senha", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
-                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 25, 18, 59, 41, 316, DateTimeKind.Local).AddTicks(1687), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
+                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 29, 14, 17, 35, 919, DateTimeKind.Local).AddTicks(4420), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Compradores",
+                columns: new[] { "Id", "Ativo", "CPF", "DataDeAlteracao", "DataDeInclusao", "DataDeNascimento", "Email", "Nome", "Telefone", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
+                values: new object[] { 1, true, "111.111.111.11", null, new DateTime(2022, 7, 29, 14, 17, 35, 908, DateTimeKind.Local).AddTicks(8589), new DateTime(2022, 7, 29, 14, 17, 35, 907, DateTimeKind.Local).AddTicks(1129), "comprador-fulano@gmail.com", "Comprador Fulano", "11 9999-9999", null, 1 });
 
             migrationBuilder.InsertData(
                 table: "Fretes",
                 columns: new[] { "Id", "Bairro", "Cep", "Cidade", "Complemento", "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao", "EstadoId", "Logadouro", "UsuarioAlteracaoId", "UsuarioInclusaoId", "ValorFrete" },
                 values: new object[,]
                 {
-                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(6176), new DateTime(2022, 7, 25, 18, 59, 41, 303, DateTimeKind.Local).AddTicks(5979), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(5566), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
-                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7080), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7084), 12, "Rua Dino, 456", 1, 1, 53m },
-                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7089), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088), new DateTime(2022, 7, 25, 18, 59, 41, 305, DateTimeKind.Local).AddTicks(7088), 13, "Rua do Acai, 789", 1, 1, 32m }
+                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(7689), new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(7077), new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(7686), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
+                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(8372), new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(8368), new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(8371), 12, "Rua Dino, 456", 1, 1, 53m },
+                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(8376), new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(8374), new DateTime(2022, 7, 29, 14, 17, 35, 910, DateTimeKind.Local).AddTicks(8375), 13, "Rua do Acai, 789", 1, 1, 32m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Produtos",
+                columns: new[] { "Id", "Ativo", "DataDeAlteracao", "DataDeInclusao", "Descricao", "Nome", "UrlDaImagem", "UsuarioAlteracaoId", "UsuarioInclusaoId", "Valor" },
+                values: new object[,]
+                {
+                    { 1, true, null, new DateTime(2022, 7, 29, 14, 17, 35, 911, DateTimeKind.Local).AddTicks(5617), "21 polegadas", "Monitor Dell", "", null, 1, 300.00m },
+                    { 2, true, null, new DateTime(2022, 7, 29, 14, 17, 35, 911, DateTimeKind.Local).AddTicks(5639), "Mas é o mais simples da marca", "Teclado Logitech", "", null, 1, 100.00m },
+                    { 3, true, null, new DateTime(2022, 7, 29, 14, 17, 35, 911, DateTimeKind.Local).AddTicks(5641), "Também é o mais simples possível", "Mouse Logitech", "", null, 1, 50.00m }
                 });
 
             migrationBuilder.InsertData(
                 table: "ValorFreteEstados",
                 columns: new[] { "Id", "DataDeAlteracao", "DataDeInclusao", "EstadoId", "UsuarioAlteracaoId", "UsuarioInclusaoId", "Valor" },
-                values: new object[] { 1, null, new DateTime(2022, 7, 25, 18, 59, 41, 307, DateTimeKind.Local).AddTicks(7232), 42, null, 1, 100m });
+                values: new object[] { 1, null, new DateTime(2022, 7, 29, 14, 17, 35, 912, DateTimeKind.Local).AddTicks(9728), 42, null, 1, 100m });
+
+            migrationBuilder.InsertData(
+                table: "Vendas",
+                columns: new[] { "Id", "CompradorId", "DataDeAlteracao", "DataDeInclusao", "UsuarioAlteracaoId", "UsuarioInclusaoId", "VendedorId" },
+                values: new object[,]
+                {
+                    { 1, 1, null, new DateTime(2022, 7, 29, 14, 17, 35, 911, DateTimeKind.Local).AddTicks(9951), null, 1, 1 },
+                    { 2, 1, null, new DateTime(2022, 7, 29, 14, 17, 35, 911, DateTimeKind.Local).AddTicks(9969), null, 1, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "VendasProdutos",
+                columns: new[] { "Id", "DataDeAlteracao", "DataDeInclusao", "IdProduto", "IdVenda", "Quantidade", "UsuarioAlteracaoId", "UsuarioInclusaoId", "Valor" },
+                values: new object[,]
+                {
+                    { 1, null, new DateTime(2022, 7, 29, 14, 17, 35, 912, DateTimeKind.Local).AddTicks(5655), 1, 1, 1, null, 1, 300.0 },
+                    { 2, null, new DateTime(2022, 7, 29, 14, 17, 35, 912, DateTimeKind.Local).AddTicks(5675), 2, 1, 1, null, 1, 100.0 },
+                    { 3, null, new DateTime(2022, 7, 29, 14, 17, 35, 912, DateTimeKind.Local).AddTicks(5677), 3, 1, 1, null, 1, 500.0 },
+                    { 4, null, new DateTime(2022, 7, 29, 14, 17, 35, 912, DateTimeKind.Local).AddTicks(5678), 3, 2, 2, null, 1, 50.0 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Compradores_UsuarioAlteracaoId",

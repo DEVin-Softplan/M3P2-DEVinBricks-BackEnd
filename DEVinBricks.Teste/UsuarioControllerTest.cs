@@ -96,7 +96,7 @@ namespace DEVinBricks.Teste
 
             var expected = (result.Result as ObjectResult);
 
-            Assert.That(expected.Value.ToString(), Is.EqualTo(UsuarioSeed.Seed.First().ToString()));
+            Assert.That(expected.Value.ToString(), Is.EqualTo(CompradorSeed.Seed.First().ToString()));
             Assert.That(expected.StatusCode.ToString(), Is.EqualTo("200"));
         }
 
