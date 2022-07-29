@@ -5,7 +5,7 @@ namespace DEVinBricks.Repositories
 {
     public interface ICompradorRepository
     {
-        Task<int> CadastrarComprador(CompradorPostDTO comprador, int authUserId);
+        Task<int> CadastrarComprador(CompradorPostDTO comprador, int authUserId, DateTime dataDeNascimento);
         IEnumerable<Comprador> ListarGetComprador(CompradorGetDTO comprador);
         Comprador ObterPeloId(int id);
         Comprador EditarComprador(CompradorPatchDTO dto, int authUserId, int id);

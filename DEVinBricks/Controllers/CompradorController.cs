@@ -4,6 +4,7 @@ using DEVinBricks.Repositories.Models;
 using DEVinBricks.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace DEVinBricks.Controllers
@@ -48,16 +49,19 @@ namespace DEVinBricks.Controllers
             string postCompradorCPF = comprador.CPF;
             comprador.CPF = Util.formataCPF(comprador.CPF);
             comprador.Telefone = Util.formataTelefone(comprador.Telefone);
+            if (!Util.verificaDataNascimento(comprador.DataDeNascimento))
+                return BadRequest($"A Data de Nascimento '{comprador.DataDeNascimento}' não está no formato adequado (dd/MM/yyyy). Exemplo: 01/01/2000");
+            DateTime dataDeNascimento = DateTime.ParseExact(comprador.DataDeNascimento, "dd/MM/yyyy", new CultureInfo("pt-BR"));
             if (!Util.validaCPF(postCompradorCPF))
                 return BadRequest($"O CPF '{postCompradorCPF}' não é válido.");
             if (!Util.validaEmail(comprador.Email))
-                return BadRequest($"O E-mail '{comprador.Email}' não é valido.");
+                return BadRequest($"O E-mail '{comprador.Email}' não é valido. Exemplo: exemplopost@email.com.br");
             if (_compradorRepository.VerificaSeExisteEmailComprador(comprador.Email))
                 return BadRequest($"O E-mail '{comprador.Email}' já está cadastrado.");
             if (_compradorRepository.VerificaSeExisteCPFComprador(comprador.CPF))
                 return BadRequest($"O CPF '{postCompradorCPF}' já está cadastrado.");
             int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var resultado = await _compradorRepository.CadastrarComprador(comprador, authUserId);
+            var resultado = await _compradorRepository.CadastrarComprador(comprador, authUserId, dataDeNascimento);
             return Created("Comprador cadastrado com sucesso!", new { Id = resultado, NovoComprador = comprador });
         }
 
@@ -97,6 +101,8 @@ namespace DEVinBricks.Controllers
         [Authorize(Policy = "admin")]
         public ActionResult<Comprador> ObterListaCompradores(string? nome, string? cpf, int pagina = 0, int tamanhopagina = 10)
         {
+            if (cpf != null)
+                cpf = Util.formataCPF(cpf);
             CompradorGetDTO comprador = CompradorGetDTO.ConverterParaEntidadeCompradorGetDTO(nome, cpf, pagina, tamanhopagina);
             var resultado = _compradorRepository.ListarGetComprador(comprador);
             if (resultado.Count() == 0)
@@ -134,7 +140,7 @@ namespace DEVinBricks.Controllers
             if (_compradorRepository.ObterPeloId(id) == null)
                 return NotFound("Id não encontrado");
             if (!Util.validaEmail(alteracao.Email))
-                return BadRequest($"O E-mail '{alteracao.Email}' não é valido.");
+                return BadRequest($"O E-mail '{alteracao.Email}' não é valido. Exemplo: exemplopatch@email.com.br");
             if (_compradorRepository.VerificaSeExisteEmailComprador(alteracao.Email))
                 return BadRequest($"O Email '{alteracao.Email}' já existe.");
             // sucesso editado 201

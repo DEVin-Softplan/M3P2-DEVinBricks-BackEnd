@@ -1,13 +1,14 @@
-﻿using DEVinBricks.DTO;
-using DEVinBricks.Repositories.Models;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace DEVinBricks.Services
 {
     public class Util
     {
+        public static bool verificaDataNascimento(string dataNascimento)
+        {
+            return DateTime.TryParseExact(dataNascimento, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
+        }
         public static string formataTelefone(string telefone)
         {
             return telefone.Replace("(", "").Replace(")", "").Replace("-", "").Replace(" ", "");
@@ -18,7 +19,11 @@ namespace DEVinBricks.Services
         }
         public static bool validaCPF(string cpf)
         {
+
             string valor = formataCPF(cpf);
+
+            if (!validaNumero(valor))
+                return false;
 
             if (valor.Length != 11)
                 return false;
@@ -71,6 +76,14 @@ namespace DEVinBricks.Services
         {
             Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
             Match match = regex.Match(email);
+            if (match.Success)
+                return true;
+            return false;
+        }
+        public static bool validaNumero(string num)
+        {
+            Regex regex = new Regex("^\\d+$");
+            Match match = regex.Match(num);
             if (match.Success)
                 return true;
             return false;

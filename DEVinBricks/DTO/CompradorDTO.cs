@@ -12,24 +12,23 @@ namespace DEVinBricks.DTO
         [Required(ErrorMessage = "Telefone é obrigatório.")]
         public string Telefone { get; set; }
         [Required(ErrorMessage = "DataDeNascimento é obrigatório.")]
-        public DateTime DataDeNascimento { get; set; }
+        public string DataDeNascimento { get; set; }
         [Required(ErrorMessage = "CPF é obrigatório.")]
         public string CPF { get; set; }
 
-        public static Comprador ConverterParaEntidadeComprador(CompradorPostDTO requisicao, int authUserId, int id = 0)
+        public static Comprador ConverterParaEntidadeComprador(CompradorPostDTO requisicao, int authUserId, DateTime dataDeNascimento)
         {
             if (requisicao == null)
                 return null;
 
             return new Comprador()
             {
-                Id = id,
                 UsuarioInclusaoId = authUserId,
                 DataDeInclusao = DateTime.Now,
                 Nome = requisicao.Nome,
                 Email = requisicao.Email,
                 Telefone = requisicao.Telefone,
-                DataDeNascimento = requisicao.DataDeNascimento,
+                DataDeNascimento = dataDeNascimento,
                 CPF = requisicao.CPF,
                 Ativo = true
             };

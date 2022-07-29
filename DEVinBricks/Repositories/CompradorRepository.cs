@@ -12,9 +12,9 @@ namespace DEVinBricks.Repositories
             _compradorContext = compradorContext;
         }
 
-        public async Task<int> CadastrarComprador(CompradorPostDTO comprador, int authUserId)
+        public async Task<int> CadastrarComprador(CompradorPostDTO comprador, int authUserId, DateTime dataDeNascimento)
         {
-            var newComprador = CompradorPostDTO.ConverterParaEntidadeComprador(comprador, authUserId);
+            var newComprador = CompradorPostDTO.ConverterParaEntidadeComprador(comprador, authUserId, dataDeNascimento);
             var resultado = await _compradorContext.Compradores.AddAsync(newComprador);
             await _compradorContext.SaveChangesAsync();
             return resultado.Entity.Id;
