@@ -1,6 +1,7 @@
 ﻿using DEVinBricks.DTO;
 using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
+using DEVinBricks.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -33,25 +34,31 @@ namespace DEVinBricks.Controllers
         ///        "email": "exemplopost@email.com.br",
         ///        "telefone": "(12) 3456-7890",
         ///        "dataDeNascimento": "01/01/2000",
-        ///        "cpf": "012.345.678-90",
-        ///        "ativo": 1
+        ///        "cpf": "012.345.678-90"
         ///     }
         /// 
         /// </remarks>
-        /// <response code="200">Cadastro realizado com sucesso.</response>
-        /// <response code="400">Já existe Comprador com este E-mail ou CPF cadastrado.</response>
+        /// <response code="201">Cadastro realizado com sucesso.</response>
+        /// <response code="400">Erro no pedido realizado.</response>
         [HttpPost(Name = "CriarComprador")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CriarComprador([FromBody] CompradorPostDTO comprador)
         {
-            int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            string postCompradorCPF = comprador.CPF;
+            comprador.CPF = Util.formataCPF(comprador.CPF);
+            comprador.Telefone = Util.formataTelefone(comprador.Telefone);
+            if (!Util.validaCPF(postCompradorCPF))
+                return BadRequest($"O CPF '{postCompradorCPF}' não é válido.");
+            if (!Util.validaEmail(comprador.Email))
+                return BadRequest($"O E-mail '{comprador.Email}' não é valido.");
             if (_compradorRepository.VerificaSeExisteEmailComprador(comprador.Email))
-                return BadRequest($"O E-mail '{comprador.Email}' já está cadastrado");
+                return BadRequest($"O E-mail '{comprador.Email}' já está cadastrado.");
             if (_compradorRepository.VerificaSeExisteCPFComprador(comprador.CPF))
-                return BadRequest($"O CPF '{comprador.CPF}' já está cadastrado");
+                return BadRequest($"O CPF '{postCompradorCPF}' já está cadastrado.");
+            int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var resultado = await _compradorRepository.CadastrarComprador(comprador, authUserId);
-            return Ok(new { message = "Comprador cadastrado com sucesso!", Id = resultado, NovoComprador = comprador });
+            return Created("Comprador cadastrado com sucesso!", new { Id = resultado, NovoComprador = comprador });
         }
 
         /// <summary>
@@ -67,7 +74,8 @@ namespace DEVinBricks.Controllers
         public async Task<ActionResult<IEnumerable<Comprador>>> ObterCompradorPeloId(int id)
         {
             var comprador = _compradorRepository.ObterPeloId(id);
-            if (comprador == null) return NotFound("Comprador não encontrado");
+            if (comprador == null)
+                return NotFound("Comprador não encontrado.");
             return Ok(comprador);
         }
 
@@ -75,6 +83,10 @@ namespace DEVinBricks.Controllers
         /// Retorna a lista de Comprador(es) conforme os parâmetros passados
         /// </summary>
         /// <returns>Lista de Comprador(es) conforme os parâmetros passados</returns>
+        /// <param name="nome">Busca Nome do Comprador.</param>
+        /// <param name="cpf">Busca CPF do Comprador.</param>
+        /// <param name="pagina">Retorna a Página da Busca.</param>
+        /// <param name="tamanhopagina">Retorna o Tamanho Página da Busca.</param>
         /// <response code="200">Lista retornada com sucesso.</response>
         /// <response code="401">Usuário não autorizado.</response>
         /// <response code="404">Nenhum resultado encontrado.</response>
@@ -107,23 +119,27 @@ namespace DEVinBricks.Controllers
         ///     }
         /// 
         /// </remarks>
-        /// <response code="200">Comprador alterado.</response>
-        /// <response code="404">Nenhum Comprador encontrado.</response>
-        /// <response code="400">Email já existente</response>
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        /// <response code="204">Comprador alterado.</response>
+        /// <response code="400">Erro no pedido realizado.</response>
+        /// <response code="404">Id não encontrado.</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPatch]
         public IActionResult EditarComprador([FromBody] CompradorPatchDTO alteracao, int id)
         {
             int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            alteracao.Telefone = Util.formataTelefone(alteracao.Telefone);
             // verificar se o ID existe
             if (_compradorRepository.ObterPeloId(id) == null)
                 return NotFound("Id não encontrado");
-            if (_compradorRepository.VerificaSeExisteEmailComprador(alteracao.Email)) return BadRequest("O Email informado já existe.");
+            if (!Util.validaEmail(alteracao.Email))
+                return BadRequest($"O E-mail '{alteracao.Email}' não é valido.");
+            if (_compradorRepository.VerificaSeExisteEmailComprador(alteracao.Email))
+                return BadRequest($"O Email '{alteracao.Email}' já existe.");
             // sucesso editado 201
             var model = _compradorRepository.EditarComprador(alteracao, authUserId, id);
-            return Ok(new { message = "Comprador alterado.", Comprador = model });
+            return NoContent();
         }
 
     }

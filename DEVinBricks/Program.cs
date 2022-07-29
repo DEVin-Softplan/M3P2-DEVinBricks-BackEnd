@@ -55,7 +55,7 @@ builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoServi
 builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
 builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
 
-// Context para o Server Connection
+// Context para o Server Connection Conforme o Computador que está executando.
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString($"ServerConnection_{Environment.MachineName}")));
 
 // Admin Authorization

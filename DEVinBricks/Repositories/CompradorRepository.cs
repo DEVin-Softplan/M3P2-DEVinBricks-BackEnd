@@ -41,7 +41,7 @@ namespace DEVinBricks.Repositories
             if (VerificaSeTemConteudo(dto.Email)) model.Email = dto.Email;
             if (VerificaSeTemConteudo(dto.Telefone)) model.Telefone = dto.Telefone;
             model.UsuarioAlteracaoId = authUserId;
-            model.DataDeAlteracao = DateTime.UtcNow;
+            model.DataDeAlteracao = DateTime.Now;
             _compradorContext.Update(model);
             _compradorContext.SaveChanges();
 

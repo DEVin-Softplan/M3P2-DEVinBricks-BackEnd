@@ -1,15 +1,20 @@
 ﻿using DEVinBricks.Repositories.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DEVinBricks.DTO
 {
     public class CompradorPostDTO
     {
+        [Required(ErrorMessage = "Nome é obrigatório.")]
         public string Nome { get; set; }
+        [Required(ErrorMessage = "E-mail é obrigatório.")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Telefone é obrigatório.")]
         public string Telefone { get; set; }
+        [Required(ErrorMessage = "DataDeNascimento é obrigatório.")]
         public DateTime DataDeNascimento { get; set; }
+        [Required(ErrorMessage = "CPF é obrigatório.")]
         public string CPF { get; set; }
-        public bool Ativo { get; set; }
 
         public static Comprador ConverterParaEntidadeComprador(CompradorPostDTO requisicao, int authUserId, int id = 0)
         {
@@ -20,13 +25,13 @@ namespace DEVinBricks.DTO
             {
                 Id = id,
                 UsuarioInclusaoId = authUserId,
-                DataDeInclusao = DateTime.UtcNow,
+                DataDeInclusao = DateTime.Now,
                 Nome = requisicao.Nome,
                 Email = requisicao.Email,
                 Telefone = requisicao.Telefone,
                 DataDeNascimento = requisicao.DataDeNascimento,
                 CPF = requisicao.CPF,
-                Ativo = requisicao.Ativo,
+                Ativo = true
             };
         }
     }
