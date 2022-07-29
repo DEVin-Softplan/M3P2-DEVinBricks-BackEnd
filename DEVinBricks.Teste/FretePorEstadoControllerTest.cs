@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NUnit.Framework;
 using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace DEVinBricks.Teste
 {
@@ -65,6 +66,7 @@ namespace DEVinBricks.Teste
 
             Assert.AreEqual(response.Value, "Id não encontrado");
         }
+
         [Test]
         public void EditaValorFretePorEstadoIdConflitanteBadRequest()
         {
@@ -79,6 +81,19 @@ namespace DEVinBricks.Teste
             var response = controller.Editar(dto, 1) as Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
 
             Assert.AreEqual(response.Value, "Dados inconsistentes");
+        }
+
+        [Test]
+        public void ConsultaValorFretePorEstado()
+        {
+            var controller = retornaController();
+
+            var response = controller.Consultar("Santa") as OkObjectResult;
+            
+            Assert.AreEqual(response.StatusCode, 200);
+            var responseEntity = response.Value as List<ValorFretePorEstadoModel>;
+            Assert.IsNotNull(responseEntity);
+            Assert.AreEqual(responseEntity[0].Id, 1);
         }
 
         public void EditaValorFretePorEstadoSucesso()
