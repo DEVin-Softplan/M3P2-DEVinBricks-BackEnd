@@ -9,9 +9,9 @@ namespace DEVinBricks.Controllers
     [ApiController]
     public class VendaProdutoController : ControllerBase
     {
-        private readonly IObterVendaProdutoService _service;
+        private readonly IVendaService _service;
 
-        public VendaProdutoController(IObterVendaProdutoService service)
+        public VendaProdutoController(IVendaService service)
         {
             _service = service;
         }

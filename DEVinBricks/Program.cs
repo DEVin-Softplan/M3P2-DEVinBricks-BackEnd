@@ -54,8 +54,8 @@ builder.Services.AddScoped<IValorFretePorEstadoRepository, ValorFretePorEstadoRe
 builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoService>();
 builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
 builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
-builder.Services.AddScoped<IObterVendaProdutoRepository, ObterVendaProdutoRepository>();
-builder.Services.AddScoped<IObterVendaProdutoService, ObterVendaProdutoService>();
+builder.Services.AddScoped<IVendaRepository, VendaRepository>();
+builder.Services.AddScoped<IVendaService, ObterVendaProdutoService>();
 
 
 // Context para o Server Connection

@@ -5,16 +5,16 @@ using DEVinBricks.Services.Interfaces;
 
 namespace DEVinBricks.Services
 {
-    public class ObterVendaProdutoService : IObterVendaProdutoService
+    public class ObterVendaProdutoService : IVendaService
     {
-        private readonly IObterVendaProdutoRepository _service;
-        public ObterVendaProdutoService(IObterVendaProdutoRepository service)
+        private readonly IVendaRepository _service;
+        public ObterVendaProdutoService(IVendaRepository service)
         {
             _service = service;
         }
         public ObterVendaProdutoPorIdVendaDTO ObterVendaProdutoPorIdVenda(int idVenda)
         {
-            var model = _service.ObterVendaProdutoPorIdVenda(idVenda);
+            var model = _service.ObterVendaPorIdVenda(idVenda);
             var vendaProdutoDTO = new ObterVendaProdutoPorIdVendaDTO()
             {
                 Id = model.Id,
