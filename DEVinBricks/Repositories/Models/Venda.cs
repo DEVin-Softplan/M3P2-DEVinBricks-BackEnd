@@ -7,7 +7,7 @@ namespace DEVinBricks.Repositories.Models
     {
      
         public Comprador CompradorId { get; set; }
-        public Venda VendedorId { get; set; }
+        public Usuario VendedorId { get; set; }
         public FreteModel FreteId { get; set; }
 
     }
