@@ -55,7 +55,7 @@ builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoServi
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
 builder.Services.AddScoped<IFreteRepository, FreteRepository>();
-
+builder.Services.AddScoped<ICadastroDeProdutoRepository,CadastroDeProdutoRepository>();
 // Context para o Server Connection
 builder.Services.AddDbContext<DEVinBricksContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ServerConnection")));
 

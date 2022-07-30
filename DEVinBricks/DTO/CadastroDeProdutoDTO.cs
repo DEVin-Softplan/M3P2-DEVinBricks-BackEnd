@@ -5,24 +5,22 @@ namespace DEVinBricks.DTO
 {
     public class CadastroDeProdutoDTO
     {
-        public int UsuarioInclusaoId { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        [Range(0, int.MaxValue,
+        [Range(1, int.MaxValue,
         ErrorMessage = "Valor deve ser positivo")]
         public decimal Valor { get; set; }
         public string UrlDaImagem { get; set; }
         public bool Ativo { get; set; }
 
-        public static Produto ConverterParaEntidadeCadastro(CadastroDeProdutoDTO requerido, int id = 0)
+        public static Produto ConverterParaEntidadeCadastro(CadastroDeProdutoDTO requerido,int IdUsuarioAlteracao)
         {
             if (requerido == null)
                 return null;
 
             return new Produto()
             {
-                Id = id,
-                UsuarioInclusaoId = requerido.UsuarioInclusaoId,
+                UsuarioInclusaoId = IdUsuarioAlteracao,
                 DataDeInclusao = DateTime.UtcNow,
                 Nome = requerido.Nome,
                 Descricao = requerido.Descricao,

@@ -100,17 +100,19 @@ namespace DEVinBricks.Controllers
         /// <response code="400">Já existe Produto cadastrado.</response>
         /// <response code="401">Usuário não autorizado.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPost("api/Produto/CadastraProduto")]
-        // [Authorize(Policy = "admin")]
+        [Authorize(Policy = "admin")]
         public async Task<ActionResult> CriarCadastroDeProduto([FromBody] CadastroDeProdutoDTO produtoDTO)
         {
+            var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             if (_context.VerificaSeExisteProduto(produtoDTO.Nome))
                 return NotFound($"O Produto '{produtoDTO.Nome}' já existente");
-            var cadastroInserido = await _context.CadastrarProduto(produtoDTO);
+            var cadastroInserido = await _context.CadastrarProduto(produtoDTO, IdUsuarioAlteracao);
             return Ok(new
             {
-                message = "Prosuto cadastrado com sucesso!",
+                message = "Produto cadastrado com sucesso!",
                 Id = cadastroInserido,
                 NovoProduto = produtoDTO
             });

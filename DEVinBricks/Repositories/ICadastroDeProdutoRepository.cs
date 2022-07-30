@@ -6,7 +6,7 @@ namespace DEVinBricks.Repositories
 {
     public interface ICadastroDeProdutoRepository
     {
-        Task<int> CadastrarProduto(CadastroDeProdutoDTO produtoDTO);
+        Task<int> CadastrarProduto(CadastroDeProdutoDTO produtoDTO, int IdUsuarioAlteracao);
         IEnumerable<Produto> ListarProdutos(CadastroGetDoDTO produtoDTO);
         bool VerificaSeExisteProduto(string nome);
         public Produto ObterPeloIdCadastro(int id);

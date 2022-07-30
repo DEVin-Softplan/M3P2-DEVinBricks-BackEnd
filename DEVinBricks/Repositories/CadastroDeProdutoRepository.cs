@@ -11,9 +11,9 @@ namespace DEVinBricks.Repositories
             _context = context;
         }
 
-        public async Task<int> CadastrarProduto(CadastroDeProdutoDTO produtoDTO)
+        public async Task<int> CadastrarProduto(CadastroDeProdutoDTO produtoDTO, int IdUsuarioAlteracao)
         {
-            var newProdutoModel = CadastroDeProdutoDTO.ConverterParaEntidadeCadastro(produtoDTO);
+            var newProdutoModel = CadastroDeProdutoDTO.ConverterParaEntidadeCadastro(produtoDTO, IdUsuarioAlteracao);
             var resultadoDeCadastro = await _context.Produtos.AddAsync(newProdutoModel);
             await _context.SaveChangesAsync();
             return resultadoDeCadastro.Entity.Id;
