@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NUnit.Framework;
 using System.Security.Claims;
+using System.Collections.Generic;
 
 namespace DEVinBricks.Teste
 {
@@ -30,6 +31,28 @@ namespace DEVinBricks.Teste
             context.Database.EnsureCreated();
         }
 
+        /// <summary>
+        /// Teste que valida adição e validação de não adicionar quando já há cadastro do estado
+        /// </summary>
+        [Test]
+        public void AdicionarValorFretePorEstado()
+        {
+            var controller = retornaController();
+            var dto = new ValorFretePorEstadoPostDTO()
+            {
+                Valor = 100,
+                EstadoId = 1
+            };
+            var response = controller.Adicionar(dto) as CreatedResult;
+            Assert.AreEqual(response.StatusCode, 201);
+
+            dto.Valor = 200;
+
+            var responseCriacaoExistente = controller.Adicionar(dto) as BadRequestObjectResult;
+
+            Assert.AreEqual(responseCriacaoExistente.StatusCode, 400);
+        }
+
         [Test]
         public void EditaValorFretePorEstadoIdNaoEcontrado()
         {
@@ -43,6 +66,7 @@ namespace DEVinBricks.Teste
 
             Assert.AreEqual(response.Value, "Id não encontrado");
         }
+
         [Test]
         public void EditaValorFretePorEstadoIdConflitanteBadRequest()
         {
@@ -57,6 +81,19 @@ namespace DEVinBricks.Teste
             var response = controller.Editar(dto, 1) as Microsoft.AspNetCore.Mvc.BadRequestObjectResult;
 
             Assert.AreEqual(response.Value, "Dados inconsistentes");
+        }
+
+        [Test]
+        public void ConsultaValorFretePorEstado()
+        {
+            var controller = retornaController();
+
+            var response = controller.Consultar("Santa") as OkObjectResult;
+            
+            Assert.AreEqual(response.StatusCode, 200);
+            var responseEntity = response.Value as List<ValorFretePorEstadoModel>;
+            Assert.IsNotNull(responseEntity);
+            Assert.AreEqual(responseEntity[0].Id, 1);
         }
 
         public void EditaValorFretePorEstadoSucesso()

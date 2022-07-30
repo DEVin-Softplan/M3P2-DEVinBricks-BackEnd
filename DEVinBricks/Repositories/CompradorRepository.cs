@@ -1,27 +1,28 @@
 ﻿using DEVinBricks.DTO;
 using DEVinBricks.Repositories.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DEVinBricks.Repositories
 {
     public class CompradorRepository : ICompradorRepository
     {
-        private DEVinBricksContext _context;
-        public CompradorRepository(DEVinBricksContext context)
+        private DEVinBricksContext _compradorContext;
+        public CompradorRepository(DEVinBricksContext compradorContext)
         {
-            _context = context;
+            _compradorContext = compradorContext;
         }
-        public async Task<int> CadastrarComprador(CompradorPostDTO comprador)
+
+        public async Task<int> CadastrarComprador(CompradorPostDTO comprador, int authUserId, DateTime dataDeNascimento)
         {
-            var newComprador = CompradorPostDTO.ConverterParaEntidadeComprador(comprador);
-            var resultado = await _context.Compradores.AddAsync(newComprador);
-            await _context.SaveChangesAsync();
+            var newComprador = CompradorPostDTO.ConverterParaEntidadeComprador(comprador, authUserId, dataDeNascimento);
+            var resultado = await _compradorContext.Compradores.AddAsync(newComprador);
+            await _compradorContext.SaveChangesAsync();
             return resultado.Entity.Id;
         }
 
-
         public IEnumerable<Comprador> ListarGetComprador(CompradorGetDTO comprador)
         {
-            var queryableComprador = _context.Compradores as IQueryable<Comprador>;
+            var queryableComprador = _compradorContext.Compradores.Include(ui => ui.UsuarioInclusao).ThenInclude(ua => ua.UsuarioAlteracao) as IQueryable<Comprador>;
             if (!string.IsNullOrWhiteSpace(comprador.Nome))
                 queryableComprador = queryableComprador.Where(c => c.Nome.Contains(comprador.Nome));
             if (!string.IsNullOrWhiteSpace(comprador.CPF))
@@ -34,36 +35,33 @@ namespace DEVinBricks.Repositories
             return resultado;
         }
 
-
-        public bool VerificaSeExisteCPFComprador(string cpf)
-        {
-            return _context.Compradores.Any(x => x.CPF == cpf);
-        }
-
-
-        public bool VerificaSeExisteEmailComprador(string email)
-        {
-            return _context.Compradores.Any(x => x.Email == email);
-        }
-
-
-        public Comprador ObterPeloId(int id)
-        {
-            return _context.Compradores.FirstOrDefault(x => x.Id == id);
-        }
-
-
-        public Comprador EditarComprador(CompradorPatchDTO dto, int id)
+        public Comprador EditarComprador(CompradorPatchDTO dto, int authUserId, int id)
         {
             var model = ObterPeloId(id);
             if (VerificaSeTemConteudo(dto.Email)) model.Email = dto.Email;
             if (VerificaSeTemConteudo(dto.Telefone)) model.Telefone = dto.Telefone;
-            _context.Update(model);
-            _context.SaveChanges();
+            model.UsuarioAlteracaoId = authUserId;
+            model.DataDeAlteracao = DateTime.Now;
+            _compradorContext.Update(model);
+            _compradorContext.SaveChanges();
 
             return model;
         }
 
+        public bool VerificaSeExisteCPFComprador(string cpf)
+        {
+            return _compradorContext.Compradores.Any(x => x.CPF == cpf);
+        }
+
+        public bool VerificaSeExisteEmailComprador(string email)
+        {
+            return _compradorContext.Compradores.Any(x => x.Email == email);
+        }
+
+        public Comprador ObterPeloId(int id)
+        {
+            return _compradorContext.Compradores.Include(ui => ui.UsuarioInclusao).ThenInclude(ua => ua.UsuarioAlteracao).FirstOrDefault(x => x.Id == id);
+        }
 
         public bool VerificaSeTemConteudo(string texto)
         {
