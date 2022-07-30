@@ -12,10 +12,13 @@ namespace DEVinBricks.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoService _service;
+        private readonly ICadastroDeProdutoRepository _context;
 
-        public ProdutoController(IProdutoService service)
+
+        public ProdutoController(IProdutoService service, ICadastroDeProdutoRepository context)
         {
             _service = service;
+            _context = context;
         }
 
         /// <summary>
@@ -87,6 +90,32 @@ namespace DEVinBricks.Controllers
             var response = _service.EditarProduto(dto, IdUsuarioAlteracao);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Cadastre um Produto
+        /// </summary>
+        /// <returns>Produto cadastrado com sucesso!</returns>
+        /// <response code="200">Cadastro realizado com sucesso.</response>
+        /// <response code="400">Já existe Produto cadastrado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpPost("api/Produto/CadastraProduto")]
+        [Authorize(Policy = "admin")]
+        public async Task<ActionResult> CriarCadastroDeProduto([FromBody] CadastroDeProdutoDTO produtoDTO)
+        {
+            var IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (_context.VerificaSeExisteProduto(produtoDTO.Nome))
+                return NotFound($"O Produto '{produtoDTO.Nome}' já existente");
+            var cadastroInserido = await _context.CadastrarProduto(produtoDTO, IdUsuarioAlteracao);
+            return Ok(new
+            {
+                message = "Produto cadastrado com sucesso!",
+                Id = cadastroInserido,
+                NovoProduto = produtoDTO
+            });
         }
     }
 }
