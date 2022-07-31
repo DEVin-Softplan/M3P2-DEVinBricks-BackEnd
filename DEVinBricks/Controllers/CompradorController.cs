@@ -51,7 +51,7 @@ namespace DEVinBricks.Controllers
             comprador.Telefone = Util.formataTelefone(comprador.Telefone);
             if (!Util.verificaDataNascimento(comprador.DataDeNascimento))
                 return BadRequest($"A Data de Nascimento '{comprador.DataDeNascimento}' não está no formato adequado (dd/MM/yyyy). Exemplo: 01/01/2000");
-            DateTime dataDeNascimento = DateTime.ParseExact(comprador.DataDeNascimento, "dd/MM/yyyy", new CultureInfo("pt-BR"));
+            DateTime dataDeNascimento = Util.formataStringParaDatetime(comprador.DataDeNascimento);
             if (!Util.validaCPF(postCompradorCPF))
                 return BadRequest($"O CPF '{postCompradorCPF}' não é válido.");
             if (!Util.validaEmail(comprador.Email))
@@ -59,7 +59,7 @@ namespace DEVinBricks.Controllers
             if (_compradorRepository.VerificaSeExisteEmailComprador(comprador.Email))
                 return BadRequest($"O E-mail '{comprador.Email}' já está cadastrado.");
             if (_compradorRepository.VerificaSeExisteCPFComprador(comprador.CPF))
-                return BadRequest($"O CPF '{postCompradorCPF}' já está cadastrado.");
+                 return BadRequest($"O CPF '{postCompradorCPF}' já está cadastrado.");
             int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var resultado = await _compradorRepository.CadastrarComprador(comprador, authUserId, dataDeNascimento);
             return Created("Comprador cadastrado com sucesso!", new { Id = resultado, NovoComprador = comprador });
@@ -136,14 +136,12 @@ namespace DEVinBricks.Controllers
         {
             int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             alteracao.Telefone = Util.formataTelefone(alteracao.Telefone);
-            // verificar se o ID existe
             if (_compradorRepository.ObterPeloId(id) == null)
                 return NotFound("Id não encontrado");
             if (!Util.validaEmail(alteracao.Email))
                 return BadRequest($"O E-mail '{alteracao.Email}' não é valido. Exemplo: exemplopatch@email.com.br");
             if (_compradorRepository.VerificaSeExisteEmailComprador(alteracao.Email))
                 return BadRequest($"O Email '{alteracao.Email}' já existe.");
-            // sucesso editado 201
             var model = _compradorRepository.EditarComprador(alteracao, authUserId, id);
             return NoContent();
         }
