@@ -3,15 +3,13 @@ using DEVinBricks.DTO;
 using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
 using DEVinBricks.Seeds;
-using DEVinBricks.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DEVinBricks.Teste
@@ -20,39 +18,54 @@ namespace DEVinBricks.Teste
     {
         private DbContextOptions<DEVinBricksContext> _contextOptions;
 
-        public CompradorControllerTest()
+        [SetUp]
+        public void Setup()
         {
             _contextOptions = new DbContextOptionsBuilder<DEVinBricksContext>()
-          .UseInMemoryDatabase("CompradorTeste")
-          .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
-          .Options;
+                             .UseInMemoryDatabase("CompradorTeste")
+                             .ConfigureWarnings(b => b.Ignore(InMemoryEventId.TransactionIgnoredWarning))
+                             .Options;
 
             using var context = new DEVinBricksContext(_contextOptions);
 
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
         }
-        [SetUp]
-        public void Setup()
+        public CompradorController retornaCompradorController()
         {
-
+            var context = new DEVinBricksContext(_contextOptions);
+            var repository = new CompradorRepository(context);
+            var controller = new CompradorController(repository);
+            var claims = new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, "1"),
+                    new Claim(ClaimTypes.Name, "Admin"),
+                    new Claim(ClaimTypes.Email, "admin@gmail.com"),
+                    new Claim("is_admin","True"),
+                };
+            var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "mock"));
+            var controllercontext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext
+                {
+                    User = user
+                }
+            };
+            controller.ControllerContext = controllercontext;
+            return controller;
         }
+
         [Test]
         public async Task GetCompradorPeloIdExistente()
         {
 
-            var context = new DEVinBricksContext(_contextOptions);
-
-            var repository = new CompradorRepository(context);
-
-            var controller = new CompradorController(repository);
+            var controller = retornaCompradorController();
 
             var result = await controller.ObterCompradorPeloId(1);
 
             var expected = (result.Result as ObjectResult);
 
-            Assert.Pass();
-            Assert.That(expected.Value.ToString(), Is.EqualTo(UsuarioSeed.Seed.First().ToString()));
+            Assert.That(expected.Value.ToString(), Is.EqualTo(CompradorSeed.Seed.First().ToString()));
             Assert.That(expected.StatusCode.ToString(), Is.EqualTo("200"));
 
         }
@@ -60,13 +73,9 @@ namespace DEVinBricks.Teste
         public async Task GetCompradorPeloIdInexistente()
         {
 
-            var context = new DEVinBricksContext(_contextOptions);
+            var controller = retornaCompradorController();
 
-            var repository = new CompradorRepository(context);
-
-            var controller = new CompradorController(repository);
-
-            var result = await controller.ObterCompradorPeloId(124321352);
+            var result = await controller.ObterCompradorPeloId(-1);
 
             var expected = (result.Result as ObjectResult);
 
@@ -79,19 +88,15 @@ namespace DEVinBricks.Teste
         public async Task PatchDadosComIdInexistente()
         {
 
-            var context = new DEVinBricksContext(_contextOptions);
-
-            var repository = new CompradorRepository(context);
-
-            var controller = new CompradorController(repository);
+            var controller = retornaCompradorController();
 
             var dto = new CompradorPatchDTO()
             {
-                Email = "jaexiste@gmail.com",
+                Email = "AlteraComprador@gmail.com",
                 Telefone = ""
             };
 
-            var response = controller.EditarComprador(dto, 1231231);
+            var response = controller.EditarComprador(dto, -1);
 
             var expected = (response as ObjectResult);
 
@@ -103,15 +108,11 @@ namespace DEVinBricks.Teste
         public async Task PatchDadosComEmailExistente()
         {
 
-            var context = new DEVinBricksContext(_contextOptions);
-
-            var repository = new CompradorRepository(context);
-
-            var controller = new CompradorController(repository);
+            var controller = retornaCompradorController();
 
             var dto = new CompradorPatchDTO()
             {
-                Email = "jaexiste@gmail.com",
+                Email = "comprador1@comprador.com.br",
                 Telefone = ""
             };
 
@@ -119,32 +120,67 @@ namespace DEVinBricks.Teste
 
             var expected = (response as ObjectResult);
 
-            Assert.Pass();
-            Assert.That(expected.Value.ToString(), Is.EqualTo("O Email informado já existe."));
+            Assert.That(expected.Value.ToString(), Is.EqualTo($"O Email '{dto.Email}' já existe."));
+            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
+        }
+        [Test]
+        public async Task PatchDadosComFormatoEmailErrado()
+        {
+
+            var controller = retornaCompradorController();
+
+            var dto = new CompradorPatchDTO()
+            {
+                Email = "erradogmail.com",
+                Telefone = ""
+            };
+
+            var response = controller.EditarComprador(dto, 1);
+
+            var expected = (response as ObjectResult);
+
+            Assert.That(expected.Value.ToString(), Is.EqualTo($"O E-mail '{dto.Email}' não é valido. Exemplo: exemplopatch@email.com.br"));
             Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
         }
         [Test]
         public async Task PatchDadosComIdExistente()
         {
 
-            var context = new DEVinBricksContext(_contextOptions);
-
-            var repository = new CompradorRepository(context);
-
-            var controller = new CompradorController(repository);
+            var controller = retornaCompradorController();
 
             var dto = new CompradorPatchDTO()
             {
                 Email = "outroemail@gmail.com",
-                Telefone = ""
+                Telefone = "(98) 7654-3210"
             };
 
             var response = controller.EditarComprador(dto, 1);
 
-            var expected = (response as ObjectResult);
+            var expectedResult = (response as ObjectResult);
 
-            Assert.Pass();
-            Assert.That(expected.StatusCode.ToString(), Is.EqualTo("200"));
+            Assert.IsNull(expectedResult);
         }
+        //[Test]
+        //public async Task PostNovoCompradorCPFErrado()
+        //{
+
+        //    var controller = retornaCompradorController();
+
+        //    var dto = new CompradorPostDTO()
+        //    {
+        //        Nome = "Novo Comprador",
+        //        Email = "novo.comprador@comprador.com.br",
+        //        Telefone = "(55) 4321-5678",
+        //        DataDeNascimento = "05/05/2005",
+        //        CPF = "432156"
+        //    };
+
+        //    var response = controller.CriarComprador(dto);
+
+        //    var expectedResult = (response as ObjectResult);
+
+        //    Assert.That(expected.Value.ToString(), Is.EqualTo($"O E-mail '{dto.Email}' não é valido. Exemplo: exemplopatch@email.com.br"));
+        //    Assert.That(expected.StatusCode.ToString(), Is.EqualTo("400"));
+        //}
     }
 }

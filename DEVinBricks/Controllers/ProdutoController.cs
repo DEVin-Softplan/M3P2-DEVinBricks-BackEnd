@@ -33,7 +33,8 @@ namespace DEVinBricks.Controllers
         /// <response code="404">Nenhum resultado encontrado.</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Route("ObterProduto"),HttpGet]
+        [HttpGet("{id}")]
+        [Authorize(Policy = "admin")]
         public ActionResult ObterProduto(int id)
         {
             try
@@ -57,8 +58,8 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Route("ListaProdutos"), HttpPost]
-        //[Authorize(Policy = "admin")]
+        [HttpGet]
+        [Authorize(Policy = "admin")]
         public IActionResult ObterListaProduto(string? nome, int pagina, int tamanhoPagina)
         {
             var response = _service.ObterListaProduto(nome, pagina, tamanhoPagina);
@@ -78,8 +79,8 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [Route("Editar"), HttpPut]
-       // [Authorize(Policy = "admin")]
+        [HttpPut]
+        [Authorize(Policy = "admin")]
         public IActionResult EditarProduto([FromBody] ObterProdutoPorIdDTO dto)
         {
 
@@ -97,7 +98,7 @@ namespace DEVinBricks.Controllers
         }
 
         /// <summary>
-        /// Cadastre um Produto
+        /// Cadastra um Produto
         /// </summary>
         /// <returns>Produto cadastrado com sucesso!</returns>
         /// <response code="200">Cadastro realizado com sucesso.</response>
@@ -106,7 +107,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpPost("api/Produto/CadastraProduto")]
+        [HttpPost]
         [Authorize(Policy = "admin")]
         public async Task<ActionResult> CriarCadastroDeProduto([FromBody] CadastroDeProdutoDTO produtoDTO)
         {

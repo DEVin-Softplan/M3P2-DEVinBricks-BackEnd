@@ -136,14 +136,12 @@ namespace DEVinBricks.Controllers
         {
             int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             alteracao.Telefone = Util.formataTelefone(alteracao.Telefone);
-            // verificar se o ID existe
             if (_compradorRepository.ObterPeloId(id) == null)
                 return NotFound("Id não encontrado");
             if (!Util.validaEmail(alteracao.Email))
                 return BadRequest($"O E-mail '{alteracao.Email}' não é valido. Exemplo: exemplopatch@email.com.br");
             if (_compradorRepository.VerificaSeExisteEmailComprador(alteracao.Email))
                 return BadRequest($"O Email '{alteracao.Email}' já existe.");
-            // sucesso editado 201
             var model = _compradorRepository.EditarComprador(alteracao, authUserId, id);
             return NoContent();
         }
