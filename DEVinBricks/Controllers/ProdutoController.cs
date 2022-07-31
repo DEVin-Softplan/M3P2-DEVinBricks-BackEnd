@@ -1,5 +1,6 @@
 ﻿using DEVinBricks.DTO;
 using DEVinBricks.Repositories;
+using DEVinBricks.Repositories.Models;
 using DEVinBricks.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,15 @@ namespace DEVinBricks.Controllers
     {
         private readonly IProdutoService _service;
         private readonly ICadastroDeProdutoRepository _context;
+        
+        public ProdutoController(ICadastroDeProdutoRepository context)
+        {
+            _context = context;
+        } 
 
-
-        public ProdutoController(IProdutoService service, ICadastroDeProdutoRepository context)
+        public ProdutoController(IProdutoService service)
         {
             _service = service;
-            _context = context;
         }
 
         /// <summary>
@@ -116,6 +120,24 @@ namespace DEVinBricks.Controllers
                 Id = cadastroInserido,
                 NovoProduto = produtoDTO
             });
+        }
+
+        /// <summary>
+        /// Busca Produto pelo Id
+        /// </summary>
+        /// <param name="id">Busca Id do Produto.</param>
+        /// <returns>Dados do Produto</returns>
+        /// <response code="200">Produto encontrado.</response>
+        /// <response code="404">Produto não encontrado.</response>
+        [HttpGet(Name = "TesteProdutoId")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task <ActionResult<IEnumerable<Produto>>> ObterPeloIdCadastro(int id)
+        {
+            var produto = _context.ObterPeloIdCadastro(id);
+            if (produto == null)
+                return NotFound("Produto não encontrado.");
+            return Ok(produto);
         }
     }
 }
