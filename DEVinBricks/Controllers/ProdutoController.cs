@@ -121,23 +121,5 @@ namespace DEVinBricks.Controllers
                 NovoProduto = produtoDTO
             });
         }
-
-        /// <summary>
-        /// Busca Produto pelo Id
-        /// </summary>
-        /// <param name="id">Busca Id do Produto.</param>
-        /// <returns>Dados do Produto</returns>
-        /// <response code="200">Produto encontrado.</response>
-        /// <response code="404">Produto não encontrado.</response>
-        [HttpGet(Name = "TesteProdutoId")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task <ActionResult<IEnumerable<Produto>>> ObterPeloIdCadastro(int id)
-        {
-            var produto = _context.ObterPeloIdCadastro(id);
-            if (produto == null)
-                return NotFound("Produto não encontrado.");
-            return Ok(produto);
-        }
     }
 }
