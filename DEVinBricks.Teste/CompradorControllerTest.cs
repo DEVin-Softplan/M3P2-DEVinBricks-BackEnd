@@ -91,7 +91,7 @@ namespace DEVinBricks.Teste
                 Telefone = ""
             };
 
-            var response = controller.Editar(dto, 1231231);
+            var response = controller.EditarComprador(dto, 1231231);
 
             var expected = (response as ObjectResult);
 
@@ -115,7 +115,7 @@ namespace DEVinBricks.Teste
                 Telefone = ""
             };
 
-            var response = controller.Editar(dto, 1);
+            var response = controller.EditarComprador(dto, 1);
 
             var expected = (response as ObjectResult);
 
@@ -139,7 +139,7 @@ namespace DEVinBricks.Teste
                 Telefone = ""
             };
 
-            var response = controller.Editar(dto, 1);
+            var response = controller.EditarComprador(dto, 1);
 
             var expected = (response as ObjectResult);
 

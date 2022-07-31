@@ -1,5 +1,6 @@
 ﻿using DEVinBricks.DTO;
 using DEVinBricks.Repositories;
+using DEVinBricks.Repositories.Models;
 using DEVinBricks.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,15 @@ namespace DEVinBricks.Controllers
     {
         private readonly IProdutoService _service;
         private readonly ICadastroDeProdutoRepository _context;
+        
+        public ProdutoController(ICadastroDeProdutoRepository context)
+        {
+            _context = context;
+        } 
 
-
-        public ProdutoController(IProdutoService service, ICadastroDeProdutoRepository context)
+        public ProdutoController(IProdutoService service)
         {
             _service = service;
-            _context = context;
         }
 
         /// <summary>
