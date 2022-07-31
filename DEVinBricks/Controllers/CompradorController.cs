@@ -51,7 +51,7 @@ namespace DEVinBricks.Controllers
             comprador.Telefone = Util.formataTelefone(comprador.Telefone);
             if (!Util.verificaDataNascimento(comprador.DataDeNascimento))
                 return BadRequest($"A Data de Nascimento '{comprador.DataDeNascimento}' não está no formato adequado (dd/MM/yyyy). Exemplo: 01/01/2000");
-            DateTime dataDeNascimento = DateTime.ParseExact(comprador.DataDeNascimento, "dd/MM/yyyy", new CultureInfo("pt-BR"));
+            DateTime dataDeNascimento = Util.formataStringParaDatetime(comprador.DataDeNascimento);
             if (!Util.validaCPF(postCompradorCPF))
                 return BadRequest($"O CPF '{postCompradorCPF}' não é válido.");
             if (!Util.validaEmail(comprador.Email))

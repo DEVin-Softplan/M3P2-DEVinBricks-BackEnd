@@ -5,6 +5,10 @@ namespace DEVinBricks.Services
 {
     public class Util
     {
+        public static DateTime formataStringParaDatetime(string date)
+        {
+            return DateTime.ParseExact(date, "dd/MM/yyyy", new CultureInfo("pt-BR"));
+        }
         public static bool verificaDataNascimento(string dataNascimento)
         {
             return DateTime.TryParseExact(dataNascimento, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date);
