@@ -1,4 +1,5 @@
 ﻿using DEVinBricks.Repositories.Models;
+using DEVinBricks.Services;
 using System.Globalization;
 
 namespace DEVinBricks.Seeds
@@ -11,9 +12,9 @@ namespace DEVinBricks.Seeds
               Id = 1,
               Nome = "Comprador 1",
               Email = "comprador1@comprador.com.br",
-              Telefone = "(12) 3456-7891",
-              DataDeNascimento = DateTime.ParseExact("01/01/2000", "dd/MM/yyyy", new CultureInfo("pt-BR")),
-              CPF = "12345678911",
+              Telefone = "1234567891",
+              DataDeNascimento = Util.formataStringParaDatetime("01/01/2000"),
+              CPF = "34602022030",
               Ativo = true,
               UsuarioInclusaoId = 1
           },
@@ -22,9 +23,9 @@ namespace DEVinBricks.Seeds
               Id = 2,
               Nome = "Comprador 2",
               Email = "comprador2@comprador.com.br",
-              Telefone = "(12) 3456-7892",
-              DataDeNascimento = DateTime.ParseExact("02/01/2000", "dd/MM/yyyy", new CultureInfo("pt-BR")),
-              CPF = "12345678912",
+              Telefone = "1234567892",
+              DataDeNascimento = Util.formataStringParaDatetime("02/01/2000"),
+              CPF = "13574152060",
               Ativo = true,
               UsuarioInclusaoId = 1
           },
@@ -33,9 +34,9 @@ namespace DEVinBricks.Seeds
               Id = 3,
               Nome = "Comprador 3",
               Email = "comprador3@comprador.com.br",
-              Telefone = "(12) 3456-7893",
-              DataDeNascimento = DateTime.ParseExact("03/01/2000", "dd/MM/yyyy", new CultureInfo("pt-BR")),
-              CPF = "12345678913",
+              Telefone = "1234567893",
+              DataDeNascimento = Util.formataStringParaDatetime("03/01/2000"),
+              CPF = "57394817083",
               Ativo = true,
               UsuarioInclusaoId = 1
           },
@@ -44,9 +45,9 @@ namespace DEVinBricks.Seeds
               Id = 4,
               Nome = "Comprador 4",
               Email = "comprador4@comprador.com.br",
-              Telefone = "(12) 3456-7894",
-              DataDeNascimento = DateTime.ParseExact("04/01/2000", "dd/MM/yyyy", new CultureInfo("pt-BR")),
-              CPF = "12345678914",
+              Telefone = "1234567894",
+              DataDeNascimento = Util.formataStringParaDatetime("04/01/2000"),
+              CPF = "39921234056",
               Ativo = true,
               UsuarioInclusaoId = 1
           },
@@ -55,9 +56,9 @@ namespace DEVinBricks.Seeds
               Id = 5,
               Nome = "Comprador 5",
               Email = "comprador5@comprador.com.br",
-              Telefone = "(12) 3456-7895",
-              DataDeNascimento = DateTime.ParseExact("05/01/2000", "dd/MM/yyyy", new CultureInfo("pt-BR")),
-              CPF = "12345678915",
+              Telefone = "1234567895",
+              DataDeNascimento = Util.formataStringParaDatetime("05/01/2000"),
+              CPF = "80202128091",
               Ativo = true,
               UsuarioInclusaoId = 1
           }

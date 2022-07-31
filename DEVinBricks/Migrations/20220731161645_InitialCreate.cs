@@ -300,22 +300,34 @@ namespace DEVinBricks.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "Admin", "Ativo", "DataDeAlteracao", "DataDeInclusao", "Email", "Login", "Nome", "Senha", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
-                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 31, 0, 16, 45, 335, DateTimeKind.Local).AddTicks(5508), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
+                values: new object[] { 1, true, true, null, new DateTime(2022, 7, 31, 13, 16, 44, 210, DateTimeKind.Local).AddTicks(7078), "admin@gmail.com", "admin", "Admin", "admin123", null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Compradores",
+                columns: new[] { "Id", "Ativo", "CPF", "DataDeAlteracao", "DataDeInclusao", "DataDeNascimento", "Email", "Nome", "Telefone", "UsuarioAlteracaoId", "UsuarioInclusaoId" },
+                values: new object[,]
+                {
+                    { 1, true, "34602022030", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "comprador1@comprador.com.br", "Comprador 1", "1234567891", null, 1 },
+                    { 2, true, "13574152060", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2000, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "comprador2@comprador.com.br", "Comprador 2", "1234567892", null, 1 },
+                    { 3, true, "57394817083", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2000, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "comprador3@comprador.com.br", "Comprador 3", "1234567893", null, 1 },
+                    { 4, true, "39921234056", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2000, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "comprador4@comprador.com.br", "Comprador 4", "1234567894", null, 1 },
+                    { 5, true, "80202128091", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2000, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "comprador5@comprador.com.br", "Comprador 5", "1234567895", null, 1 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Fretes",
                 columns: new[] { "Id", "Bairro", "Cep", "Cidade", "Complemento", "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao", "EstadoId", "Logadouro", "UsuarioAlteracaoId", "UsuarioInclusaoId", "ValorFrete" },
                 values: new object[,]
                 {
-                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(6848), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(6148), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(6844), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
-                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7525), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7522), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7524), 12, "Rua Dino, 456", 1, 1, 53m },
-                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7529), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7528), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7528), 13, "Rua do Acai, 789", 1, 1, 32m }
+                    { 1, "Vasco", "0123456-789", "Porto Velho", "Casa 98", new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(220), new DateTime(2022, 7, 31, 13, 16, 44, 227, DateTimeKind.Local).AddTicks(9218), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(215), 11, "Rua Vasco da Gama, 123", 1, 1, 27m },
+                    { 2, "T-REX", "345631-127", "Parque Jurassico", "Casa 47", new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1180), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1176), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1179), 12, "Rua Dino, 456", 1, 1, 53m },
+                    { 3, "Acai", "999999-888", "Manaus", "Casa 12", new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1185), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1184), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1184), 13, "Rua do Acai, 789", 1, 1, 32m }
                 });
 
             migrationBuilder.InsertData(
                 table: "ValorFreteEstados",
                 columns: new[] { "Id", "DataDeAlteracao", "DataDeInclusao", "EstadoId", "UsuarioAlteracaoId", "UsuarioInclusaoId", "Valor" },
-                values: new object[] { 1, null, new DateTime(2022, 7, 31, 0, 16, 45, 340, DateTimeKind.Local).AddTicks(8188), 42, null, 1, 100m });
+                values: new object[] { 1, null, new DateTime(2022, 7, 31, 13, 16, 44, 229, DateTimeKind.Local).AddTicks(4695), 42, null, 1, 100m });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Compradores_UsuarioAlteracaoId",

@@ -14,35 +14,35 @@ namespace DEVinBricks.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 columns: new[] { "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao" },
-                values: new object[] { new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(5194), new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(4403), new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(5190) });
+                values: new object[] { new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7117), new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(6385), new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7112) });
 
             migrationBuilder.UpdateData(
                 table: "Fretes",
                 keyColumn: "Id",
                 keyValue: 2,
                 columns: new[] { "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao" },
-                values: new object[] { new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(6524), new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(6516), new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(6523) });
+                values: new object[] { new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7885), new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7881), new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7884) });
 
             migrationBuilder.UpdateData(
                 table: "Fretes",
                 keyColumn: "Id",
                 keyValue: 3,
                 columns: new[] { "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao" },
-                values: new object[] { new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(6529), new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(6527), new DateTime(2022, 7, 31, 0, 17, 16, 315, DateTimeKind.Local).AddTicks(6528) });
+                values: new object[] { new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7889), new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7888), new DateTime(2022, 7, 31, 13, 16, 58, 44, DateTimeKind.Local).AddTicks(7889) });
 
             migrationBuilder.UpdateData(
                 table: "Usuarios",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "DataDeInclusao",
-                value: new DateTime(2022, 7, 31, 0, 17, 16, 311, DateTimeKind.Local).AddTicks(406));
+                value: new DateTime(2022, 7, 31, 13, 16, 58, 35, DateTimeKind.Local).AddTicks(2292));
 
             migrationBuilder.UpdateData(
                 table: "ValorFreteEstados",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "DataDeInclusao",
-                value: new DateTime(2022, 7, 31, 0, 17, 16, 316, DateTimeKind.Local).AddTicks(7688));
+                value: new DateTime(2022, 7, 31, 13, 16, 58, 45, DateTimeKind.Local).AddTicks(8196));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -52,35 +52,35 @@ namespace DEVinBricks.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 columns: new[] { "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao" },
-                values: new object[] { new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(6848), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(6148), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(6844) });
+                values: new object[] { new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(220), new DateTime(2022, 7, 31, 13, 16, 44, 227, DateTimeKind.Local).AddTicks(9218), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(215) });
 
             migrationBuilder.UpdateData(
                 table: "Fretes",
                 keyColumn: "Id",
                 keyValue: 2,
                 columns: new[] { "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao" },
-                values: new object[] { new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7525), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7522), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7524) });
+                values: new object[] { new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1180), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1176), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1179) });
 
             migrationBuilder.UpdateData(
                 table: "Fretes",
                 keyColumn: "Id",
                 keyValue: 3,
                 columns: new[] { "DataDeAlteracao", "DataDeEntrega", "DataDeInclusao" },
-                values: new object[] { new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7529), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7528), new DateTime(2022, 7, 31, 0, 16, 45, 339, DateTimeKind.Local).AddTicks(7528) });
+                values: new object[] { new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1185), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1184), new DateTime(2022, 7, 31, 13, 16, 44, 228, DateTimeKind.Local).AddTicks(1184) });
 
             migrationBuilder.UpdateData(
                 table: "Usuarios",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "DataDeInclusao",
-                value: new DateTime(2022, 7, 31, 0, 16, 45, 335, DateTimeKind.Local).AddTicks(5508));
+                value: new DateTime(2022, 7, 31, 13, 16, 44, 210, DateTimeKind.Local).AddTicks(7078));
 
             migrationBuilder.UpdateData(
                 table: "ValorFreteEstados",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "DataDeInclusao",
-                value: new DateTime(2022, 7, 31, 0, 16, 45, 340, DateTimeKind.Local).AddTicks(8188));
+                value: new DateTime(2022, 7, 31, 13, 16, 44, 229, DateTimeKind.Local).AddTicks(4695));
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using DEVinBricks.Repositories.Models;
 using FluentValidation;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DEVinBricks.Controllers.Validacoes
 {
-    [ExcludeFromCodeCoverage]
     public class ValidarUsuario : AbstractValidator<Usuario>
     {
         public ValidarUsuario()

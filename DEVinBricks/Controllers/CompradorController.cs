@@ -59,7 +59,7 @@ namespace DEVinBricks.Controllers
             if (_compradorRepository.VerificaSeExisteEmailComprador(comprador.Email))
                 return BadRequest($"O E-mail '{comprador.Email}' já está cadastrado.");
             if (_compradorRepository.VerificaSeExisteCPFComprador(comprador.CPF))
-                return BadRequest($"O CPF '{postCompradorCPF}' já está cadastrado.");
+                 return BadRequest($"O CPF '{postCompradorCPF}' já está cadastrado.");
             int authUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var resultado = await _compradorRepository.CadastrarComprador(comprador, authUserId, dataDeNascimento);
             return Created("Comprador cadastrado com sucesso!", new { Id = resultado, NovoComprador = comprador });
