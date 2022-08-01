@@ -24,6 +24,39 @@ namespace DEVinBricks.Services
             return usuarioId;
         }
 
+        public async Task<Usuario> CriarUsuario(CadastrarUsuarioDTO usuario, int idInclusao)
+        {
+            string senha = GerarSenha();
+            var usuarioInclusao = _usuarioRepository.ObterUsuarioPorId(idInclusao);
+
+            var novoUsuario = new Usuario()
+            {
+                Nome = usuario.Nome,
+                Senha = senha,
+                Email = usuario.Email,
+                Login = usuario.Login,
+                Admin = usuario.Admin,
+                Ativo = true,
+                UsuarioInclusaoId = idInclusao,
+                UsuarioInclusao = usuarioInclusao,
+                DataDeInclusao = DateTime.Now,
+            };
+
+            return novoUsuario;
+        }
+
+        public string GerarSenha()
+        {
+            string chars = "abcdefghijklmnopqrstuvwxyz023456789";
+            string pass = "";
+            Random random = new Random();
+            for (int f = 0; f < 6; f++)
+            {
+                pass = pass + chars.Substring(random.Next(0, chars.Length - 1), 1);
+            }
+            return pass;
+        }
+
         public async Task<bool> VerificarSeEmailExiste(string email)
         {
             return await _usuarioRepository.VerificarSeEmailExiste(email);
