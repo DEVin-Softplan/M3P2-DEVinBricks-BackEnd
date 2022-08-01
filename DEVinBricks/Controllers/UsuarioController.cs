@@ -74,31 +74,37 @@ namespace DEVinBricks.Controllers
         /// Cadastra novo usuário no sistema
         /// </summary>
         /// <returns>Inclusão de usuário no sistema</returns>
-        /// <response code="200">Usuário cadastrado.</response>
+        /// <response code="201">Usuário cadastrado.</response>
         /// <response code="401">Seu usuário não está autenticado no sistema.</response>
         /// <response code="403">Seu usário não tem permissão para acessar essa informação.</response>
         /// <response code="422">Já existe um usuário cadastrado com esse mesmo email.</response>
+        /// <response code="400">Email ou Login já existente</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [Authorize(Policy = "admin")]
-        public async Task<IActionResult> Cadastrar([FromBody] Usuario usuario)
+        public async Task<IActionResult> Cadastrar([FromBody] CadastrarUsuarioDTO dadosUsuario)
         {
             try
             {
+                if (await _usuarioService.VerificarSeEmailExiste(dadosUsuario.Email)) return BadRequest("O email informado já existe.");
+
+                if (await _usuarioService.VerificarSeLoginExiste(dadosUsuario.Login)) return BadRequest("O login informado já existe.");
+
+                int IdUsuarioInclusao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+                var usuario = await _usuarioService.CriarUsuario(dadosUsuario, IdUsuarioInclusao);
+
                 var validador = new ValidarUsuario();
                 var valido = validador.Validate(usuario);
 
                 if (valido.IsValid)
                 {
-                    if (await _usuarioService.VerificarSeEmailExiste(usuario.Email))
-                    {
-                        return UnprocessableEntity(new { message = "Já existe um usuário cadastrado com esse mesmo email" });
-                    }
                     var resultado = await _usuarioService.CadastrarUsuario(usuario);
-                    return Ok(new { message = "Usuario cadastrado com sucesso!", id = resultado });
+                    return Created("Create", resultado);
                 }
                 else
                 {
