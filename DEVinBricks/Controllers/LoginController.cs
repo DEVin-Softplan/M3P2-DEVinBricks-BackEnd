@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinBricks.Controllers
 {
-    [Route("/Login")]
+    [Route("/api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
     {
