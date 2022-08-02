@@ -5,6 +5,7 @@ using DEVinBricks.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace DEVinBricks.Controllers
 {
@@ -27,6 +28,7 @@ namespace DEVinBricks.Controllers
         /// <returns>Token de Autenticação</returns>
         /// <response code="200">Login efetuado com sucesso.</response>
         /// <response code="404">Login e/ou senha incorreto(s).</response>
+        [EnableCors("AllowAllHeaders")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
