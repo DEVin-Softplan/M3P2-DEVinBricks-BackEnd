@@ -4,7 +4,7 @@ using DEVinBricks.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DEVinBricks.Services
+namespace DEVinBricks.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
