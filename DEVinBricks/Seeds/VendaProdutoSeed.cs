@@ -4,9 +4,9 @@ namespace DEVinBricks.Seeds
 {
     public class VendaProdutoSeed
     {
-        public static List<VendaProduto> Seed { get; set; } = new List<VendaProduto>()
+        public static List<VendaProdutoModel> Seed { get; set; } = new List<VendaProdutoModel>()
         {
-            new VendaProduto() {
+            new VendaProdutoModel() {
                 Id = 1,
                 IdVenda = 1,
                 IdProduto = 1,
@@ -15,7 +15,7 @@ namespace DEVinBricks.Seeds
                 UsuarioInclusaoId = 1,
                 DataDeInclusao = DateTime.Now,
             },
-            new VendaProduto() {
+            new VendaProdutoModel() {
                 Id = 2,
                 IdVenda = 1,
                 IdProduto = 2,
@@ -24,7 +24,7 @@ namespace DEVinBricks.Seeds
                 UsuarioInclusaoId = 1,
                 DataDeInclusao = DateTime.Now,
             },            
-            new VendaProduto() {
+            new VendaProdutoModel() {
                 Id = 3,
                 IdVenda = 1,
                 IdProduto = 3,
@@ -33,7 +33,7 @@ namespace DEVinBricks.Seeds
                 UsuarioInclusaoId = 1,
                 DataDeInclusao = DateTime.Now,
             },
-            new VendaProduto()
+            new VendaProdutoModel()
             {
                 Id = 4,
                 IdVenda = 2,

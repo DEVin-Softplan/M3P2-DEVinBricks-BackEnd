@@ -45,7 +45,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<IEnumerable<Repositories.Models.Venda>>> ObterVendaPeloId(int id)
+        public async Task<ActionResult<IEnumerable<Repositories.Models.VendaModel>>> ObterVendaPeloId(int id)
         {
             var Venda = _service.ObterPeloId(id);
             if (Venda == null) return NotFound("Venda não encontrada");
@@ -65,7 +65,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         //[Authorize(Policy = "admin")]
-        public ActionResult<Venda> GetVenda(//string? nome, string? cpf, 
+        public ActionResult<VendaModel> GetVenda(//string? nome, string? cpf, 
             int compradorId, int vendedorId, int pagina = 0, int tamanhopagina = 10)
         {
             VendaGetDTO Venda = VendaGetDTO.ConverterParaEntidadeVendaGetDTO(//nome, cpf, 

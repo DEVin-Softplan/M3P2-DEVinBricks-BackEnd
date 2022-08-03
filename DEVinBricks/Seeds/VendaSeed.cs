@@ -4,16 +4,16 @@ namespace DEVinBricks.Seeds
 {
     public class VendaSeed
     {
-        public static List<Venda> Seed { get; set; } = new List<Venda>()
+        public static List<VendaModel> Seed { get; set; } = new List<VendaModel>()
         {
-            new Venda() {
+            new VendaModel() {
                 Id = 1,
                 CompradorId = 1,
                 VendedorId = 1,
                 UsuarioInclusaoId = 1,
                 DataDeInclusao = DateTime.Now,
             },
-            new Venda() {
+            new VendaModel() {
                 Id = 2,
                 CompradorId = 1,
                 VendedorId = 1,

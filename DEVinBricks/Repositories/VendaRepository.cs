@@ -21,9 +21,9 @@ namespace DEVinBricks.Repositories
             return resultado.Entity.Id;
         }
 
-        public IEnumerable<Venda> ListarGetVenda(VendaGetDTO venda)
+        public IEnumerable<VendaModel> ListarGetVenda(VendaGetDTO venda)
         {
-            var queryableVenda = _context.Vendas as IQueryable<Venda>;
+            var queryableVenda = _context.Vendas as IQueryable<VendaModel>;
             if (venda.Pagina > 0)
                 queryableVenda = queryableVenda
                                     .Skip((venda.Pagina - 1) * venda.TamanhoPagina)
@@ -41,7 +41,7 @@ namespace DEVinBricks.Repositories
         //    return _context.Vendas.Any(x => x.CPF == cpf);
         //}
 
-        public Venda ObterPeloId(int id)
+        public VendaModel ObterPeloId(int id)
         {
             return _context.Vendas.FirstOrDefault(x => x.Id == id);
         }
@@ -52,7 +52,7 @@ namespace DEVinBricks.Repositories
         //    return response;
         //}
 
-        public VendaProduto ObterVendaPorIdVenda(int IdVenda)
+        public VendaProdutoModel ObterVendaPorIdVenda(int IdVenda)
         {
             return _context.VendasProdutos.Find(IdVenda);
         }
