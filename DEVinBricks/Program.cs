@@ -55,7 +55,8 @@ builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoServi
 builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
 builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
 builder.Services.AddScoped<IVendaRepository, VendaRepository>();
-builder.Services.AddScoped<IVendaService, ObterVendaProdutoService>();
+//builder.Services.AddScoped<IVendaService, ObterVendaProdutoService>();
+
 
 
 // Context para o Server Connection

@@ -28,11 +28,17 @@ namespace DEVinBricks.Repositories.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var usuarioEntityBuilder = modelBuilder.Entity<Usuario>();
+            usuarioEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            usuarioEntityBuilder.HasIndex(prop => prop.Email).IsUnique();
+            usuarioEntityBuilder.HasIndex(prop => prop.Login).IsUnique();
+            usuarioEntityBuilder.HasData(UsuarioSeed.Seed);
+
             var compradorEntityBuilder = modelBuilder.Entity<Comprador>();
             compradorEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             compradorEntityBuilder.HasData(CompradorSeed.Seed);
@@ -56,12 +62,6 @@ namespace DEVinBricks.Repositories.Models
             var valorFreteEstadosModelEntityBuilder = modelBuilder.Entity<ValorFretePorEstadoModel>();
             valorFreteEstadosModelEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             valorFreteEstadosModelEntityBuilder.HasData(ValorFretePorEstadoSeed.Seed);
-
-            var usuarioEntityBuilder = modelBuilder.Entity<Usuario>();
-            usuarioEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
-            usuarioEntityBuilder.HasIndex(prop => prop.Email).IsUnique();
-            usuarioEntityBuilder.HasIndex(prop => prop.Login).IsUnique();
-            usuarioEntityBuilder.HasData(UsuarioSeed.Seed);
 
             var estadoEntityBuilder = modelBuilder.Entity<Estado>();
             estadoEntityBuilder.HasData(EstadoSeed.Seed);

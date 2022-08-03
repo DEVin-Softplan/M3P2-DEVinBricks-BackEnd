@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DEVinBricks.Controllers
 {
-    [Route("api/venda")]
+    [Route("api/vendaProduto")]
     [ApiController]
     public class VendaProdutoController : ControllerBase
     {
