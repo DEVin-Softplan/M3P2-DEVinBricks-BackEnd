@@ -1,5 +1,6 @@
 ﻿using DEVinBricks.Controllers;
 using DEVinBricks.DTO;
+using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
 using DEVinBricks.Seeds;
 using DEVinBricks.Services;

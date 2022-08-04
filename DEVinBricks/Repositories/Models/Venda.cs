@@ -6,9 +6,13 @@ namespace DEVinBricks.Repositories.Models
     public partial class Venda : BaseEntity
     {
      
-        public Comprador CompradorId { get; set; }
-        public Usuario VendedorId { get; set; }
-        public FreteModel FreteId { get; set; }
+        public Comprador Comprador { get; set; }
+        public Usuario Vendedor { get; set; }
+        public FreteModel Frete { get; set; }
+
+        public int CompradorId { get; set; }
+        public int VendedorId { get; set; }
+        public int FreteId { get; set; }
 
     }
 }

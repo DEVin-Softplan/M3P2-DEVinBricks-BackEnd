@@ -49,6 +49,7 @@ namespace DEVinBricks.Repositories.Models
 
             var produtoEntityBuilder = modelBuilder.Entity<Produto>();
             produtoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
+            produtoEntityBuilder.HasData(ProdutoSeed.Seed);
 
             var vendaEntityBuilder = modelBuilder.Entity<Venda>();
             vendaEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
