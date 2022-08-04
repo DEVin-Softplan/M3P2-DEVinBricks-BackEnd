@@ -15,15 +15,11 @@ namespace DEVinBricks.Controllers
         private readonly IProdutoService _service;
         private readonly ICadastroDeProdutoRepository _context;
         
-        public ProdutoController(ICadastroDeProdutoRepository context)
+        public ProdutoController(ICadastroDeProdutoRepository context, IProdutoService service)
         {
             _context = context;
-        } 
-
-        public ProdutoController(IProdutoService service)
-        {
             _service = service;
-        }
+        } 
 
         /// <summary>
         /// Retorna um Produto.
