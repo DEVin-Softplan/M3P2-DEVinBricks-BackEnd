@@ -17,7 +17,7 @@ namespace DEVinBricks.Repositories
             if (!string.IsNullOrWhiteSpace(nome))
             {
                 nome = nome.Trim();
-                collection = collection.Where(c => c.Estado.Nome == nome);
+                collection = collection.Where(c => c.Estado.Nome.Contains(nome));
             }
 
             var total = collection.Count();
@@ -41,6 +41,18 @@ namespace DEVinBricks.Repositories
         public ValorFretePorEstadoModel ObterPeloId(int id)
         {
             return _context.ValorFreteEstados.FirstOrDefault(x => x.Id == id);
+        }
+
+        public ValorFretePorEstadoModel ObterPeloEstadoId(int estadoId)
+        {
+            return _context.ValorFreteEstados.FirstOrDefault(x => x.EstadoId == estadoId);
+        }
+
+        public ValorFretePorEstadoModel Adicionar(ValorFretePorEstadoModel model)
+        {
+            _context.Add(model);
+            _context.SaveChanges();
+            return model;
         }
     }
 }

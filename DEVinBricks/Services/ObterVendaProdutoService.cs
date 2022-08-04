@@ -7,14 +7,14 @@ namespace DEVinBricks.Services
 {
     public class ObterVendaProdutoService : IVendaService
     {
-        private readonly IVendaRepository _service;
-        public ObterVendaProdutoService(IVendaRepository service)
+        private readonly IVendaRepository _repository;
+        public ObterVendaProdutoService(IVendaRepository repository)
         {
-            _service = service;
+            _repository = repository;
         }
         public ObterVendaProdutoPorIdVendaDTO ObterVendaProdutoPorIdVenda(int idVenda)
         {
-            var model = _service.ObterVendaPorIdVenda(idVenda);
+            var model = _repository.ObterVendaPorIdVenda(idVenda);
             var vendaProdutoDTO = new ObterVendaProdutoPorIdVendaDTO()
             {
                 Id = model.Id,
@@ -25,6 +25,11 @@ namespace DEVinBricks.Services
             };
 
             return vendaProdutoDTO;
+        }
+
+        public IEnumerable<VendaModel> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
+        {
+            return _repository.ConsultarVendaPorComprador(nome, cpf, page, size);
         }
     }
 }

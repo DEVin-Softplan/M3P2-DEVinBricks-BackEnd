@@ -11,6 +11,7 @@ namespace DEVinBricks.Controllers
     [ApiController]
     public class VendaController : ControllerBase
     {
+        const int maxPageSize = 20;
         private IVendaRepository _service;
         public VendaController(IVendaRepository context)
         {
@@ -27,7 +28,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize()]
-        public async Task<IActionResult> CadastrarVenda([FromBody] VendaPostDTO Venda, VendaProdutoPostDTO VendaProduto)
+        public async Task<IActionResult> CadastrarVenda([FromBody] VendaPostDTO Venda/*, VendaProdutoPostDTO VendaProduto*/)
         {
             var IdUsuarioInclusao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var resultado = await _service.CadastrarVenda(Venda, IdUsuarioInclusao);
@@ -74,6 +75,38 @@ namespace DEVinBricks.Controllers
             if (resultado.Count() == 0)
                 return NotFound("Nenhum resultado encontrado com os parâmetros passados.");
             return Ok(new { Pagina = pagina, TamanhoPagina = tamanhopagina, Resultados = resultado });
+        }
+
+        /// <summary>
+        /// Consulta lista de Vendas por comprador.
+        /// </summary>
+        /// <param name="nome">Filtra por nome do Comprador.</param>
+        /// <param name="cpf">Filtra por nome CPF do Comprador.</param>
+        /// <param name="page">Número da página.</param>
+        /// <param name="size">Tamanho da página.</param>
+        /// <returns>Vendas.</returns>
+        /// <response code="200">Sucesso.</response>
+        /// <response code="400">Requisição inválida.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="404">Venda não encontrada.</response>
+        /// <response code="500">Ocorreu uma exceção durante a consulta.</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [HttpGet]
+        //[Authorize(Policy = "admin")]
+        public IActionResult ConsultarVendaPorComprador(string? nome, string? cpf, int page = 1, int size = 10)
+        {
+            if (size > maxPageSize)
+            {
+                size = maxPageSize;
+            }
+
+            var resultado = _service.ConsultarVendaPorComprador(nome, cpf, page, size);
+
+            return Ok(resultado);
         }
     }
 }

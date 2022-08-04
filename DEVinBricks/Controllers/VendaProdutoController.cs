@@ -24,8 +24,9 @@ namespace DEVinBricks.Controllers
         {
             try
             {
-                var response = _service.ObterVendaProdutoPorIdVenda(idVenda);
-                return Ok(response);
+                //var response = _service.ObterVendaProdutoPorIdVenda(idVenda);
+                //return Ok(response);
+                return null;
             }
             catch (Exception ex)
             {

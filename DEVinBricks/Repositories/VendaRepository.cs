@@ -31,6 +31,33 @@ namespace DEVinBricks.Repositories
             var resultado = queryableVenda.OrderBy(c => c.Id).ToList();
             return resultado;
         }
+
+        public IEnumerable<VendaModel> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
+        {
+            var collection = _context.Vendas as IQueryable<VendaModel>;
+
+            if (!string.IsNullOrWhiteSpace(nome))
+            {
+                nome = nome.Trim();
+                collection = collection.Where(c => c.Comprador.Nome.Contains(nome));
+            }
+
+            if (!string.IsNullOrWhiteSpace(cpf))
+            {
+                cpf = cpf.Trim();
+                collection = collection.Where(c => c.Comprador.CPF.Equals(cpf));
+            }
+
+            var total = collection.Count();
+
+            var resultado = collection.OrderBy(c => c.Comprador.Nome)
+                                        .Skip(size * (page - 1))
+                                        .Take(size)
+                                        .ToList();
+
+            return resultado;
+        }
+
         //public bool VerificaSeExisteComprador(int compradorId)
         //{
         //    return _context.Vendas.Any(x => x.CompradorId == compradorId);
