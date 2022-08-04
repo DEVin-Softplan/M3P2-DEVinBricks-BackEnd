@@ -1,4 +1,5 @@
 ﻿using DEVinBricks.Repositories.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DEVinBricks.Repositories
 {
@@ -8,11 +9,12 @@ namespace DEVinBricks.Repositories
         public ValorFretePorEstadoRepository(DEVinBricksContext context)
         {
             _context = context;
+          
         }
 
         public IEnumerable<ValorFretePorEstadoModel> ConsultarValorFreteEstado(string? nome, int page, int size)
         {
-            var collection = _context.ValorFreteEstados as IQueryable<ValorFretePorEstadoModel>;
+            var collection = _context.ValorFreteEstados.Include(x => x.Estado) as IQueryable<ValorFretePorEstadoModel>;
 
             if (!string.IsNullOrWhiteSpace(nome))
             {
