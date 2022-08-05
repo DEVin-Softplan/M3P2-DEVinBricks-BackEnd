@@ -154,9 +154,9 @@ namespace DEVinBricks.Controllers
                 {
                     int IdUsuarioAlteracao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-                    await _usuarioService.AlterarDadosUsuario(usuario, IdUsuarioAlteracao);
+                    var responseUsuario = await _usuarioService.AlterarDadosUsuario(usuario, IdUsuarioAlteracao);
 
-                    return Ok("Usuario alterado com sucesso!");
+                    return Ok(responseUsuario);
                 }
                 else
                 {
