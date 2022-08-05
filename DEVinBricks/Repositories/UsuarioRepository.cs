@@ -14,13 +14,13 @@ namespace DEVinBricks.Repositories
             _context = context;
         }
 
-        public async Task<int> CadastrarUsuario(Usuario usuario)
+        public async Task<Usuario> CadastrarUsuario(Usuario usuario)
         {
             try
             {
                 var resultado = await _context.Usuarios.AddAsync(usuario);
                 await _context.SaveChangesAsync();
-                return resultado.Entity.Id;
+                return usuario;
             }
             catch (Exception ex)
             {
@@ -34,19 +34,19 @@ namespace DEVinBricks.Repositories
             var usuarios = new List<Usuario>();
             if (nome == "sem nome" && login == "sem login")
             {
-                usuarios = _context.Usuarios.ToList();
+                usuarios = _context.Usuarios.Include(x => x.UsuarioInclusao).Include(x => x.UsuarioAlteracao).ToList();
             }
             if (nome != "sem nome" && login == "sem login")
             {
-                usuarios = _context.Usuarios.Where(x => x.Nome == nome).ToList();
+                usuarios = _context.Usuarios.Where(x => x.Nome == nome).Include(x => x.UsuarioInclusao).Include(x => x.UsuarioAlteracao).ToList();
             }
             if (nome == "sem nome" && login != "sem login")
             {
-                usuarios = _context.Usuarios.Where(x => x.Login == login).ToList();
+                usuarios = _context.Usuarios.Where(x => x.Login == login).Include(x => x.UsuarioInclusao).Include(x => x.UsuarioAlteracao).ToList();
             }
             if (nome != "sem nome" && login != "sem login")
             {
-                usuarios = _context.Usuarios.Where(x => x.Nome == nome && x.Login == login).ToList();
+                usuarios = _context.Usuarios.Where(x => x.Nome == nome && x.Login == login).Include(x => x.UsuarioInclusao).Include(x => x.UsuarioAlteracao).ToList();
             }
 
             if (tamanho != 0)
@@ -94,10 +94,10 @@ namespace DEVinBricks.Repositories
 
         public Usuario ObterUsuarioPorId(int id)
         {
-            return _context.Usuarios.Find(id);
+            return _context.Usuarios.Include(x => x.UsuarioInclusao).Include(x => x.UsuarioAlteracao).FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task AlterarDados(Usuario usuario)
+        public async Task<Usuario> AlterarDados(Usuario usuario)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace DEVinBricks.Repositories
 
                 await _context.SaveChangesAsync();
 
-                return;
+                return usuario;
             }
             catch (Exception ex)
             {

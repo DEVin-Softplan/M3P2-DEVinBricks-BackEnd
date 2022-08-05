@@ -17,11 +17,11 @@ namespace DEVinBricks.Services
         {
             _usuarioRepository = usuarioRepository;
         }
-        public async Task<int> CadastrarUsuario(Usuario usuario)
+        public async Task<Usuario> CadastrarUsuario(Usuario usuario)
         {
-            var usuarioId = await _usuarioRepository.CadastrarUsuario(usuario);
+            var usuarioCadastrado = await _usuarioRepository.CadastrarUsuario(usuario);
             EnviarEmailParaFila(usuario);
-            return usuarioId;
+            return usuarioCadastrado;
         }
 
         public async Task<Usuario> CriarUsuario(CadastrarUsuarioDTO usuario, int idInclusao)
@@ -109,7 +109,7 @@ namespace DEVinBricks.Services
             }
         }
 
-        public async Task AlterarDadosUsuario(Usuario usuarioAlterado, int idUsuarioAlteracao)
+        public async Task<Usuario> AlterarDadosUsuario(Usuario usuarioAlterado, int idUsuarioAlteracao)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace DEVinBricks.Services
 
                 await _usuarioRepository.AlterarDados(usuarioAlterado);
 
-                return;
+                return usuarioAlterado;
             }
             catch (Exception ex)
             {
