@@ -42,6 +42,7 @@ namespace DEVinBricks.Services
                     Descricao = item.Descricao,
                     Valor = item.Valor,
                     Ativo = item.Ativo,
+                    Url = item.UrlDaImagem,
                 });
             }
 
