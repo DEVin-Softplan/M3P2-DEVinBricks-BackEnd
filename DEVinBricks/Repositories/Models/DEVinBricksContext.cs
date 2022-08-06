@@ -23,8 +23,8 @@ namespace DEVinBricks.Repositories.Models
         public virtual DbSet<Produto> Produtos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<ValorFretePorEstadoModel> ValorFreteEstados { get; set; } = null!;
-        public virtual DbSet<Venda> Vendas { get; set; } = null!;
-        public virtual DbSet<VendasProduto> VendasProdutos { get; set; } = null!;
+        public virtual DbSet<VendaModel> Vendas { get; set; } = null!;
+        public virtual DbSet<VendasProdutoModel> VendasProdutos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -51,10 +51,10 @@ namespace DEVinBricks.Repositories.Models
             produtoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
             produtoEntityBuilder.HasData(ProdutoSeed.Seed);
 
-            var vendaEntityBuilder = modelBuilder.Entity<Venda>();
+            var vendaEntityBuilder = modelBuilder.Entity<VendaModel>();
             vendaEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
 
-            var vendasProdutoEntityBuilder = modelBuilder.Entity<VendasProduto>();
+            var vendasProdutoEntityBuilder = modelBuilder.Entity<VendasProdutoModel>();
             vendasProdutoEntityBuilder.HasOne(prop => prop.UsuarioInclusao).WithMany().OnDelete(DeleteBehavior.NoAction);
 
             var valorFreteEstadosModelEntityBuilder = modelBuilder.Entity<ValorFretePorEstadoModel>();
