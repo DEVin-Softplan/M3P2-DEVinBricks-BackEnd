@@ -43,7 +43,7 @@ Além disto é importante ter um editor para trabalhar com o código, como [Visu
 
 ```bash
 # Clone este repositório
-$ git clone -b develop https://github.com/DEVin-Softplan/M3P2-DEVinBricks-BackEnd.git
+$ git clone https://github.com/DEVin-Softplan/M3P2-DEVinBricks-BackEnd.git
 ```
 
 <li>Abra o projeto no VisualStudio, clicando 2x no arquivo <b style="color:#7b9eeb">DevInBricks.sln</b></li>
