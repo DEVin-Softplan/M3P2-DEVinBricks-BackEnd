@@ -1,3 +1,6 @@
+$ErrorActionPreference = 'SilentlyContinue'
+try {dotnet tool install -g dotnet-reportgenerator-globaltool -ErrorAction}
+finally {
 dotnet test --collect:"XPlat Code Coverage"
 cd .\TestResults
 cd (gci * | sort LastWriteTime |select -last 1).Name
@@ -7,3 +10,4 @@ $ClassFilters = "-classfilters:-DEVinBricks.Migrations.*;-DEVinBricks.Repositori
 reportgenerator $ReportName $TargetDir $ClassFilters
 TestCoverageReport/index.html
 cd ../..
+}
