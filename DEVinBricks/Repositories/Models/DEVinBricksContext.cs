@@ -24,7 +24,7 @@ namespace DEVinBricks.Repositories.Models
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<ValorFretePorEstadoModel> ValorFreteEstados { get; set; } = null!;
         public virtual DbSet<VendaModel> Vendas { get; set; } = null!;
-        public virtual DbSet<VendasProdutoModel> VendasProdutos { get; set; } = null!;
+        public virtual DbSet<VendaProdutoModel> VendasProdutos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
