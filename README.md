@@ -2,7 +2,7 @@
 </h1>
 
 <h1 align="center">
-   <p>DEVinSales - API RESTful de Vendas</p>
+   <p>DEVinBricks - API RESTful de Vendas de Mateirais de Construção</p>
 </h1>
 
 <h4 align="center"> 
