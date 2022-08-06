@@ -46,7 +46,7 @@ Além disto é importante ter um editor para trabalhar com o código, como [Visu
 $ git clone -b develop https://github.com/DEVin-Softplan/M3P2-DEVinBricks-BackEnd.git
 ```
 
-<li>Abra o projeto no VisualStudio, clicando 2x no arquivo <b style="color:#7b9eeb">DevInSales.sln</b></li>
+<li>Abra o projeto no VisualStudio, clicando 2x no arquivo <b style="color:#7b9eeb">DevInBricks.sln</b></li>
 <br>
 <li>Vá para o arquivo <b style="color:#7b9eeb">appsettings.Development.json</b> e adicione a ConnectionString, seguindo o modelo abaixo 👇<br>
 
