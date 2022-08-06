@@ -1,5 +1,6 @@
 ﻿using DEVinBricks.DTO;
 using DEVinBricks.Repositories.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DEVinBricks.Repositories
 {
@@ -32,9 +33,11 @@ namespace DEVinBricks.Repositories
             return resultado;
         }
 
-        public IEnumerable<VendaModel> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
+        public IEnumerable<VendaPostDTO> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
         {
-            var collection = _context.Vendas as IQueryable<VendaModel>;
+            var collection = _context.Vendas
+                   .Include(c => c.Comprador)
+                   .Include(v => v.Vendedor) as IQueryable<VendaModel>;
 
             if (!string.IsNullOrWhiteSpace(nome))
             {
@@ -54,34 +57,22 @@ namespace DEVinBricks.Repositories
                                         .Skip(size * (page - 1))
                                         .Take(size)
                                         .ToList();
-
-            return resultado;
+            var retorno = new List<VendaPostDTO>();
+            foreach (var item in resultado)
+            {
+                retorno.Add(VendaPostDTO.ConverterParaVendaPostDTO(item));
+            }
+            return retorno;
         }
-
-        //public bool VerificaSeExisteComprador(int compradorId)
-        //{
-        //    return _context.Vendas.Any(x => x.CompradorId == compradorId);
-        //}
-
-        //public bool VerificaSeExisteCPFComprador(string cpf)
-        //{
-        //    return _context.Vendas.Any(x => x.CPF == cpf);
-        //}
 
         public VendaModel ObterPeloId(int id)
         {
             return _context.Vendas.FirstOrDefault(x => x.Id == id);
         }
 
-        //public Venda ObterVendaPorIdVenda(int IdVenda)
-        //{
-        //    var response = _context.Vendas.Find(IdVenda);
-        //    return response;
-        //}
-
-        public VendaProdutoModel ObterVendaPorIdVenda(int IdVenda)
+        public VendaProdutoModel ObterVendaPorIdVenda(int id)
         {
-            return _context.VendasProdutos.Find(IdVenda);
+            return _context.VendasProdutos.FirstOrDefault(x => x.Id == id);
         }
     }
 }

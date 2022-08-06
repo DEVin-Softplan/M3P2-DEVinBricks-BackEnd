@@ -7,8 +7,8 @@ namespace DEVinBricks.Repositories
     {
         public VendaProdutoModel ObterVendaPorIdVenda(int IdVenda);
         Task<int> CadastrarVenda(VendaPostDTO venda, int usuarioInclusaoId);
-        IEnumerable<VendaModel> ListarGetVenda(VendaGetDTO venda);
-        public IEnumerable<VendaModel> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size);
+        IEnumerable<VendaModel> ListarGetVenda(VendaGetDTO venda);        
+        public IEnumerable<VendaPostDTO> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size);
         public VendaModel ObterPeloId(int id);
 
     }

@@ -5,10 +5,10 @@ using DEVinBricks.Services.Interfaces;
 
 namespace DEVinBricks.Services
 {
-    public class ObterVendaProdutoService : IVendaService
+    public class VendaService : IVendaService
     {
         private readonly IVendaRepository _repository;
-        public ObterVendaProdutoService(IVendaRepository repository)
+        public VendaService(IVendaRepository repository)
         {
             _repository = repository;
         }
@@ -27,7 +27,7 @@ namespace DEVinBricks.Services
             return vendaProdutoDTO;
         }
 
-        public IEnumerable<VendaModel> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
+        public IEnumerable<VendaPostDTO> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
         {
             return _repository.ConsultarVendaPorComprador(nome, cpf, page, size);
         }

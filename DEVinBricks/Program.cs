@@ -55,7 +55,7 @@ builder.Services.AddScoped<IValorFretePorEstadoService, ValorFretePorEstadoServi
 builder.Services.AddScoped<IObterProdutoRepository, ObterProdutoRepository>();
 builder.Services.AddScoped<IObterProdutoService, ObterProdutoService>();
 builder.Services.AddScoped<IVendaRepository, VendaRepository>();
-//builder.Services.AddScoped<IVendaService, ObterVendaProdutoService>();
+builder.Services.AddScoped<IVendaService, VendaService>();
 
 
 
@@ -77,6 +77,8 @@ builder.Services.AddCors(options =>
 	});
 });
 
+builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -85,6 +87,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseHttpsRedirection();
 

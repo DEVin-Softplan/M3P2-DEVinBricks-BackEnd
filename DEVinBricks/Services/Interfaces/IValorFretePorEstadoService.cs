@@ -10,8 +10,6 @@ namespace DEVinBricks.Services.Interfaces
 
         ValorFretePorEstadoModel Atualizar(ValorFretePorEstadoDTO dto, int idUsuarioAlteracao);
        
-
         IEnumerable<ValorFretePorEstadoModel> Consultar(string? nome, int page, int size);
-
     }
 }

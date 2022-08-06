@@ -18,6 +18,5 @@ namespace DEVinBricks.Seeds
                 DataDeInclusao = DateTime.Now,
             }
         };
-
     }
 }
