@@ -14,7 +14,7 @@ namespace DEVinBricks.Services
         }
         public ObterVendaProdutoPorIdVendaDTO ObterVendaProdutoPorIdVenda(int idVenda)
         {
-            var model = _repository.ObterVendaPorIdVenda(idVenda);
+            var model = _repository.ObterVendaProdutoPorIdVenda(idVenda);
             var vendaProdutoDTO = new ObterVendaProdutoPorIdVendaDTO()
             {
                 Id = model.Id,
@@ -26,6 +26,11 @@ namespace DEVinBricks.Services
 
             return vendaProdutoDTO;
         }
+
+        //public IEnumerable<VendaProdutoGetDTO> ConsultarVendaProdutoPorIdVenda(int idVenda)
+        //{
+        //    return _repository.ConsultarVendaProdutoPorIdVenda(idVenda);
+        //}
 
         public IEnumerable<VendaPostDTO> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
         {

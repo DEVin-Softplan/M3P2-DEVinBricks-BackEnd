@@ -32,6 +32,28 @@ namespace DEVinBricks.Repositories
             var resultado = queryableVenda.OrderBy(c => c.Id).ToList();
             return resultado;
         }
+                
+        public IEnumerable<VendaProdutoGetDTO> ConsultarVendaProdutoPorIdVenda(int idVenda)
+        {
+            //var vendaProtudo = _context.VendasProdutos
+                //.Include(p => p.Produto) as IQueryable<VendaProdutoModel>;
+                //.FirstOrDefault(x => x.IdVenda == idVenda);            
+            //return VendaProdutoGetDTO.ConverterParaVendaProdutoGetDTO(vendaProtudo);
+
+            var collection = _context.VendasProdutos
+                .Include(p => p.Produto) as IQueryable<VendaProdutoModel>;
+
+            var resultado = collection.OrderBy(p => p.Produto.Id)
+                                        //.Skip(size * (page - 1))
+                                        //.Take(size)
+                                        .ToList();
+            var retorno = new List<VendaProdutoGetDTO>();
+            foreach (var item in resultado)
+            {
+                retorno.Add(VendaProdutoGetDTO.ConverterParaVendaProdutoGetDTO(item));
+            }
+            return retorno;
+        }
 
         public IEnumerable<VendaPostDTO> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size)
         {
@@ -70,9 +92,9 @@ namespace DEVinBricks.Repositories
             return _context.Vendas.FirstOrDefault(x => x.Id == id);
         }
 
-        public VendaProdutoModel ObterVendaPorIdVenda(int id)
+        public VendaProdutoModel ObterVendaProdutoPorIdVenda(int idVenda)
         {
-            return _context.VendasProdutos.FirstOrDefault(x => x.Id == id);
+            return _context.VendasProdutos.FirstOrDefault(x => x.Id == idVenda);
         }
     }
 }
