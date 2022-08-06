@@ -39,7 +39,7 @@ namespace DEVinBricks.Teste
         {
             var context = new DEVinBricksContext(_contextOptions);
             var repository = new CadastroDeProdutoRepository(context);
-            var controller = new ProdutoController(repository);
+            var controller = new ProdutoController(repository, null);
             var claims = new Claim[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, "1"),
