@@ -19,7 +19,7 @@ namespace DEVinBricks.Repositories
             if (!string.IsNullOrWhiteSpace(nome))
             {
                 nome = nome.Trim();
-                collection = collection.Where(c => c.Estado.Nome.Contains(nome));
+                collection = collection.Where(c => c.Estado.Nome.Contains(nome) || c.Estado.UF.Contains(nome));
             }
 
             var total = collection.Count();
