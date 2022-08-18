@@ -6,17 +6,22 @@ using DEVinBricks.Services.Interfaces;
 namespace DEVinBricks.Services {
     public class VendaService : IVendaService {
         private readonly IVendaRepository _repository;
-        public VendaService(IVendaRepository repository) {
+        private readonly IProdutoRepository _produtoRepository;
+        public VendaService(IVendaRepository repository, IProdutoRepository produto) {
             _repository = repository;
+            _produtoRepository = produto;
         }
-        public ObterVendaProdutoPorIdVendaDTO ObterVendaProdutoPorIdVenda(int idVenda) {
-            var model = _repository.ObterVendaProdutoPorIdVenda(idVenda);
+        public ObterVendaProdutoPorIdVendaDTO ObterVendaProdutoPorIdVenda(int idVenda)  {
+            var venda = _repository.ObterVendaProdutoPorIdVenda(idVenda);
+            var produto = _produtoRepository.ObterProdutoPorId(venda.IdProduto);
+
             var vendaProdutoDTO = new ObterVendaProdutoPorIdVendaDTO() {
-                Id = model.Id,
-                IdVenda = model.IdVenda,
-                IdProduto = model.IdProduto,
-                Valor = model.Valor,
-                Quantidade = model.Quantidade,
+                Id = venda.Id,
+                IdVenda = venda.IdVenda,
+                IdProduto = venda.IdProduto,
+                Produto = produto,
+                Valor = venda.Valor,
+                Quantidade = venda.Quantidade,
             };
 
             return vendaProdutoDTO;

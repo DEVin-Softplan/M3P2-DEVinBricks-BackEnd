@@ -14,7 +14,7 @@ namespace DEVinBricks.Repositories
             var response = _context.Produtos.Find(id);
             return response;
 
-        }
+        } 
 
         public IEnumerable<Produto> ObterListaProduto(string? nome, int pagina, int tamanhoPagina)
         {

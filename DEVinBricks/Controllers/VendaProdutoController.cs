@@ -18,14 +18,9 @@ namespace DEVinBricks.Controllers {
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet]
         public ActionResult ObterVendaProduto(int idVenda) {
-            try {
-                //var response = _service.ObterVendaProdutoPorIdVenda(idVenda);
-                //return response;
-
-                //var response = _service.ConsultarVendaProdutoPorIdVenda(idVenda);
-                //return Ok(response);
-
-                return null;
+            try  {
+                var response = _service.ObterVendaProdutoPorIdVenda(idVenda);
+                return Ok(response);             
             } catch (Exception ex) {
                 return NotFound("Venda Inexistente");
             }
