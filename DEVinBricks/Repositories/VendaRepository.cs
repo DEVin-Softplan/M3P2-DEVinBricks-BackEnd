@@ -81,7 +81,9 @@ namespace DEVinBricks.Repositories {
         }
 
         public VendaProdutoModel ObterVendaProdutoPorIdVenda(int idVenda) {
-            return _context.VendasProdutos.FirstOrDefault(x => x.Id == idVenda);
+            var response = _context.VendasProdutos.FirstOrDefault(x => x.IdVenda == idVenda);        
+            
+            return response;
         }
     }
-}
+}               
