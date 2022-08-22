@@ -98,6 +98,7 @@ namespace DEVinBricks.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         [Authorize(Policy = "admin")]
         public ActionResult<Comprador> ObterListaCompradores(string? nome, string? cpf, int pagina = 0, int tamanhopagina = 10)
         {

@@ -1,6 +1,7 @@
 ﻿using DEVinBricks.DTO;
 using DEVinBricks.Repositories;
 using DEVinBricks.Repositories.Models;
+using DEVinBricks.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,8 +12,10 @@ namespace DEVinBricks.Controllers {
     public class VendaController : ControllerBase {
         const int maxPageSize = 20;
         private IVendaRepository _service;
-        public VendaController(IVendaRepository context) {
+        private readonly IVendaService _vendaService;
+        public VendaController(IVendaRepository context, IVendaService vendaService) {
             _service = context;
+            _vendaService = vendaService;
         }
 
         /// <summary>
@@ -20,14 +23,16 @@ namespace DEVinBricks.Controllers {
         /// </summary>
         /// <returns>Venda cadastrada com sucesso!</returns>
         /// <response code="201">Cadastro realizado com sucesso.</response>
-        [HttpPost(Name = "CadastrarVenda")]
+        [HttpPost("CadastrarVenda")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
         [Authorize()]
-        public async Task<IActionResult> CadastrarVenda([FromBody] VendaPostDTO Venda/*, VendaProdutoPostDTO VendaProduto*/) {
-            var IdUsuarioInclusao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var resultado = await _service.CadastrarVenda(Venda, IdUsuarioInclusao);
-            return Ok(new { message = "Venda cadastrada com sucesso!", Id = resultado, NovaVenda = Venda });
+        public IActionResult CadastrarVenda([FromBody] CriarVendaDTO Venda) {
+            //var IdUsuarioInclusao = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var IdUsuarioInclusao = 1;
+            var numeroPedido = _vendaService.CriarVenda(Venda, IdUsuarioInclusao);
+            return Ok(new { message = "Venda cadastrada com sucesso!", numeroPedido , NovaVenda = Venda });
         }
 
         /// <summary>
@@ -66,12 +71,12 @@ namespace DEVinBricks.Controllers {
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [HttpGet]
+        [AllowAnonymous]
         [Authorize]
         public IActionResult ConsultarVendaPorComprador(string? nome, string? cpf, int page = 1, int size = 10) {
             if (size > maxPageSize) {
                 size = maxPageSize;
             }
-
             var resultado = _service.ConsultarVendaPorComprador(nome, cpf, page, size);
 
             return Ok(resultado);

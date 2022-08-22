@@ -9,13 +9,14 @@ namespace DEVinBricks.Repositories {
             _context = context;
         }
 
-        public async Task<int> CadastrarVenda(VendaPostDTO venda, int usuarioInclusaoId) {
+        public string CadastrarVenda(CriarVendaDTO venda, int usuarioInclusaoId) {
             var newVenda = VendaPostDTO.ConverterParaEntidadeVenda(venda);
             newVenda.UsuarioInclusaoId = usuarioInclusaoId;
             newVenda.DataDeInclusao = DateTime.Now;
-            var resultado = await _context.Vendas.AddAsync(newVenda);
-            await _context.SaveChangesAsync();
-            return resultado.Entity.Id;
+            var resultado =  _context.Vendas.Add(newVenda);
+            _context.SaveChanges();
+            resultado.Entity.Id.ToString();
+            return resultado.Entity.Id.ToString(); 
         }
 
         public IEnumerable<VendaModel> ListarGetVenda(VendaGetDTO venda) {

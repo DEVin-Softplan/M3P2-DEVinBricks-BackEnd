@@ -27,10 +27,12 @@ namespace DEVinBricks.Services {
             return vendaProdutoDTO;
         }
 
-        //public IEnumerable<VendaProdutoGetDTO> ConsultarVendaProdutoPorIdVenda(int idVenda)
-        //{
-        //    return _repository.ConsultarVendaProdutoPorIdVenda(idVenda);
-        //}
+        public string CriarVenda(CriarVendaDTO venda, int usuarioInclusao)
+        {
+            var novaVenda = _repository.CadastrarVenda(venda, usuarioInclusao);
+
+            return novaVenda;
+        }
 
         public IEnumerable<VendaPostDTO> ConsultarVendaPorComprador(string? nome, string? cpf, int page, int size) {
             return _repository.ConsultarVendaPorComprador(nome, cpf, page, size);
