@@ -18,15 +18,15 @@ namespace DEVinBricks.DTO {
         public int? UsuarioAlteracaoId { get; set; }
         public Usuario? UsuarioAlteracao { get; set; }
 
-        public static VendaModel ConverterParaEntidadeVenda(VendaPostDTO requisicao, int id = 0) {
+        public static VendaModel ConverterParaEntidadeVenda(CriarVendaDTO requisicao, int id = 0) {
             if (requisicao == null)
                 return null;
 
 
             return new VendaModel() {
                 Id = id,
-                CompradorId = requisicao.CompradorId,
-                VendedorId = requisicao.VendedorId
+                CompradorId = requisicao.Comprador.CompradorId,
+                VendedorId = requisicao.Vendedor.VendedorId
             };
         }
 
